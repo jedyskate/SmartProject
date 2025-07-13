@@ -1,0 +1,466 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Application\\SmartConfig.Application.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Application\\SmartConfig.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Application\\SmartConfig.Application.csproj",
+        "projectName": "SmartConfig.Application",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Application\\SmartConfig.Application.csproj",
+        "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj"
+              },
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj"
+              },
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj"
+              },
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Orleans.Silo\\SmartConfig.Orleans.Silo.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Orleans.Silo\\SmartConfig.Orleans.Silo.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Aspire.Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.3.1, )"
+            },
+            "EntityFrameworkCore.Exceptions.SqlServer": {
+              "target": "Package",
+              "version": "(, )"
+            },
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.3.1, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.5.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Queryout.Password": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj",
+        "projectName": "SmartConfig.Common",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj",
+        "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj",
+        "projectName": "SmartConfig.Core",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj",
+        "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj",
+        "projectName": "SmartConfig.Data",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj",
+        "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj"
+              },
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "System.Linq.Dynamic.Core": {
+              "target": "Package",
+              "version": "[1.6.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Orleans.Silo\\SmartConfig.Orleans.Silo.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Orleans.Silo\\SmartConfig.Orleans.Silo.csproj",
+        "projectName": "SmartConfig.Orleans.Silo",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Orleans.Silo\\SmartConfig.Orleans.Silo.csproj",
+        "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Orleans.Silo\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "AutoFixture": {
+              "target": "Package",
+              "version": "[4.18.1, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Http.Polly": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.6, )"
+            },
+            "Microsoft.Orleans.Core.Abstractions": {
+              "target": "Package",
+              "version": "[9.1.2, )"
+            },
+            "Microsoft.Orleans.Server": {
+              "target": "Package",
+              "version": "[9.1.2, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

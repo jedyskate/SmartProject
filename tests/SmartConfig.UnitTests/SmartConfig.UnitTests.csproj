@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoFixture" Version="4.18.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="Moq" Version="4.20.72" />
+		<PackageReference Include="Shouldly" Version="4.3.0" />
+		<PackageReference Include="nunit" Version="4.3.2" />
+		<PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\SmartConfig.Application\SmartConfig.Application.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Data\SmartConfig.Data.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,13 @@
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\bin\Debug\net9.0\SmartConfig.Core.deps.json
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\bin\Debug\net9.0\SmartConfig.Core.dll
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\bin\Debug\net9.0\SmartConfig.Core.pdb
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.csproj.AssemblyReference.cache
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.AssemblyInfoInputs.cache
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.AssemblyInfo.cs
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.csproj.CoreCompileInputs.cache
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.sourcelink.json
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.dll
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\refint\SmartConfig.Core.dll
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\SmartConfig.Core.pdb
+C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Core\obj\Debug\net9.0\ref\SmartConfig.Core.dll
