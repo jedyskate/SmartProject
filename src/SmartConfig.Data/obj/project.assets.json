@@ -5854,14 +5854,14 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj",
+      "projectUniqueName": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj",
       "projectName": "SmartConfig.Data",
-      "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj",
+      "projectPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Data\\SmartConfig.Data.csproj",
       "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Data\\obj\\",
+      "outputPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+        "C:\\Users\\jedyp\\Repos\\SmartProject\\NuGet.Config",
         "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
@@ -5874,11 +5874,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj": {
-              "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj"
+            "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj": {
+              "projectPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj"
             },
-            "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj": {
-              "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj"
+            "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj": {
+              "projectPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Core\\SmartConfig.Core.csproj"
             }
           }
         }
@@ -5956,7 +5956,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

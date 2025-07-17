@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+89Ar4cnGNk=",
+  "dgSpecHash": "ojY0Y49xBB4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor\\SmartConfig.Blazor.csproj",
+  "projectFilePath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor\\SmartConfig.Blazor.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jedyp\\.nuget\\packages\\microsoft.aspnetcore.authorization\\9.0.6\\microsoft.aspnetcore.authorization.9.0.6.nupkg.sha512",
     "C:\\Users\\jedyp\\.nuget\\packages\\microsoft.aspnetcore.components\\9.0.6\\microsoft.aspnetcore.components.9.0.6.nupkg.sha512",

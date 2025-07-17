@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "y8Mfj2gQZuU=",
+  "dgSpecHash": "pmvRRIK+TUs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj",
+  "projectFilePath": "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jedyp\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.0\\microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",
     "C:\\Users\\jedyp\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.0\\microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512",

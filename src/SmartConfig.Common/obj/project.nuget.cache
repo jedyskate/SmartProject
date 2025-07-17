@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KBMO3Uc9/YY=",
+  "dgSpecHash": "iXwtYFFlSP8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj",
+  "projectFilePath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Common\\SmartConfig.Common.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jedyp\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.6\\microsoft.extensions.dependencyinjection.abstractions.9.0.6.nupkg.sha512",
     "C:\\Users\\jedyp\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"

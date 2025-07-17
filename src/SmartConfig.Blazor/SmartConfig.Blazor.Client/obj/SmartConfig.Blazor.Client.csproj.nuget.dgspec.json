@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj": {}
+    "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj": {
+    "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj",
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj",
         "projectName": "SmartConfig.Sdk",
-        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj",
         "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\obj\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\Repos\\SmartProject\\NuGet.Config",
           "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -82,21 +82,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj": {
+    "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj",
+        "projectUniqueName": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj",
         "projectName": "SmartConfig.Blazor.Client",
-        "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj",
+        "projectPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\SmartConfig.Blazor.Client.csproj",
         "packagesPath": "C:\\Users\\jedyp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jedyp\\Repos\\smartproject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\obj\\",
+        "outputPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\src\\SmartConfig.Blazor\\SmartConfig.Blazor.Client\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jedyp\\Repos\\smartproject\\NuGet.Config",
+          "C:\\Users\\jedyp\\Repos\\SmartProject\\NuGet.Config",
           "C:\\Users\\jedyp\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
@@ -109,8 +109,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj": {
-                "projectPath": "C:\\Users\\jedyp\\Repos\\smartproject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj"
+              "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj": {
+                "projectPath": "C:\\Users\\jedyp\\Repos\\SmartProject\\sdk\\SmartConfig.Sdk\\SmartConfig.Sdk.csproj"
               }
             }
           }
@@ -138,13 +138,13 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.6, )",
+              "version": "[9.0.7, )",
               "autoReferenced": true
             },
             "Microsoft.NET.Sdk.WebAssembly.Pack": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.6, )",
+              "version": "[9.0.7, )",
               "autoReferenced": true
             }
           },
@@ -162,7 +162,7 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
-              "version": "[9.0.6, 9.0.6]"
+              "version": "[9.0.7, 9.0.7]"
             }
           ],
           "frameworkReferences": {
@@ -170,7 +170,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
