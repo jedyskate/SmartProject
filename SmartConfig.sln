@@ -47,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{2D1C41C0
 		Dockerfile = Dockerfile
 		docker-compose.yml = docker-compose.yml
 		nuget.config = nuget.config
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.LoadTests", "tests\SmartConfig.LoadTests\SmartConfig.LoadTests.csproj", "{366D3100-4770-4507-9931-04B7D636346C}"

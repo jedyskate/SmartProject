@@ -1,8 +1,0 @@
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.csproj.AssemblyReference.cache
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\rpswa.dswa.cache.json
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.AssemblyInfoInputs.cache
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.AssemblyInfo.cs
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.csproj.CoreCompileInputs.cache
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\jedyp\Repos\smartproject\src\SmartConfig.Blazor\SmartConfig.Blazor\obj\Debug\net8.0\SmartConfig.Blazor.sourcelink.json
