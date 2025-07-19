@@ -1,10 +1,10 @@
 # Rider temporary files
-.idea/
+**.idea/
 
 # Visual Studio temporary files
-.vs/
-*.suo
-*.user
+**.vs/
+**.suo
+**.user
 *.sln.docstates
 
 # Ignore build output
@@ -34,38 +34,38 @@
 # yarn.lock
 
 # Ignore log files
-*.log
+**.log
 
 # Ignore local environment files
-.env.local
-.env.*.local
+**.env.local
+**.env.*.local
 
 # Ignore VS Code settings
-.vscode/
+**.vscode/
 
 # Dotnet Watcher
-.dotnettls/
+**.dotnettls/
 
 # MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
+**[Tt]est[Rr]esult*/
+**[Bb]uild[Ll]og.*
 
 # Docker-related files
 **/.docker/
 **/.dockerignore
 docker-compose.override.yml
-*.pid
-*.cid
+**.pid
+**.cid
 
 # Docker volumes or temp files (if mapped locally)
 **/docker-volumes/
 **/tmp/
 
 # Ignore Docker build cache (if you export to file)
-*.tar
-*.img
-*.container
-*.dockerfile-backup
+**.tar
+**.img
+**.container
+**.dockerfile-backup
 
 # Optional: Ignore Docker logs
 **/docker-logs/
