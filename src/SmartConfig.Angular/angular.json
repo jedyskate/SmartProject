@@ -54,6 +54,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "ssl": true,
+            "sslKey": "localhost-key.pem",
+            "sslCert": "localhost.pem"
+          },
           "configurations": {
             "production": {
               "buildTarget": "SmartConfig.Angular:build:production"

@@ -40,12 +40,11 @@ var nextjs = builder.AddNpmApp("nextjs", "../../src/SmartConfig.NextJs", "dev")
 var angular = builder.AddNpmApp("angular", "../../src/SmartConfig.Angular", "start")
     .WaitFor(api)
     .WithReference(api)
-    .WithHttpsEndpoint(4220, env: "PORT", name: "angular-https") 
+    .WithHttpsEndpoint(4212, env: "PORT", name: "angular-https") 
     .WithExternalHttpEndpoints()
-    .WithEnvironment("NEXT_PUBLIC_API_BASE_URL", $"https://localhost:{apiPort.ToString()}")
-    .WithEnvironment("NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
-    .WithEnvironment("NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
-
+    .WithEnvironment("API_BASE_URL", $"https://localhost:{apiPort.ToString()}")
+    .WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
+    .WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
 
 // Frontend Blazor
 var blazor = builder.AddProject<SmartConfig_Blazor>("blazor")
