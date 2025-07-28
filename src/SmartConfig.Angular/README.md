@@ -10,7 +10,13 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+To start a local development server with HTTPS, run:
+
+```bash
+npm run start:ssl
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:4200/` (or `https://localhost:4210/` for HTTPS). The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
 
