@@ -1,18 +1,15 @@
 using Projects;
+using SmartConfig.Host.Extensions;
 
 var builder = DistributedApplication.CreateBuilder(args);
 var otlpEndpoint = Environment.GetEnvironmentVariable("ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL") ?? throw new ArgumentException();
 var otlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS") ?? throw new ArgumentException();
 
-// External Open Telemetry Collector
-// var otelCollector = builder.AddOTelCollector();
-
 // Database
-// var sqlPassword = builder.AddParameter("sqlPassword", secret: true);
-var db = builder
-    .AddSqlServer("sql", port: 1800)
-    .WithLifetime(ContainerLifetime.Persistent)
-    .AddDatabase("SmartConfig");
+var db = builder.AddDatabase();
+
+// RabbitMq
+var rabbitMq = builder.AddRabbitMq();
 
 // Data Migration
 var migration = builder.AddProject<SmartConfig_Migration>("migration")
