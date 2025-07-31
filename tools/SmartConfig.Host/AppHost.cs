@@ -18,6 +18,7 @@ var migration = builder.AddProject<SmartConfig_Migration>("migration")
 
 // Backend
 var api = builder.AddProject<SmartConfig_Api>("api")
+    .WaitFor(rabbitMq)
     .WithReference(db)
     .WaitForCompletion(migration);
 var apiPort = api.Resource.Annotations.OfType<EndpointAnnotation>()

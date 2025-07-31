@@ -17,7 +17,7 @@ public static class ResourceExtensions
     {
         var resource = builder.AddContainer("rabbitmq", "rabbitmq:3.11-management-alpine")
             .WithEnvironment("RABBITMQ_DEFAULT_USER", "admin")
-            .WithEnvironment("RABBITMQ_DEFAULT_PASS", "admin")
+            .WithEnvironment("RABBITMQ_DEFAULT_PASS", "admin123")
             .WithHttpEndpoint(name: "management", port: 15672, targetPort: 15672) // Management UI
             .WithEndpoint(name: "amqp", port: 5672, targetPort: 5672)             // AMQP default
             .WithEndpoint(name: "amqp-alt", port: 5673, targetPort: 5673);        // Optional second port
