@@ -14,7 +14,9 @@ var rabbitMq = builder.AddRabbitMq();
 // Data Migration
 var migration = builder.AddProject<SmartConfig_Migration>("migration")
     .WithReference(dbs.SmartConfigDb)
-    .WaitFor(dbs.SmartConfigDb);
+    .WithReference(dbs.SchedulerDb)
+    .WaitFor(dbs.SmartConfigDb)
+    .WaitFor(dbs.SchedulerDb);
 
 // Backend
 var api = builder.AddProject<SmartConfig_Api>("api")

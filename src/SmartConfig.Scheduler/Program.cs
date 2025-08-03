@@ -6,7 +6,7 @@ using TickerQ.EntityFrameworkCore.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<SchedulerContext>(options => options.UseSqlServer("Scheduler"));
+builder.Services.AddDbContext<SchedulerContext>(options => options.UseSqlServer("TickerQ"));
 
 builder.Services.AddTickerQ(options =>
 {

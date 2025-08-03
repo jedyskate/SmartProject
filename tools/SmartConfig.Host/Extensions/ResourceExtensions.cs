@@ -11,7 +11,7 @@ public static class ResourceExtensions
             .WithLifetime(ContainerLifetime.Persistent);
 
         var smartConfigDb = sqlServer.AddDatabase("SmartConfig");
-        var schedulerDb = sqlServer.AddDatabase("Scheduler");
+        var schedulerDb = sqlServer.AddDatabase("TickerQ");
 
         return (smartConfigDb, schedulerDb);
     }
