@@ -2,6 +2,7 @@ using SmartConfig.Blazor.Components;
 using SmartConfig.Blazor.Extensions;
 using SmartConfig.Sdk;
 using SmartConfig.Sdk.Extensions;
+using SmartConfig.Sdk.Queue;
 
 namespace SmartConfig.Blazor;
 
@@ -38,6 +39,18 @@ public class Program
             SmartConfigApiEndpoint = builder.Configuration["SmartConfig:ApiEndpoint"]!,
             ApplicationName = "SmartConfig.Blazor",
             DryRun = false
+        });
+        builder.Services.AddSingleton(new SmartConfigQueueSettings
+        {
+            HostName = builder.Configuration["RabbitMq:TcpEndpoint:HostName"]!,
+            Port = int.Parse(builder.Configuration["RabbitMq:TcpEndpoint:Port"]!),
+            UserName = builder.Configuration["RabbitMq:Credentials:UserName"]!,
+            Password = builder.Configuration["RabbitMq:Credentials:Password"]!,
+            VirtualHost = builder.Configuration["RabbitMq:Credentials:VirtualHost"]!,
+            Exchange = builder.Configuration["RabbitMq:SmartConfigMq:Exchange"]!,
+            Queue = builder.Configuration["RabbitMq:SmartConfigMq:Queue"]!,
+            RoutingKey = builder.Configuration["RabbitMq:SmartConfigMq:RoutingKey"]!,
+            Environment = builder.Environment.EnvironmentName
         });
         builder.Services.AddSmartConfigClient();
 
