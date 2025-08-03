@@ -52,7 +52,7 @@ public class Program
             RoutingKey = builder.Configuration["RabbitMq:SmartConfigMq:RoutingKey"]!,
             Environment = builder.Environment.EnvironmentName
         });
-        builder.Services.AddSmartConfigClient();
+        builder.Services.AddSmartConfigClient(true);
 
         // Add YARP to proxy FE requests to SmartConfig API
         builder.AddYarp();
