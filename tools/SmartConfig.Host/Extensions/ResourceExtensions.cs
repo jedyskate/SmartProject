@@ -2,15 +2,18 @@ namespace SmartConfig.Host.Extensions;
 
 public static class ResourceExtensions
 {
-    public static IResourceBuilder<SqlServerDatabaseResource> AddDatabase(this IDistributedApplicationBuilder builder)
+    public static (IResourceBuilder<SqlServerDatabaseResource> SmartConfigDb, IResourceBuilder<SqlServerDatabaseResource> SchedulerDb) 
+        AddDatabases(this IDistributedApplicationBuilder builder)
     {
-        // var sqlPassword = builder.AddParameter("sqlPassword", secret: true);
-        var resource = builder
+        // Set up the SQL Server container once
+        var sqlServer = builder
             .AddSqlServer("sql", port: 1800)
-            .WithLifetime(ContainerLifetime.Persistent)
-            .AddDatabase("SmartConfig");
+            .WithLifetime(ContainerLifetime.Persistent);
 
-        return resource;
+        var smartConfigDb = sqlServer.AddDatabase("SmartConfig");
+        var schedulerDb = sqlServer.AddDatabase("Scheduler");
+
+        return (smartConfigDb, schedulerDb);
     }
     
     public static IResourceBuilder<ContainerResource> AddRabbitMq(this IDistributedApplicationBuilder builder)
