@@ -5,24 +5,31 @@ var builder = DistributedApplication.CreateBuilder(args);
 var otlpEndpoint = Environment.GetEnvironmentVariable("ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL") ?? throw new ArgumentException();
 var otlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS") ?? throw new ArgumentException();
 
-// Database
-var db = builder.AddDatabase();
+// Databases
+var dbs = builder.AddDatabases();
 
 // RabbitMq
 var rabbitMq = builder.AddRabbitMq();
 
 // Data Migration
 var migration = builder.AddProject<SmartConfig_Migration>("migration")
-    .WithReference(db)
-    .WaitFor(db);
+    .WithReference(dbs.SmartConfigDb)
+    .WithReference(dbs.SchedulerDb)
+    .WaitFor(dbs.SmartConfigDb)
+    .WaitFor(dbs.SchedulerDb);
 
 // Backend
 var api = builder.AddProject<SmartConfig_Api>("api")
     .WaitFor(rabbitMq)
-    .WithReference(db)
+    .WithReference(dbs.SmartConfigDb)
     .WaitForCompletion(migration);
 var apiPort = api.Resource.Annotations.OfType<EndpointAnnotation>()
     .FirstOrDefault(r => r.Name == "https")?.Port ?? throw new ArgumentException();
+
+// Scheduler
+var scheduler = builder.AddProject<SmartConfig_Scheduler>("scheduler")
+    .WithReference(dbs.SchedulerDb)
+    .WaitForCompletion(migration);
 
 // Frontend NextJs
 var nextjs = builder.AddNpmApp("nextjs", "../../src/SmartConfig.NextJs", "dev")
