@@ -6,7 +6,16 @@ using TickerQ.EntityFrameworkCore.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<SchedulerContext>(options => options.UseSqlServer("TickerQ"));
+builder.AddSqlServerDbContext<SchedulerContext>("TickerQ",
+    configureDbContextOptions: options =>
+    {
+        var serviceProvider = builder.Services.BuildServiceProvider();
+
+        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        var connectionString = configuration.GetConnectionString("TickerQ");
+
+        options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
+    });
 
 builder.Services.AddTickerQ(options =>
 {
