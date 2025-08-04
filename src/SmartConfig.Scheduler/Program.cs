@@ -9,11 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddSqlServerDbContext<SchedulerContext>("TickerQ",
     configureDbContextOptions: options =>
     {
-        var serviceProvider = builder.Services.BuildServiceProvider();
-
-        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        var connectionString = configuration.GetConnectionString("TickerQ");
-
+        var connectionString = builder.Configuration.GetConnectionString("TickerQ");
         options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
     });
 

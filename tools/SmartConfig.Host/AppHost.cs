@@ -29,7 +29,9 @@ var apiPort = api.Resource.Annotations.OfType<EndpointAnnotation>()
 // Scheduler
 var scheduler = builder.AddProject<SmartConfig_Scheduler>("scheduler")
     .WithReference(dbs.SchedulerDb)
-    .WaitForCompletion(migration);
+    .WaitForCompletion(migration)
+    .WithHttpsEndpoint(7068, env: "PORT", name: "scheduler-https")
+    .WithExternalHttpEndpoints();
 
 // Frontend NextJs
 var nextjs = builder.AddNpmApp("nextjs", "../../src/SmartConfig.NextJs", "dev")
