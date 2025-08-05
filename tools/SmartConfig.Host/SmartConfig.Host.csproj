@@ -19,6 +19,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Api.csproj" />
         <ProjectReference Include="..\..\src\SmartConfig.Blazor\SmartConfig.Blazor\SmartConfig.Blazor.csproj" />
+        <ProjectReference Include="..\..\src\SmartConfig.Scheduler\SmartConfig.Scheduler.csproj" />
         <ProjectReference Include="..\SmartConfig.Migration\SmartConfig.Migration.csproj" />
     </ItemGroup>
 

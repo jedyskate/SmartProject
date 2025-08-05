@@ -21,10 +21,7 @@ public static class EntityFrameworkExtensions
             builder.AddSqlServerDbContext<SmartConfigContext>("SmartConfig",
                 configureDbContextOptions: options =>
                 {
-                    var serviceProvider = builder.Services.BuildServiceProvider();
-
-                    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-                    var connectionString = configuration.GetConnectionString("SmartConfig");
+                    var connectionString = builder.Configuration.GetConnectionString("SmartConfig");
 
                     options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
                     options.UseExceptionProcessor();
