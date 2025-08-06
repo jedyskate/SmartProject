@@ -1,10 +1,44 @@
-// src/pages/About.tsx
-export default function About() {
+// src/pages/Orleans/HelloWorld.tsx
+
+import React, { useState } from 'react';
+import { sayHello, type HelloResponse } from '../../../lib/services/orleans-api';
+
+export default function HelloWorld() {
+    const [name, setName] = useState('');
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError('');
+        setMessage('');
+
+        try {
+            const result: HelloResponse = await sayHello(name);
+            setMessage(result.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Something went wrong');
+            }
+        }
+    };
+
     return (
         <div>
             <h1>Say hello to the Backend</h1>
 
-            <h2>Hello from ....</h2>
+            <form onSubmit={handleSubmit} className="form-container">
+                <label>
+                    Name:
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                </label>
+                <button type="submit">Say Hello</button>
+            </form>
+
+            {message && <p>{message}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
-    )
+    );
 }

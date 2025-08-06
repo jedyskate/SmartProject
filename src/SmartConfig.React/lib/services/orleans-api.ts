@@ -4,7 +4,6 @@ export interface HelloResponse {
 
 export async function sayHello(name: string): Promise<HelloResponse> {
     const baseUrl = process.env.API_BASE_URL;
-    const baseUrlCode = process.env.API_BASE_URL;
 
     const response = await fetch(`${baseUrl}/api/Orleans/HelloWorld`, {
         method: 'POST',
