@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev-cert": "mkcert -key-file key.pem -cert-file cert.pem localhost"
   },
   "dependencies": {
     "react": "^19.1.0",

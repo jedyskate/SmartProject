@@ -1,6 +1,7 @@
 // src/pages/Home.tsx
 import viteLogo from "../assets/vite.svg";
 import reactLogo from "../assets/react.svg";
+import orleansLogo from "../assets/orleans.png";
 import {useState} from "react";
 
 
@@ -16,12 +17,15 @@ export default function Home() {
                 <a href="https://react.dev" target="_blank">
                     <img src={reactLogo} className="logo react" alt="React logo"/>
                 </a>
+                <a href="/orlenas/hello-world" target="_blank">
+                    <img src={orleansLogo} className="logo" alt="Orleans logo"/>
+                </a>
             </div>
-            <h1>Vite + React</h1>
+            <h1>Vite + React + Orleans</h1>
 
             <div className="card">
                 <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
+                count is {count}
                 </button>
                 <p>
                     Edit <code>src/App.tsx</code> and save to test HMR

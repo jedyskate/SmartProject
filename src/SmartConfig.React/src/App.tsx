@@ -3,9 +3,6 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { routes } from './routes.js';
 import './App.css'
 
-// const Home = lazy(() => import('./pages/Home'));
-// const About = lazy(() => import('./pages/About'));
-
 function App() {
     return (
         <BrowserRouter>
@@ -18,6 +15,7 @@ function App() {
             }}>
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
+                <Link to="/orlenas/hello-world">Orleans</Link>
             </nav>
             
             {/* Routing */}
