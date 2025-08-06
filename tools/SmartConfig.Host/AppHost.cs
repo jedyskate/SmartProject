@@ -51,6 +51,16 @@ var angular = builder.AddNpmApp("angular", "../../src/SmartConfig.Angular", "sta
     .WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
     .WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
 
+// Frontend React
+var react = builder.AddNpmApp("react", "../../src/SmartConfig.React", "dev")
+    .WaitFor(api)
+    .WithReference(api)
+    .WithUrl("https://localhost:5175")
+    .WithExternalHttpEndpoints()
+    .WithEnvironment("VITE_API_BASE_URL", $"https://localhost:{apiPort.ToString()}")
+    .WithEnvironment("VITE_OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
+    .WithEnvironment("VITE_OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
+
 // Frontend Blazor
 var blazor = builder.AddProject<SmartConfig_Blazor>("blazor")
         .WaitFor(api)
