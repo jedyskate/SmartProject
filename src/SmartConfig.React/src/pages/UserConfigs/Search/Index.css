@@ -15,6 +15,9 @@
     --status-deleted-color: #ffffff;
     --preference-item-bg: #343a40;
     --preference-item-border: #454d55;
+    --setting-item-bg: #343a40;
+    --setting-item-border: #454d55;
+    --setting-key-color: #adb5bd;
 }
 
 body {
@@ -45,11 +48,12 @@ body {
 
 .filter-container {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
+    align-items: center;
     margin-bottom: 2rem;
 }
 
-.filter-container input {
+.filter-container input[type="text"] {
     flex-grow: 1;
     padding: 0.75rem;
     border: 1px solid var(--border-color);
@@ -57,6 +61,35 @@ body {
     font-size: 1rem;
     background-color: #2c2c2c;
     color: var(--font-color);
+}
+
+.status-filter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #1e1e1e;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--border-color);
+}
+
+.filter-label {
+    font-weight: 500;
+    color: var(--font-color);
+}
+
+.status-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--font-color);
+}
+
+.status-checkbox input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: var(--primary-color);
 }
 
 .filter-container button {
@@ -137,6 +170,13 @@ body {
     gap: 0.5rem;
 }
 
+.settings-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
 .preference-item {
     background-color: var(--preference-item-bg);
     border: 1px solid var(--preference-item-border);
@@ -146,7 +186,27 @@ body {
     white-space: nowrap;
 }
 
-.no-preferences {
+.setting-item {
+    background-color: var(--setting-item-bg);
+    border: 1px solid var(--setting-item-border);
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    display: inline-flex;
+    gap: 0.4rem;
+}
+
+.setting-key {
+    font-weight: 600;
+    color: var(--setting-key-color);
+}
+
+.setting-value {
+    color: var(--font-color);
+}
+
+.no-preferences, .no-settings {
     color: var(--secondary-color);
     font-style: italic;
 }

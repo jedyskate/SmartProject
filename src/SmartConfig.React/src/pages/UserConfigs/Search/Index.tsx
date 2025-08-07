@@ -1,7 +1,9 @@
 // src/pages/UserConfigs/Search/Index.tsx
 import React, { useEffect, useState, useCallback } from 'react';
-import { fetchUserConfigs, type UserConfig } from '../../../../lib/services/userconfig-api';
+import { fetchUserConfigs, type UserConfig, type UserConfigStatus } from '../../../../lib/services/userconfig-api';
 import './Index.css';
+
+const availableStatuses: UserConfigStatus[] = ['Active', 'Inactive', 'Deleted'];
 
 const UserPreferencesDisplay: React.FC<{ preferences: UserConfig['userPreferences'] }> = ({ preferences }) => {
     if (!preferences) {
@@ -39,18 +41,36 @@ const UserPreferencesDisplay: React.FC<{ preferences: UserConfig['userPreference
     );
 };
 
+const UserSettingsDisplay: React.FC<{ settings: UserConfig['userSettings'] }> = ({ settings }) => {
+    if (!settings || settings.length === 0) {
+        return <span className="no-settings">N/A</span>;
+    }
+
+    return (
+        <div className="settings-compact">
+            {settings.map((setting, index) => (
+                <span key={index} className="setting-item">
+                    <span className="setting-key">{setting.key}:</span>
+                    <span className="setting-value">{String(setting.value)}</span>
+                </span>
+            ))}
+        </div>
+    );
+};
+
 const SearchUserConfigs: React.FC = () => {
     const [configs, setConfigs] = useState<UserConfig[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [name, setName] = useState<string>('');
+    const [statuses, setStatuses] = useState<UserConfigStatus[]>([]);
     const [page, setPage] = useState<number>(1);
     const [pageSize] = useState<number>(10);
 
     const getConfigs = useCallback(async () => {
         try {
             setLoading(true);
-            const data = await fetchUserConfigs({ name, page, pageSize });
+            const data = await fetchUserConfigs({ name, status: statuses, page, pageSize });
             setConfigs(data);
             setError(null);
         } catch (err) {
@@ -59,7 +79,7 @@ const SearchUserConfigs: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    }, [name, page, pageSize]);
+    }, [name, statuses, page, pageSize]);
 
     useEffect(() => {
         getConfigs();
@@ -68,6 +88,14 @@ const SearchUserConfigs: React.FC = () => {
     const handleSearch = () => {
         setPage(1);
         getConfigs();
+    };
+
+    const handleStatusChange = (status: UserConfigStatus) => {
+        setStatuses(prevStatuses =>
+            prevStatuses.includes(status)
+                ? prevStatuses.filter(s => s !== status)
+                : [...prevStatuses, status]
+        );
     };
     
     const renderContent = () => {
@@ -91,6 +119,7 @@ const SearchUserConfigs: React.FC = () => {
                             <th>Name</th>
                             <th>Status</th>
                             <th>User Preferences</th>
+                            <th>User Settings</th>
                             <th>Created At</th>
                         </tr>
                     </thead>
@@ -100,6 +129,7 @@ const SearchUserConfigs: React.FC = () => {
                                 <td>{config.name}</td>
                                 <td><span className={`status status-${config.status?.toLowerCase()}`}>{config.status}</span></td>
                                 <td><UserPreferencesDisplay preferences={config.userPreferences} /></td>
+                                <td><UserSettingsDisplay settings={config.userSettings} /></td>
                                 <td>{new Date(config.createdUtc).toLocaleString()}</td>
                             </tr>
                         ))}
@@ -131,6 +161,19 @@ const SearchUserConfigs: React.FC = () => {
                     onChange={(e) => setName(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
+                <div className="status-filter">
+                    <span className="filter-label">Status:</span>
+                    {availableStatuses.map(status => (
+                        <label key={status} className="status-checkbox">
+                            <input
+                                type="checkbox"
+                                checked={statuses.includes(status)}
+                                onChange={() => handleStatusChange(status)}
+                            />
+                            {status}
+                        </label>
+                    ))}
+                </div>
                 <button onClick={handleSearch}>Search</button>
             </div>
             <main className="results-container">
