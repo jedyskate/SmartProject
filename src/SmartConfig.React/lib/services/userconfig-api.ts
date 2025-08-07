@@ -12,11 +12,7 @@ export type SearchUserConfigsParams = {
     returnSettings?: boolean;
 };
 
-export enum UserConfigStatus {
-    Inactive = 'Inactive',
-    Active = 'Active',
-    Deleted = 'Deleted'
-}
+export type UserConfigStatus = 'Inactive' | 'Active' | 'Deleted';
 
 export type UserConfig = {
     identifier: string;
