@@ -1,0 +1,38 @@
+.search-container {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.configs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.configs-table th,
+.configs-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    color: #333;
+}
+
+.configs-table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.configs-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.configs-table tbody tr:hover {
+    background-color: #f1f1f1;
+}

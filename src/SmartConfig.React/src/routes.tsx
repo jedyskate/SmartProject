@@ -3,6 +3,7 @@ import type {ReactElement} from 'react';
 import Home from './pages/Home';
 import About from './pages/About';
 import Orleans from './pages/Orleans/HelloWorld';
+import SearchUserConfigs from "./pages/UserConfigs/Search/Index";
 
 interface RouteItem {
     path: string;
@@ -12,5 +13,6 @@ interface RouteItem {
 export const routes: RouteItem[] = [
     { path: '/', element: <Home /> },
     { path: '/about', element: <About /> },
-    { path: '/orlenas/hello-world', element: <Orleans /> },
+    { path: '/orlenas/helloworld', element: <Orleans /> },
+    { path: '/userconfigs/search/index', element: <SearchUserConfigs /> },
 ];

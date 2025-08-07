@@ -15,7 +15,8 @@ function App() {
             }}>
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
-                <Link to="/orlenas/hello-world">Orleans</Link>
+                <Link to="/orlenas/helloworld">Orleans</Link>
+                <Link to="/userconfigs/search/index">User Configs</Link>
             </nav>
             
             {/* Routing */}
