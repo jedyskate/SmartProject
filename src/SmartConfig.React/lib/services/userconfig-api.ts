@@ -1,6 +1,6 @@
 import { API_URL } from '../../src/config';
 
-export async function sayHello(name: string): Promise<string> {
+export async function search(name: string): Promise<string> {
     const result = await fetch(`${API_URL}/api/Orleans/HelloWorld`, {
         method: 'POST',
         headers: {

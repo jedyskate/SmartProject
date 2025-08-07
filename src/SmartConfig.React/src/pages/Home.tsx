@@ -17,7 +17,7 @@ export default function Home() {
                 <a href="https://react.dev" target="_blank">
                     <img src={reactLogo} className="logo react" alt="React logo"/>
                 </a>
-                <a href="/orlenas/hello-world" target="_blank">
+                <a href="/orlenas/hello-world">
                     <img src={orleansLogo} className="logo" alt="Orleans logo"/>
                 </a>
             </div>
