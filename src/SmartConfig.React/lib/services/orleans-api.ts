@@ -1,11 +1,7 @@
-export interface HelloResponse {
-    message: string;
-}
-
-export async function sayHello(name: string): Promise<HelloResponse> {
+export async function sayHello(name: string): Promise<string> {
     const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
-    const response = await fetch(`${baseUrl}/api/Orleans/HelloWorld`, {
+    const result = await fetch(`${baseUrl}/api/Orleans/HelloWorld`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -13,8 +9,9 @@ export async function sayHello(name: string): Promise<HelloResponse> {
         body: JSON.stringify({name})
     })
 
-    if (!response.ok)
-        throw new Error(response.statusText || "Failed to say hello");
-
-    return await response.json();
+    if (!result.ok)
+        throw new Error(result.statusText || "Failed to say hello");
+    
+    const data = await result.json()
+    return data.response;
 }
