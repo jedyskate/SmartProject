@@ -10,24 +10,32 @@ const UserPreferencesDisplay: React.FC<{ preferences: UserConfig['userPreference
 
     const { language, notificationType, userNotifications } = preferences;
 
+    const items: string[] = [];
+    if (language) items.push(`Lang: ${language}`);
+    if (notificationType?.email || notificationType?.sms) {
+        const types = [];
+        if (notificationType?.email) types.push("Email");
+        if (notificationType?.sms) types.push("Sms");
+
+        items.push(`Type: ${types.join(", ")}`);
+    }
+    if (userNotifications?.newsLetter || userNotifications?.billings) {
+        const types = [];
+        if (userNotifications?.newsLetter) types.push("Newsletter");
+        if (userNotifications?.billings) types.push("Billings");
+
+        items.push(`Notification: ${types.join(", ")}`);
+    }
+    if (items.length === 0) {
+        return <span className="no-preferences">None</span>;
+    }
+
     return (
-        <ul className="preferences-list">
-            <li><strong>Language:</strong> {language}</li>
-            <li>
-                <strong>Notifications:</strong>
-                <ul>
-                    <li>Email: {notificationType?.email ? 'Yes' : 'No'}</li>
-                    <li>SMS: {notificationType?.sms ? 'Yes' : 'No'}</li>
-                </ul>
-            </li>
-            <li>
-                <strong>User Notifications:</strong>
-                <ul>
-                    <li>Newsletter: {userNotifications?.newsLetter ? 'Yes' : 'No'}</li>
-                    <li>Billings: {userNotifications?.billings ? 'Yes' : 'No'}</li>
-                </ul>
-            </li>
-        </ul>
+        <div className="preferences-compact">
+            {items.map((item, index) => (
+                <span key={index} className="preference-item">{item}</span>
+            ))}
+        </div>
     );
 };
 
@@ -80,7 +88,6 @@ const SearchUserConfigs: React.FC = () => {
                 <table className="configs-table">
                     <thead>
                         <tr>
-                            <th>Identifier</th>
                             <th>Name</th>
                             <th>Status</th>
                             <th>User Preferences</th>
@@ -90,7 +97,6 @@ const SearchUserConfigs: React.FC = () => {
                     <tbody>
                         {configs.map((config) => (
                             <tr key={config.identifier}>
-                                <td>{config.identifier}</td>
                                 <td>{config.name}</td>
                                 <td><span className={`status status-${config.status?.toLowerCase()}`}>{config.status}</span></td>
                                 <td><UserPreferencesDisplay preferences={config.userPreferences} /></td>

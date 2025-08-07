@@ -13,6 +13,8 @@
     --status-inactive-color: #ffffff;
     --status-deleted-bg: #6c757d;
     --status-deleted-color: #ffffff;
+    --preference-item-bg: #343a40;
+    --preference-item-border: #454d55;
 }
 
 body {
@@ -89,6 +91,7 @@ body {
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--table-border-color);
+    vertical-align: middle;
 }
 
 .configs-table th {
@@ -128,15 +131,19 @@ body {
     color: var(--status-deleted-color);
 }
 
-.preferences-list {
-    margin: 0;
-    padding-left: 1.2em;
-    list-style-type: none;
+.preferences-compact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
-.preferences-list ul {
-    margin: 0.2em 0;
-    padding-left: 1.2em;
+.preference-item {
+    background-color: var(--preference-item-bg);
+    border: 1px solid var(--preference-item-border);
+    padding: 0.25rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
 }
 
 .no-preferences {
