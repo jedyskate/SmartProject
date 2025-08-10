@@ -44,7 +44,7 @@ export async function initOpenTelemetry() {
 
     const detected: Resource = await detectResources();
     const custom: Resource = resourceFromAttributes({
-        'service.name': 'react-app',
+        'service.name': 'react',
         'service.version': '1.0.0',
     });
 
@@ -88,7 +88,7 @@ export async function initOpenTelemetry() {
 
     metrics.setGlobalMeterProvider(meterProvider);
 
-    const meter = meterProvider.getMeter('react-app-metrics');
+    const meter = meterProvider.getMeter('react-metrics');
 
     const clickCounter = meter.createCounter('button_click_total', {
         description: 'Counts the total number of button clicks',
@@ -153,13 +153,14 @@ export async function initOpenTelemetry() {
 
     const loggerProvider = new LoggerProvider({
         resource: detected.merge(custom),
+        processors: [
+            new SimpleLogRecordProcessor(logExporter),
+            new SimpleLogRecordProcessor(new ConsoleLogRecordExporter())
+        ]
     });
-    
-    loggerProvider.addLogRecordProcessor(new SimpleLogRecordProcessor(logExporter));
-    loggerProvider.addLogRecordProcessor(new SimpleLogRecordProcessor(new ConsoleLogRecordExporter()));
 
     logs.setGlobalLoggerProvider(loggerProvider);
-    const logger = logs.getLogger('react-app-logger');
+    const logger = logs.getLogger('react-logger');
 
     setInterval(() => {
         logger.emit({
