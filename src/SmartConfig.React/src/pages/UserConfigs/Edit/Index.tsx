@@ -1,6 +1,7 @@
 // src/pages/UserConfigs/Edit/Index.tsx
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import {
     getUserConfigById,
     upsertUserConfig,
@@ -15,8 +16,9 @@ const availableStatuses: UserConfigStatus[] = ['Active', 'Inactive', 'Deleted'];
 const EditUserConfig: React.FC = () => {
     const { identifier } = useParams<{ identifier: string }>();
     const navigate = useNavigate();
-    const [config, setConfig] = useState<UserConfig | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const isNew = !identifier;
+    const configId = identifier || uuidv4();
+    const [loading, setLoading] = useState<boolean>(!isNew);
     const [error, setError] = useState<string | null>(null);
     const [name, setName] = useState<string>('');
     const [status, setStatus] = useState<UserConfigStatus>('Inactive');
@@ -28,11 +30,10 @@ const EditUserConfig: React.FC = () => {
     const [userSettings, setUserSettings] = useState<{ key: string; value: string }[]>([]);
 
     const fetchConfig = useCallback(async () => {
-        if (!identifier) return;
+        if (isNew) return;
         try {
             setLoading(true);
-            const data = await getUserConfigById(identifier);
-            setConfig(data);
+            const data = await getUserConfigById(configId);
             setName(data.name);
             setStatus(data.status);
             if (data.userPreferences) {
@@ -48,31 +49,25 @@ const EditUserConfig: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    }, [identifier]);
+    }, [configId, isNew]);
 
     useEffect(() => {
         fetchConfig();
     }, [fetchConfig]);
 
-    const handlePreferenceChange = (field: string, value: any) => {
+    const handlePreferenceChange = (field: string, value: string | boolean) => {
         const keys = field.split('.');
         setUserPreferences(prev => {
-            const newPrefs = prev ? { ...prev } : {
+            const newPrefs = JSON.parse(JSON.stringify(prev || {
                 language: '',
                 notificationType: { email: false, sms: false },
-                userNotifications: { newsLetter: false, billings: false }
-            };
+                userNotifications: { newsLetter: false, billings: false },
+            }));
 
-            let current: any = newPrefs;
+            let current = newPrefs;
             for (let i = 0; i < keys.length - 1; i++) {
-                const key = keys[i];
-                if (current[key] === undefined || current[key] === null) {
-                    current[key] = {};
-                }
-                current[key] = { ...current[key] };
-                current = current[key];
+                current = current[keys[i]];
             }
-
             current[keys[keys.length - 1]] = value;
 
             return newPrefs;
@@ -96,10 +91,9 @@ const EditUserConfig: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (!config) return;
 
         const payload: UpsertUserConfigPayload = {
-            ...config,
+            identifier: configId,
             name,
             status,
             userPreferences,
@@ -129,14 +123,10 @@ const EditUserConfig: React.FC = () => {
         return <div className="error-message">{error}</div>;
     }
 
-    if (!config) {
-        return <div className="no-results">User configuration not found.</div>;
-    }
-
     return (
         <div className="edit-container">
             <header className="page-header">
-                <h1>Edit User Configuration</h1>
+                <h1>{isNew ? 'Add User Configuration' : 'Edit User Configuration'}</h1>
             </header>
             <form onSubmit={handleSubmit} className="edit-form">
                 <div className="form-group">

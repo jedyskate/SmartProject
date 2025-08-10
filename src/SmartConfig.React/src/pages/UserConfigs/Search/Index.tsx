@@ -182,6 +182,9 @@ const SearchUserConfigs: React.FC = () => {
                     ))}
                 </div>
                 <button onClick={handleSearch}>Search</button>
+                <Link to="/userconfigs/add">
+                    <button>Add New</button>
+                </Link>
             </div>
             <main className="results-container">
                 {renderContent()}
