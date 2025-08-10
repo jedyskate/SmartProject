@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SmartConfig.Scheduler.Database;
+using SmartConfig.Scheduler.Extensions;
 using TickerQ.Dashboard.DependencyInjection;
 using TickerQ.DependencyInjection;
 using TickerQ.EntityFrameworkCore.DependencyInjection;
@@ -24,8 +25,9 @@ builder.Services.AddTickerQ(options =>
     options.AddDashboardBasicAuth();
 });
 
+builder.AddSmartConfig();
+
 var app = builder.Build();
-// app.MapGet("/", () => "Hello World!");
 
 app.UseTickerQ();
 
