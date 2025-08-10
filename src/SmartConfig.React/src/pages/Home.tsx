@@ -3,6 +3,7 @@ import viteLogo from "../assets/vite.svg";
 import reactLogo from "../assets/react.svg";
 import orleansLogo from "../assets/orleans.png";
 import {useState} from "react";
+import { API_URL } from '../../src/config';
 
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
                 <a href="https://react.dev" target="_blank">
                     <img src={reactLogo} className="logo react" alt="React logo"/>
                 </a>
-                <a href="/orlenas/hello-world">
+                <a href={`${API_URL}/orleans`} target="_blank">
                     <img src={orleansLogo} className="logo" alt="Orleans logo"/>
                 </a>
             </div>

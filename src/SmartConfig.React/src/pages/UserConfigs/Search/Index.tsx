@@ -1,5 +1,6 @@
 // src/pages/UserConfigs/Search/Index.tsx
 import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchUserConfigs, type UserConfig, type UserConfigStatus } from '../../../../lib/services/userconfig-api';
 import './Index.css';
 
@@ -121,6 +122,7 @@ const SearchUserConfigs: React.FC = () => {
                             <th>User Preferences</th>
                             <th>User Settings</th>
                             <th>Created At</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,6 +133,11 @@ const SearchUserConfigs: React.FC = () => {
                                 <td><UserPreferencesDisplay preferences={config.userPreferences} /></td>
                                 <td><UserSettingsDisplay settings={config.userSettings} /></td>
                                 <td>{new Date(config.createdUtc).toLocaleString()}</td>
+                                <td>
+                                    <Link to={`/userconfigs/edit/${config.identifier}`}>
+                                        <button>Edit</button>
+                                    </Link>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
