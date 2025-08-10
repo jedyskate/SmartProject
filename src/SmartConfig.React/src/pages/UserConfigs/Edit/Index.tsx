@@ -25,6 +25,7 @@ const EditUserConfig: React.FC = () => {
         notificationType: { email: false, sms: false },
         userNotifications: { newsLetter: false, billings: false },
     });
+    const [userSettings, setUserSettings] = useState<{ key: string; value: string }[]>([]);
 
     const fetchConfig = useCallback(async () => {
         if (!identifier) return;
@@ -36,6 +37,9 @@ const EditUserConfig: React.FC = () => {
             setStatus(data.status);
             if (data.userPreferences) {
                 setUserPreferences(data.userPreferences);
+            }
+            if (data.userSettings) {
+                setUserSettings(data.userSettings);
             }
             setError(null);
         } catch (err) {
@@ -75,6 +79,21 @@ const EditUserConfig: React.FC = () => {
         });
     };
 
+    const handleSettingChange = (index: number, field: 'key' | 'value', value: string) => {
+        const newSettings = [...userSettings];
+        newSettings[index][field] = value;
+        setUserSettings(newSettings);
+    };
+
+    const addSetting = () => {
+        setUserSettings([...userSettings, { key: '', value: '' }]);
+    };
+
+    const removeSetting = (index: number) => {
+        const newSettings = userSettings.filter((_, i) => i !== index);
+        setUserSettings(newSettings);
+    };
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!config) return;
@@ -84,6 +103,7 @@ const EditUserConfig: React.FC = () => {
             name,
             status,
             userPreferences,
+            userSettings,
             options: {
                 upsertPreferences: true,
                 upsertSettings: true,
@@ -198,7 +218,28 @@ const EditUserConfig: React.FC = () => {
                     </div>
                 </fieldset>
 
-                {/* TODO: Add fields for userSettings */}
+                <fieldset className="form-group">
+                    <legend>User Settings</legend>
+                    {userSettings.map((setting, index) => (
+                        <div key={index} className="setting-item">
+                            <input
+                                type="text"
+                                placeholder="Key"
+                                value={setting.key}
+                                onChange={(e) => handleSettingChange(index, 'key', e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Value"
+                                value={setting.value}
+                                onChange={(e) => handleSettingChange(index, 'value', e.target.value)}
+                            />
+                            <button type="button" onClick={() => removeSetting(index)}>Remove</button>
+                        </div>
+                    ))}
+                    <button type="button" onClick={addSetting}>Add Setting</button>
+                </fieldset>
+
                 <div className="form-actions">
                     <button type="submit" className="save-button">Save</button>
                     <button type="button" onClick={() => navigate('/userconfigs/search/index')} className="cancel-button">
