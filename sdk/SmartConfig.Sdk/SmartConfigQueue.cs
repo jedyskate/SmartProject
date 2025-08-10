@@ -7,7 +7,7 @@ namespace SmartConfig.Sdk
 {
     public interface ISmartConfigQueue
     {
-        Task<QueueResponse> Request<T>(T command, string accessToken);
+        Task<QueueResponse> Request<T>(T command, string? accessToken = null);
     }
 
     public class SmartConfigQueue : ISmartConfigQueue
@@ -21,7 +21,7 @@ namespace SmartConfig.Sdk
             _queueManager = queueManager;
         }
 
-        public Task<QueueResponse> Request<T>(T command, string accessToken)
+        public Task<QueueResponse> Request<T>(T command, string? accessToken = null)
         {
             if (_settings.DryRun)
             {
@@ -31,11 +31,11 @@ namespace SmartConfig.Sdk
                     Code = HttpStatusCode.Accepted
                 });
             }
-            if (string.IsNullOrEmpty(accessToken) || !typeof(T).Name.ToLower().Contains("command"))
+            if (!typeof(T).Name.ToLower().Contains("command"))
             {
                 return Task.FromResult(new QueueResponse
                 {
-                    Message = "AccessToken is empty or message is not a command.",
+                    Message = "AccessToken is not a command.",
                     Code = HttpStatusCode.BadRequest
                 });
             }

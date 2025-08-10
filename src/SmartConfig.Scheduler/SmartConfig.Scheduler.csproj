@@ -27,4 +27,8 @@
       <Folder Include="Database\Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\sdk\SmartConfig.Sdk\SmartConfig.Sdk.csproj" />
+    </ItemGroup>
+
 </Project>
