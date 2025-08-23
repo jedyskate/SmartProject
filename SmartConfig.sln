@@ -58,6 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartConfig.Mcp", "SmartCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.McpServer", "src\SmartConfig.Mcp\SmartConfig.McpServer\SmartConfig.McpServer.csproj", "{8BE37253-A1F6-4936-BC8A-D522C59D9CCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.ServiceDefaults", "tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj", "{BB2CA8EA-E189-4EED-9490-8AA754128B41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,6 +134,10 @@ Global
 		{8BE37253-A1F6-4936-BC8A-D522C59D9CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BE37253-A1F6-4936-BC8A-D522C59D9CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BE37253-A1F6-4936-BC8A-D522C59D9CCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +162,7 @@ Global
 		{F01B68F3-8F88-4877-B947-104ACFA9FB9A} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
 		{95BEC018-A7B5-422F-95F0-B8D4A7E687A7} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
 		{8BE37253-A1F6-4936-BC8A-D522C59D9CCE} = {95BEC018-A7B5-422F-95F0-B8D4A7E687A7}
+		{BB2CA8EA-E189-4EED-9490-8AA754128B41} = {6809FF4D-C35F-4680-987F-8E44360460ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC340CDE-8425-405E-BD4E-A3D7AC737862}
