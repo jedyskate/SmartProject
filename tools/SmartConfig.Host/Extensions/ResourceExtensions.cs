@@ -30,8 +30,7 @@ public static class ResourceExtensions
         return resource;
     }
 
-    public static IResourceBuilder<ProjectResource> AddFrontends(this IDistributedApplicationBuilder builder,
-        IResourceBuilder<ProjectResource> api)
+    public static void AddFrontends(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
     {
         var otlpEndpoint = Environment.GetEnvironmentVariable("ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL") ?? throw new ArgumentException();
         var otlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS") ?? throw new ArgumentException();
@@ -74,8 +73,6 @@ public static class ResourceExtensions
             .WaitFor(api)
             .WithReference(api)
             .WithHttpsEndpoint(7052, name: "blazor-https");
-        
-        return blazor;
     }
 
     public static IResourceBuilder<ContainerResource> AddOTelCollector(this IDistributedApplicationBuilder builder)

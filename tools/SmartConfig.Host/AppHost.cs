@@ -28,6 +28,6 @@ var scheduler = builder.AddProject<SmartConfig_Scheduler>("scheduler")
     .WaitForCompletion(migration);
 
 // Frontends (next.js, angular, react and blazor)
-var frontends = builder.AddFrontends(api);
+builder.AddFrontends(api);
 
 builder.Build().Run();
