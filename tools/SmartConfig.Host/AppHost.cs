@@ -24,8 +24,20 @@ var api = builder.AddProject<SmartConfig_Api>("api")
 
 // Scheduler
 var scheduler = builder.AddProject<SmartConfig_Scheduler>("scheduler")
+    .WaitFor(rabbitMq)
     .WithReference(dbs.SchedulerDb)
     .WaitForCompletion(migration);
+
+// Ollama
+var ollama = builder.AddOllama("ollama")
+    .WithDataVolume()
+    .WithOpenWebUI()
+    .AddModel("phi4-mini");
+
+// Mcp Server
+var mcp = builder.AddProject<SmartConfig_McpServer>("mpc")
+    .WaitFor(ollama)
+    .WithExternalHttpEndpoints();
 
 // Frontends (next.js, angular, react and blazor)
 builder.AddFrontends(api);

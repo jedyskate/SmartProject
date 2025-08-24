@@ -14,11 +14,13 @@
         <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.1"/>
         <PackageReference Include="Aspire.Hosting.NodeJs" Version="9.3.1" />
         <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.3.1" />
+        <PackageReference Include="CommunityToolkit.Aspire.Hosting.Ollama" Version="9.7.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Api.csproj" />
         <ProjectReference Include="..\..\src\SmartConfig.Blazor\SmartConfig.Blazor\SmartConfig.Blazor.csproj" />
+        <ProjectReference Include="..\..\src\SmartConfig.Mcp\SmartConfig.McpServer\SmartConfig.McpServer.csproj" />
         <ProjectReference Include="..\..\src\SmartConfig.Scheduler\SmartConfig.Scheduler.csproj" />
         <ProjectReference Include="..\SmartConfig.Migration\SmartConfig.Migration.csproj" />
     </ItemGroup>
