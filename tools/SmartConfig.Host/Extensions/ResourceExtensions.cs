@@ -37,13 +37,14 @@ public static class ResourceExtensions
 
         var apiPort = api.Resource.Annotations.OfType<EndpointAnnotation>()
             .FirstOrDefault(r => r.Name == "https")?.Port ?? throw new ArgumentException();
-
+        
         // Frontend NextJs
         var nextjs = builder.AddNpmApp("nextjs", "../../src/SmartConfig.NextJs", "dev")
             .WaitFor(api)
             .WithReference(api)
             .WithHttpsEndpoint(7042, env: "PORT", name: "nextjs-https")
             .WithExternalHttpEndpoints()
+            .WithParentRelationship(api)
             .WithEnvironment("NEXT_PUBLIC_API_BASE_URL", $"https://localhost:{apiPort.ToString()}")
             .WithEnvironment("NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
             .WithEnvironment("NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
@@ -54,6 +55,7 @@ public static class ResourceExtensions
             .WithReference(api)
             .WithUrl("https://localhost:4200")
             .WithExternalHttpEndpoints()
+            .WithParentRelationship(api)
             .WithEnvironment("API_BASE_URL", $"https://localhost:{apiPort.ToString()}")
             .WithEnvironment("OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
             .WithEnvironment("OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
@@ -64,6 +66,7 @@ public static class ResourceExtensions
             .WithReference(api)
             .WithUrl("https://localhost:5175")
             .WithExternalHttpEndpoints()
+            .WithParentRelationship(api)
             .WithEnvironment("VITE_API_BASE_URL", $"https://localhost:{apiPort.ToString()}")
             .WithEnvironment("VITE_OTEL_EXPORTER_OTLP_ENDPOINT", otlpEndpoint)
             .WithEnvironment("VITE_OTEL_EXPORTER_OTLP_HEADERS", otlpHeaders);
@@ -72,7 +75,8 @@ public static class ResourceExtensions
         var blazor = builder.AddProject<SmartConfig_Blazor>("blazor")
             .WaitFor(api)
             .WithReference(api)
-            .WithHttpsEndpoint(7052, name: "blazor-https");
+            .WithHttpsEndpoint(7052, name: "blazor-https")
+            .WithParentRelationship(api);
     }
 
     public static IResourceBuilder<ContainerResource> AddOTelCollector(this IDistributedApplicationBuilder builder)
