@@ -39,6 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj" />
 		<ProjectReference Include="..\SmartConfig.Application\SmartConfig.Application.csproj" />
 		<ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
 	</ItemGroup>

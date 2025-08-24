@@ -1,14 +1,16 @@
+using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Polly;
 
-namespace SmartConfig.ServiceDefaults;
+namespace Microsoft.Extensions.Hosting;
 
 // Adds common .NET Aspire services: service discovery, resilience, health checks, and OpenTelemetry.
 // This project should be referenced by each service project in your solution.
@@ -26,7 +28,36 @@ public static class Extensions
         builder.Services.ConfigureHttpClientDefaults(http =>
         {
             // Turn on resilience by default
-            http.AddStandardResilienceHandler();
+            // http.AddStandardResilienceHandler();
+            http.AddResilienceHandler("custom", resilienceBuilder =>
+            {
+                // See: https://www.pollydocs.org/strategies/retry.html
+                resilienceBuilder.AddRetry(new HttpRetryStrategyOptions
+                {
+                    // Customize and configure the retry logic.
+                    BackoffType = DelayBackoffType.Exponential,
+                    MaxRetryAttempts = 5,
+                    UseJitter = true
+                });
+
+                // See: https://www.pollydocs.org/strategies/circuit-breaker.html
+                resilienceBuilder.AddCircuitBreaker(new HttpCircuitBreakerStrategyOptions
+                {
+                    // Customize and configure the circuit breaker logic.
+                    SamplingDuration = TimeSpan.FromSeconds(10),
+                    FailureRatio = 0.2,
+                    MinimumThroughput = 3,
+                    ShouldHandle = static args => ValueTask.FromResult(args is
+                    {
+                        Outcome.Result.StatusCode:
+                        HttpStatusCode.RequestTimeout or
+                        HttpStatusCode.TooManyRequests
+                    })
+                });
+
+                // See: https://www.pollydocs.org/strategies/timeout.html
+                resilienceBuilder.AddTimeout(TimeSpan.FromSeconds(120));
+            });
 
             // Turn on service discovery by default
             http.AddServiceDiscovery();
@@ -41,7 +72,7 @@ public static class Extensions
         return builder;
     }
 
-    public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    private static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Logging.AddOpenTelemetry(logging =>
         {
@@ -52,17 +83,20 @@ public static class Extensions
         builder.Services.AddOpenTelemetry()
             .WithMetrics(metrics =>
             {
-                metrics.AddAspNetCoreInstrumentation()
+                metrics.AddMeter("*")
+                    .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
-                    .AddRuntimeInstrumentation();
+                    .AddRuntimeInstrumentation()
+                    .AddProcessInstrumentation()
+                    .AddSqlClientInstrumentation();
             })
             .WithTracing(tracing =>
             {
-                tracing.AddSource(builder.Environment.ApplicationName)
+                tracing.AddSource("*")
                     .AddAspNetCoreInstrumentation()
-                    // Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
-                    //.AddGrpcClientInstrumentation()
-                    .AddHttpClientInstrumentation();
+                    .AddHttpClientInstrumentation()
+                    .AddSqlClientInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation();
             });
 
         builder.AddOpenTelemetryExporters();
@@ -79,17 +113,10 @@ public static class Extensions
             builder.Services.AddOpenTelemetry().UseOtlpExporter();
         }
 
-        // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
-        //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
-        //{
-        //    builder.Services.AddOpenTelemetry()
-        //       .UseAzureMonitor();
-        //}
-
         return builder;
     }
 
-    public static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    private static TBuilder AddDefaultHealthChecks<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddHealthChecks()
             // Add a default liveness check to ensure app is responsive
@@ -102,7 +129,7 @@ public static class Extensions
     {
         // Adding health checks endpoints to applications in non-development environments has security implications.
         // See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Local")
         {
             // All health checks must pass for app to be considered ready to accept traffic after starting
             app.MapHealthChecks("/health");

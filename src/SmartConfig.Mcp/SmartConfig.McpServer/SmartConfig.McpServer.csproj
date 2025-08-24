@@ -15,4 +15,8 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj" />
+    </ItemGroup>
+
 </Project>

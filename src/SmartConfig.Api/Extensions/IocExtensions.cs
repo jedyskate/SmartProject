@@ -32,7 +32,9 @@ public static class IocExtensions
         services.AddAppSettingsIoc(configuration);
         services.AddSecurityIoc();
         services.AddCorsConfiguration();
-        services.AddOpenTelemetryConfiguration();
+
+        // Add services to the container.
+        builder.AddServiceDefaults();
 
         return builder;
     }
