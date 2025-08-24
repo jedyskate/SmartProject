@@ -1,3 +1,4 @@
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -45,7 +46,9 @@ public static class OpenTelemetryExtensions
                 metrics.AddRuntimeInstrumentation();
                 metrics.AddProcessInstrumentation();
                 metrics.AddOtlpExporter();
-            });
+            })
+            .WithLogging()
+            .UseOtlpExporter();
 
         // Configure logging and add the OpenTelemetry logger provider.
         builder.Logging.AddOpenTelemetry(options =>

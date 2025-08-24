@@ -1,3 +1,4 @@
+using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -20,7 +21,9 @@ public static class OpenTelemetryExtensions
                 .AddRuntimeInstrumentation()
                 .AddProcessInstrumentation()
                 .AddSqlClientInstrumentation()
-                .AddOtlpExporter());
+                .AddOtlpExporter())
+            .WithLogging()
+            .UseOtlpExporter();
 
         return services;
     }
