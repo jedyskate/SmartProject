@@ -82,7 +82,7 @@ public static class ResourceExtensions
     public static IResourceBuilder<ContainerResource> AddOTelCollector(this IDistributedApplicationBuilder builder)
     {
         var resource = builder.AddContainer("otel-collector", "otel/opentelemetry-collector:latest")
-            .WithBindMount("otel-config.yaml", "/etc/otelcol/otel-config.yaml")
+            .WithBindMount("Configurations/otel-config.yaml", "/etc/otelcol/otel-config.yaml")
             .WithHttpEndpoint(name: "http", port: 4318, targetPort: 4318)
             .WithArgs("--config", "/etc/otelcol/otel-config.yaml");
 
