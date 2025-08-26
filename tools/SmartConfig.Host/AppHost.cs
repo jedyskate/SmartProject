@@ -31,7 +31,8 @@ var scheduler = builder.AddProject<SmartConfig_Scheduler>("scheduler")
 // Ollama
 var ollama = builder.AddOllama("ollama")
     .WithDataVolume()
-    .AddModel("phi4-mini");
+    .AddModel("phi4-mini", "phi4-mini");
+    // .AddModel("llama3-8b-instruct", "koesn/llama3-8b-instruct");
 
 // Mcp Server
 var mcp = builder.AddProject<SmartConfig_McpServer>("mcp")
