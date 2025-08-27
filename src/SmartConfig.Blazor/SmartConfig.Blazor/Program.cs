@@ -29,9 +29,9 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
-
-        // Add Open Telemetry.
-        builder.AddServerOpenTelemetry();
+        
+        // Add services to the container.
+        builder.AddServiceDefaults();
 
         // Add SmartConfig API.
         builder.Services.AddSingleton(new SmartConfigSettings
@@ -74,6 +74,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAntiforgery();
         app.MapStaticAssets();
+        app.MapDefaultEndpoints();
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()

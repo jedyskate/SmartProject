@@ -1,9 +1,9 @@
 namespace SmartConfig.Host.Extensions;
 
-public static class ResourceExtensions
+public static class ResourceInfraExtensions
 {
     public static (IResourceBuilder<SqlServerDatabaseResource> SmartConfigDb, IResourceBuilder<SqlServerDatabaseResource> SchedulerDb) 
-        AddDatabases(this IDistributedApplicationBuilder builder)
+        AddDatabaseResources(this IDistributedApplicationBuilder builder)
     {
         // Set up the SQL Server container once
         var sqlServer = builder
@@ -16,7 +16,7 @@ public static class ResourceExtensions
         return (smartConfigDb, schedulerDb);
     }
     
-    public static IResourceBuilder<ContainerResource> AddRabbitMq(this IDistributedApplicationBuilder builder)
+    public static IResourceBuilder<ContainerResource> AddRabbitMqResource(this IDistributedApplicationBuilder builder)
     {
         var resource = builder.AddContainer("rabbitmq", "rabbitmq:3.11-management-alpine")
             .WithEnvironment("RABBITMQ_DEFAULT_USER", "admin")
@@ -27,11 +27,11 @@ public static class ResourceExtensions
 
         return resource;
     }
-    
-    public static IResourceBuilder<ContainerResource> AddOTelCollector(this IDistributedApplicationBuilder builder)
+
+    public static IResourceBuilder<ContainerResource> AddOTelCollectorResource(this IDistributedApplicationBuilder builder)
     {
         var resource = builder.AddContainer("otel-collector", "otel/opentelemetry-collector:latest")
-            .WithBindMount("otel-config.yaml", "/etc/otelcol/otel-config.yaml")
+            .WithBindMount("Configurations/otel-config.yaml", "/etc/otelcol/otel-config.yaml")
             .WithHttpEndpoint(name: "http", port: 4318, targetPort: 4318)
             .WithArgs("--config", "/etc/otelcol/otel-config.yaml");
 
