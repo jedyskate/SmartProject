@@ -4,10 +4,10 @@ using SmartConfig.Host.Extensions;
 var builder = DistributedApplication.CreateBuilder(args);
 
 // Databases
-var dbs = builder.AddDatabases();
+var dbs = builder.AddDatabaseResources();
 
 // RabbitMq
-var rabbitMq = builder.AddRabbitMq();
+var rabbitMq = builder.AddRabbitMqResource();
 
 // Data Migration
 var migration = builder.AddProject<SmartConfig_Migration>("migration")
@@ -18,39 +18,21 @@ var migration = builder.AddProject<SmartConfig_Migration>("migration")
 
 // Backend
 var api = builder.AddProject<SmartConfig_Api>("api")
-    .WaitFor(rabbitMq)
     .WithReference(dbs.SmartConfigDb)
+    .WaitFor(rabbitMq)
     .WaitForCompletion(migration);
 
 // Scheduler
-var scheduler = builder.AddProject<SmartConfig_Scheduler>("scheduler")
-    .WaitFor(rabbitMq)
-    .WithReference(dbs.SchedulerDb)
-    .WaitForCompletion(migration);
+if (bool.Parse(builder.Configuration["SmartConfig:Clients:Scheduler"] ?? "false"))
+    builder.AddProject<SmartConfig_Scheduler>("scheduler")
+        .WaitFor(rabbitMq)
+        .WithReference(dbs.SchedulerDb)
+        .WaitForCompletion(migration);
 
-// Ollama
-var ollama = builder.AddOllama("ollama")
-    .WithDataVolume()
-    .AddModel("phi4-mini", "phi4-mini");
-    // .AddModel("llama3-8b-instruct", "koesn/llama3-8b-instruct");
-
-// Mcp Server
-var mcp = builder.AddProject<SmartConfig_McpServer>("mcp")
-    .WaitFor(ollama)
-    .WithExternalHttpEndpoints();
-
-var anythingLlm = builder.AddContainer("anythingllm", "mintplexlabs/anythingllm", "latest")
-    .WithReference(mcp)
-    .WaitFor(mcp)
-    .WithEnvironment("OLLAMA_API_BASE", "http://localhost:11434")
-    .WithEnvironment("STORAGE_DIR", "/app/server/storage")
-    .WithVolume("anythingllm-storage", "/app/server/storage")
-    .WithBindMount("Configurations/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
-    .WithBindMount("Configurations/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
-    .WithBindMount("Configurations/empty.json", "/app/server/storage/plugins/agent-skills/empty.json") // Directory is needed
-    .WithHttpEndpoint(targetPort: 3001, name: "http", isProxied: true);
+// AI
+builder.AddAiResources();
 
 // Frontends (next.js, angular, react and blazor)
-builder.AddFrontends(api);
+builder.AddFrontendResources(api);
 
 builder.Build().Run();
