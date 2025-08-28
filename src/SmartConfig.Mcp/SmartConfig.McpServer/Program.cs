@@ -2,7 +2,7 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.AddSmartConfig();
 builder.AddServiceDefaults();
 
 builder.Services.AddMcpServer()
