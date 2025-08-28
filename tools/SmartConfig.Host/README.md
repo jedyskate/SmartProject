@@ -16,7 +16,7 @@ When you run this project, it automatically performs the following actions:
     -   Starts the `SmartConfig.McpServer` to expose AI tools to clients like AnythingLLM.
 4.  **Launches AI Resources**:
     -   Starts an **Ollama** container for running local Large Language Models.
-    -   Starts an **AnythingLLM** container, which acts as a client to the `McpServer`.
+    -   Starts an **AnythingLLM** container, which acts as a client to the `SmartConfig.McpServer`.
 5.  **Launches the Frontend Applications**:
     -   Starts the **Next.js** frontend (`SmartConfig.NextJs`).
     -   Starts the **React** frontend (`SmartConfig.React`).
