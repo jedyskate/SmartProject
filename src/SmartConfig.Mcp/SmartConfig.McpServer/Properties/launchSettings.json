@@ -6,7 +6,7 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:3011",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Local",
         "OTEL_SERVICE_NAME": "aspnetcore-mcp-server"
       }
     },
@@ -15,7 +15,7 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7133;http://localhost:3011",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Local",
         "OTEL_SERVICE_NAME": "aspnetcore-mcp-server"
       }
     }

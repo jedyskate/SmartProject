@@ -6,9 +6,10 @@ namespace SmartConfig.McpServer.Tools;
 [McpServerToolType]
 public sealed class EchoTool
 {
-    [McpServerTool, Description("Echoes the input back to the client.")]
-    public static string Echo(string message)
+    [McpServerTool]
+    [Description("Echoes the input back to the client.")]
+    public string Echo([Description("The message to echo back.")] string message)
     {
-        return "hello " + message;
+        return "Hello " + message;
     }
 }

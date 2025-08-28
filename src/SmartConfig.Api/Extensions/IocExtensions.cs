@@ -33,7 +33,6 @@ public static class IocExtensions
         services.AddSecurityIoc();
         services.AddCorsConfiguration();
 
-        // Add services to the container.
         builder.AddServiceDefaults();
 
         return builder;

@@ -8,20 +8,22 @@ public static class ResourceAiExtensions
     {
         if (bool.Parse(builder.Configuration["SmartConfig:Clients:Ai"] ?? "false"))
         {
-            // Ollama
-            var ollama = builder.AddOllama("ollama")
-                .WithDataVolume()
-                .AddModel("phi4-mini", "phi4-mini");
-
             // Mcp Server
             var mcp = builder.AddProject<SmartConfig_McpServer>("mcp")
-                .WaitFor(ollama)
                 .WithExternalHttpEndpoints();
 
+            // Ollama
+            var ollama = builder.AddOllama("ollama")
+                .WaitFor(mcp)
+                .WithParentRelationship(mcp)
+                // .AddModel("phi4-mini", "phi4-mini")
+                .WithDataVolume();
+            
             // AnythingLLM
             var anythingLlm = builder.AddContainer("anythingllm", "mintplexlabs/anythingllm", "latest")
-                .WithReference(mcp)
                 .WaitFor(mcp)
+                .WaitFor(ollama)
+                .WithParentRelationship(mcp)
                 .WithEnvironment("OLLAMA_API_BASE", "http://localhost:11434")
                 .WithEnvironment("STORAGE_DIR", "/app/server/storage")
                 .WithVolume("anythingllm-storage", "/app/server/storage")
