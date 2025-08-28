@@ -18,8 +18,8 @@ public sealed class OrleansTool
     [Description("Say hello to the orlenas backend.")]
     public async Task<string> HelloOrleans([Description("Name who's sying hello.")] string name)
     {
-        var response = await _smartConfigClient.HelloWorldAsync(new HelloWorldCommand { Name = name });
+        var result = await _smartConfigClient.HelloWorldAsync(new HelloWorldCommand { Name = name });
         
-        return response.Response;
+        return result.Response;
     }
 }
