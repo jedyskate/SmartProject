@@ -1,0 +1,16 @@
+@using Markdig
+
+<div class="chat-container">
+    <div class="chat-messages">
+        @foreach (var message in messages)
+        {
+            <div class="chat-message @(message.IsUser ? "user-message" : "bot-message")">
+                @((MarkupString)Markdown.ToHtml(message.Text))
+            </div>
+        }
+    </div>
+    <div class="chat-input">
+        <input @bind="userInput" @onkeyup="HandleKeyUp" placeholder="Type your message..." />
+        <button @onclick="SendMessage">Send</button>
+    </div>
+</div>
