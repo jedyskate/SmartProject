@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -6,11 +5,15 @@ namespace SmartConfig.Blazor.Client.Components
 {
     public partial class Chat
     {
-        [Inject]
-        private HttpClient Http { get; set; }
+        private HttpClient _http;
 
         private List<ChatMessage> messages = new();
         private string userInput = "";
+
+        protected override void OnInitialized()
+        {
+            _http = HttpClientFactory.CreateClient("n8n");
+        }
 
         private async Task SendMessage()
         {
@@ -18,7 +21,7 @@ namespace SmartConfig.Blazor.Client.Components
             {
                 messages.Add(new ChatMessage { Text = userInput, IsUser = true });
 
-                var response = await Http.PostAsJsonAsync("https://n8n.ai.queryout.com/webhook/smartconfig-chat", new { message = userInput });
+                var response = await _http.PostAsJsonAsync("webhook/smartconfig-chat", new { message = userInput });
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -53,12 +56,12 @@ namespace SmartConfig.Blazor.Client.Components
     
     public class ChatMessage
     {
-        public string Text { get; set; }
+        public string? Text { get; set; }
         public bool IsUser { get; set; }
     }
 
     public class ChatResponse
     {
-        public string Text { get; set; }
+        public string? Text { get; set; }
     }
 }
