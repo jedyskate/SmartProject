@@ -19,7 +19,7 @@ public static class ResourceAiExtensions
             .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "n8n-http", isProxied: false)
             .WithExternalHttpEndpoints()
             .WithDataVolume()
-            .AddModel("phi4-mini", "phi4-mini");
+            .AddModel("llama32", "llama3.2:latest");
 
         // n8n
         var n8n = builder.AddContainer("n8n", "n8nio/n8n", "latest")
