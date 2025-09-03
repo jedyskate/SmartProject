@@ -5,7 +5,7 @@
         @foreach (var message in _messages)
         {
             <div class="chat-message @((message.IsUser ?? false) ? "user-message" : "bot-message")">
-                @((MarkupString)Markdown.ToHtml(message.Text))
+                @((MarkupString)Markdown.ToHtml(message.Text ?? string.Empty))
             </div>
         }
     </div>
