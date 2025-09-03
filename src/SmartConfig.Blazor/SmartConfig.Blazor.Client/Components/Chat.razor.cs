@@ -1,16 +1,20 @@
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using Newtonsoft.Json;
+
 
 namespace SmartConfig.Blazor.Client.Components
 {
     public partial class Chat : IDisposable
     {
         private HttpClient _http;
+        private ElementReference _chatBody;
         private PersistingComponentStateSubscription _persistingSubscription;
 
-        private List<ChatMessage> messages = new();
-        private string userInput = "";
+        private List<ChatMessage> _messages = new();
+        private string _userInput = "";
 
         protected override async Task OnInitializedAsync()
         {
@@ -19,55 +23,62 @@ namespace SmartConfig.Blazor.Client.Components
 
             if (ApplicationState.TryTakeFromJson<ChatState>("chat_state", out var restoredState))
             {
-                messages = restoredState.Messages;
-                userInput = restoredState.UserInput;
+                _messages = restoredState.Messages;
+                _userInput = restoredState.UserInput;
             }
 
             await base.OnInitializedAsync();
         }
+        
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("scrollToBottom", _chatBody);
+        }
+
 
         private async Task SendMessage()
         {
-            if (!string.IsNullOrWhiteSpace(userInput))
+            if (string.IsNullOrWhiteSpace(_userInput)) return;
+
+            _messages.Add(new ChatMessage { Text = _userInput, IsUser = true });
+            var chatRequest = new { message = _userInput };
+
+            _userInput = string.Empty;
+            StateHasChanged();
+
+            try
             {
-                messages.Add(new ChatMessage { Text = userInput, IsUser = true });
-                StateHasChanged(); // Update the UI immediately with the user's message
-
-                try
+                var request = new HttpRequestMessage(HttpMethod.Post, "webhook/smartconfig-chat")
                 {
-                    var response = await _http.PostAsJsonAsync("webhook/smartconfig-chat", new { message = userInput });
-                    if (response.IsSuccessStatusCode)
+                    Content = JsonContent.Create(chatRequest)
+                };
+
+                // important for streaming
+                var response = await _http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                if (response.IsSuccessStatusCode)
+                {
+                    await using var stream = await response.Content.ReadAsStreamAsync();
+                    using var reader = new StreamReader(stream);
+
+                    await using var jsonReader = new JsonTextReader(reader);
+                    var serializer = new JsonSerializer();
+                    while (await jsonReader.ReadAsync())
                     {
-                        var botResponse = await response.Content.ReadFromJsonAsync<List<ChatResponse>>();
-                        if (botResponse is { Count: > 0 })
-                        {
-                            messages.Add(new ChatMessage { Text = botResponse[0].Text, IsUser = false });
-                        }
-                        else
-                        {
-                            messages.Add(new ChatMessage { Text = "Received an empty response from the bot.", IsUser = false });
-                        }
-                    }
-                    else
-                    {
-                        messages.Add(new ChatMessage { Text = "Error: Could not get a response from the bot.", IsUser = false });
+                        if (jsonReader.TokenType != JsonToken.StartObject) continue;
+                        
+                        var message = serializer.Deserialize<AgentResponse>(jsonReader);
+                        _messages.Add(new ChatMessage { Text = message?.Text, IsUser = false });
+                        StateHasChanged();
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    messages.Add(new ChatMessage { Text = $"An error occurred: {ex.Message}", IsUser = false });
+                    _messages.Add(new ChatMessage { Text = "Error: Bot response failed.", IsUser = false });
                 }
-
-                userInput = "";
-                StateHasChanged();
             }
-        }
-
-        private async Task HandleKeyUp(KeyboardEventArgs e)
-        {
-            if (e.Key == "Enter")
+            catch (Exception ex)
             {
-                await SendMessage();
+                _messages.Add(new ChatMessage { Text = $"Error: {ex.Message}", IsUser = false });
             }
         }
 
@@ -77,12 +88,22 @@ namespace SmartConfig.Blazor.Client.Components
             // Bundle the data into the state object and save it
             var state = new ChatState
             {
-                Messages = messages,
-                UserInput = userInput
+                Messages = _messages,
+                UserInput = _userInput
             };
             ApplicationState.PersistAsJson("chat_state", state);
             
             return Task.CompletedTask;
+        }
+        
+        protected async Task OnKeyDownAsync(KeyboardEventArgs e)
+        {
+            if (e.Key != "Enter")
+            {
+                return;
+            }
+
+            await SendMessage();
         }
 
         public void Dispose()
@@ -100,10 +121,10 @@ namespace SmartConfig.Blazor.Client.Components
     public class ChatMessage
     {
         public string? Text { get; set; }
-        public bool IsUser { get; set; }
+        public bool? IsUser { get; set; }
     }
 
-    public class ChatResponse
+    public class AgentResponse
     {
         public string? Text { get; set; }
     }

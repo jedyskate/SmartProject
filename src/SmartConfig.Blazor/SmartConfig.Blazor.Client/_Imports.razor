@@ -8,7 +8,10 @@
 @using Microsoft.JSInterop
 @using SmartConfig.Blazor.Client
 @using SmartConfig.Blazor.Client.Components
+@using Microsoft.JSInterop
+@using Newtonsoft.Json
 
 
+@inject IJSRuntime JSRuntime
 @inject IHttpClientFactory HttpClientFactory
 @inject PersistentComponentState ApplicationState
