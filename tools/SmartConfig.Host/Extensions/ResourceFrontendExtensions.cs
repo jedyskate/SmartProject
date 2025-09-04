@@ -7,6 +7,7 @@ public static class ResourceFrontendExtensions
 {
     public static void AddFrontendResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
     {
+        //TODO::Aspire otel collector port is set at runtime. UPDATE OTEL URL TO COLLECT TELEMETRICS.
         var otlpEndpoint = Environment.GetEnvironmentVariable("ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL") ?? throw new ArgumentException();
         var otlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS") ?? throw new ArgumentException();
 

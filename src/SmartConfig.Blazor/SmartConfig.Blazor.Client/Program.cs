@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using SmartConfig.Blazor.Client.Extensions;
 using SmartConfig.Sdk;
 using SmartConfig.Sdk.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+builder.Services.AddCommonClientIoc(builder.Configuration);
 
 // Add SmartConfig Proxy.
 builder.Services.AddSingleton(new SmartConfigSettings

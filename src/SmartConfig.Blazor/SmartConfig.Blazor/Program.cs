@@ -1,3 +1,4 @@
+using SmartConfig.Blazor.Client.Extensions;
 using SmartConfig.Blazor.Components;
 using SmartConfig.Blazor.Extensions;
 using SmartConfig.Sdk;
@@ -30,6 +31,7 @@ public class Program
             .AddInteractiveWebAssemblyComponents();
         
         builder.AddServiceDefaults();
+        builder.Services.AddCommonClientIoc(builder.Configuration);
 
         // Add SmartConfig API.
         builder.Services.AddSingleton(new SmartConfigSettings
