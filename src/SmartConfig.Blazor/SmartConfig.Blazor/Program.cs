@@ -1,3 +1,4 @@
+using SmartConfig.Blazor.Client.Extensions;
 using SmartConfig.Blazor.Components;
 using SmartConfig.Blazor.Extensions;
 using SmartConfig.Sdk;
@@ -25,13 +26,12 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder();
 
-        // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
-
-        // Add Open Telemetry.
-        builder.AddServerOpenTelemetry();
+        
+        builder.AddServiceDefaults();
+        builder.Services.AddCommonClientIoc(builder.Configuration);
 
         // Add SmartConfig API.
         builder.Services.AddSingleton(new SmartConfigSettings
@@ -74,6 +74,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAntiforgery();
         app.MapStaticAssets();
+        app.MapDefaultEndpoints();
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode()

@@ -37,7 +37,7 @@ public static class AppSettingsExtensions
                         reloadCheckIntervalSeconds: 60);
 
                     return options;
-                }, "SmartConfig", $"KindReff-{environment}");
+                }, "SmartConfig", $"API-{environment}");
         }
 
         return builder;

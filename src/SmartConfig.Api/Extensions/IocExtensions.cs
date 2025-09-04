@@ -32,7 +32,8 @@ public static class IocExtensions
         services.AddAppSettingsIoc(configuration);
         services.AddSecurityIoc();
         services.AddCorsConfiguration();
-        services.AddOpenTelemetryConfiguration();
+
+        builder.AddServiceDefaults();
 
         return builder;
     }

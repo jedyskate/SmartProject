@@ -7,6 +7,7 @@ using TickerQ.EntityFrameworkCore.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
 builder.AddSqlServerDbContext<SchedulerContext>("TickerQ",
     configureDbContextOptions: options =>
     {
@@ -28,6 +29,8 @@ builder.Services.AddTickerQ(options =>
 builder.AddSmartConfig();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.UseTickerQ();
 

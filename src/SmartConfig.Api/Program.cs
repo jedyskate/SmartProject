@@ -29,6 +29,8 @@ public class Program
             .AddOrleansConfigurations();
 
         var app = builder.Build();
+        
+        app.MapDefaultEndpoints();
         app.Initialize(builder.Configuration, app.Services.GetRequiredService<ISeedData>());
 
         return app;
