@@ -1,15 +1,18 @@
+using Microsoft.Extensions.Configuration;
 using Projects;
 
 namespace SmartConfig.Host.Extensions;
 
 public static class ResourceAiExtensions
 {
-    public static void AddAiResources(this IDistributedApplicationBuilder builder)
+    public static void AddAiResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
     {
-        if (!bool.Parse(builder.Configuration["SmartConfig:Clients:Ai"] ?? "true")) return;
+        if (!bool.Parse(builder.Configuration["SmartConfig:Clients:Ai:Enabled"] ?? "true")) return;
 
         // Mcp Server
         var mcp = builder.AddProject<SmartConfig_McpServer>("mcp")
+            .WaitFor(api)
+            .WithReference(api)
             .WithExternalHttpEndpoints();
 
         // Ollama
@@ -32,9 +35,8 @@ public static class ResourceAiExtensions
             .WithEnvironment("GENERIC_TIMEZONE", "Australia/Sydney")
             .WithEnvironment("N8N_HOST", "localhost:5678")
             .WithEnvironment("WEBHOOK_URL", "http://localhost:5678")
-            // TODO::Add credential directly in n8n. Ollama doesn't need ApiKey.
-            // .WithEnvironment("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
-            .WithVolume("n8n-storage", "/home/node/.n8n");
+            .WithVolume("n8n-storage", "/home/node/.n8n")
+            .WithDefaultAiAgent(builder.Configuration); //TODO::Disable for prod environments
 
         // AnythingLLM
         var anythingLlm = builder.AddContainer("anythingllm", "mintplexlabs/anythingllm", "latest")
@@ -46,8 +48,20 @@ public static class ResourceAiExtensions
             .WithEnvironment("OLLAMA_API_BASE", "http://localhost:11434")
             .WithEnvironment("STORAGE_DIR", "/app/server/storage")
             .WithVolume("anythingllm-storage", "/app/server/storage")
-            .WithBindMount("Configurations/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
-            .WithBindMount("Configurations/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
-            .WithBindMount("Configurations/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
+            .WithBindMount("Volumes/AnythingLLM/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
+            .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
+            .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
+    }
+
+    private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,
+        IConfiguration configuration) where T : ContainerResource
+    {
+        if (bool.Parse(configuration["SmartConfig:Clients:Ai:n8nDefaultAgent"] ?? "false"))
+        {
+            builder.WithBindMount("Volumes/n8n/config", "/home/node/.n8n/config")
+                .WithBindMount("Volumes/n8n/database.sqlite", "/home/node/.n8n/database.sqlite");
+        }
+        
+        return builder;
     }
 }
