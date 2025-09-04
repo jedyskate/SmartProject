@@ -13,9 +13,10 @@ When you run this project, it automatically performs the following actions:
 3.  **Launches Backend Services**:
     -   Starts the `SmartConfig.Api` project.
     -   Starts the `SmartConfig.Scheduler` for background job processing.
-    -   Starts the `SmartConfig.McpServer` to expose AI tools to clients like AnythingLLM.
 4.  **Launches AI Resources**:
-    -   Starts an **Ollama** container for running local Large Language Models.
+    -   Starts the `SmartConfig.McpServer` to expose AI tools to clients like AnythingLLM and n8n.
+    -   Starts an **Ollama** container with llama3.2 as default LLM (This takes time to download). 
+    -   Starts a **n8n** container which has a default agent built in (Disable it in settings if needed).
     -   Starts an **AnythingLLM** container, which acts as a client to the `SmartConfig.McpServer`.
 5.  **Launches the Frontend Applications**:
     -   Starts the **Next.js** frontend (`SmartConfig.NextJs`).

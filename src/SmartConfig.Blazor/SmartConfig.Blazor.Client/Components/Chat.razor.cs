@@ -1,25 +1,27 @@
-using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using shortid;
-    
+
 
 namespace SmartConfig.Blazor.Client.Components;
 
 public partial class Chat : IDisposable
 {
     private HttpClient _http;
+    private DotNetObjectReference<Chat> _dotNetRef;
     private ElementReference _chatBody;
     private PersistingComponentStateSubscription _persistingSubscription;
 
     private List<ChatMessage> _messages = new();
     private string _userInput = "";
+    private string _currentAgentMessageId = "";
 
     protected override async Task OnInitializedAsync()
     {
         _http = HttpClientFactory.CreateClient("n8n");
+        _dotNetRef = DotNetObjectReference.Create(this);
         _persistingSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
         if (ApplicationState.TryTakeFromJson<ChatState>("chat_state", out var restoredState))
@@ -30,7 +32,7 @@ public partial class Chat : IDisposable
 
         await base.OnInitializedAsync();
     }
-        
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await JSRuntime.InvokeVoidAsync("scrollToBottom", _chatBody);
@@ -44,57 +46,52 @@ public partial class Chat : IDisposable
         var chatRequest = new { message = _userInput };
 
         _userInput = string.Empty;
+        _currentAgentMessageId = ShortId.Generate();
         StateHasChanged();
 
-        try
+        // BLAZOR WASM STREAMING DOESN'T PROPERLY WORK DUE TO THE HTTPCLIENT.
+        // This is an alternative solution.
+        var url = $"{Configuration["SmartConfig:n8nEndpoint"]}/webhook/smartconfig-chat";
+        await JSRuntime.InvokeVoidAsync("streamChat", url, chatRequest, _dotNetRef);
+    }
+
+    [JSInvokable]
+    public void ProcessStreamChunk(string line)
+    {
+        if (string.IsNullOrWhiteSpace(line)) return;
+
+        var agentStream = TryDeserializeStream(line);
+        if (agentStream?.Type == "item" && agentStream.Content != null &&
+            agentStream.Metadata?.NodeName == "AI Agent")
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, "webhook/smartconfig-chat")
+            var existingMessage = _messages.FirstOrDefault(r => r.Id == _currentAgentMessageId);
+            if (existingMessage != null)
             {
-                Content = JsonContent.Create(chatRequest)
-            };
-
-            // important for streaming
-            var response = await _http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            if (response.IsSuccessStatusCode)
-            {
-                await using var stream = await response.Content.ReadAsStreamAsync();
-                using var reader = new StreamReader(stream);
-                var agentMessageId = ShortId.Generate();
- 
-                while (await reader.ReadLineAsync() is { } line)
-                {
-                    if (string.IsNullOrWhiteSpace(line)) continue;
-
-                    var agentStream = DeserializeStream(line);
-                    if (agentStream?.Type == "item" && agentStream.Content != null && 
-                        agentStream.Metadata?.NodeName == "AI Agent")
-                    {
-                        var existingMessage = _messages.FirstOrDefault(r => r.Id == agentMessageId);
-                        if (existingMessage != null)
-                        {
-                            existingMessage.Text += agentStream.Content;
-                        }
-                        else
-                        {
-                            _messages.Add(new ChatMessage { Id = agentMessageId, Text = agentStream.Content, IsUser = false });
-                        }
-
-                        StateHasChanged();
-                    }
-                }
+                existingMessage.Text += agentStream.Content;
             }
             else
             {
-                _messages.Add(new ChatMessage { Id = ShortId.Generate(), Text = "Error: Bot response failed.", IsUser = false });
+                _messages.Add(new ChatMessage { Id = _currentAgentMessageId, Text = agentStream.Content, IsUser = false });
             }
-        }
-        catch (Exception ex)
-        {
-            _messages.Add(new ChatMessage { Id = ShortId.Generate(), Text = $"Error: {ex.Message}", IsUser = false });
+
+            InvokeAsync(StateHasChanged);
         }
     }
 
-    private AgentStream? DeserializeStream(string line)
+    [JSInvokable]
+    public void StreamCompleted()
+    {
+        // You can add any logic here that needs to run when the stream is complete.
+    }
+
+    [JSInvokable]
+    public void StreamFailed(string error)
+    {
+        _messages.Add(new ChatMessage { Id = ShortId.Generate(), Text = $"Error: {error}", IsUser = false });
+        InvokeAsync(StateHasChanged);
+    }
+
+    private AgentStream? TryDeserializeStream(string line)
     {
         AgentStream? agentStream = null;
         try
@@ -106,7 +103,7 @@ public partial class Chat : IDisposable
             _messages.Add(new ChatMessage
             {
                 Id = ShortId.Generate(),
-                Text = $"JSON parse error: {jex.Message}", 
+                Text = $"JSON parse error: {jex.Message}",
                 IsUser = false
             });
             return agentStream;
@@ -125,11 +122,11 @@ public partial class Chat : IDisposable
             UserInput = _userInput
         };
         ApplicationState.PersistAsJson("chat_state", state);
-            
+
         return Task.CompletedTask;
     }
-        
-    protected async Task OnKeyDownAsync(KeyboardEventArgs e)
+
+    private async Task OnKeyDownAsync(KeyboardEventArgs e)
     {
         if (e.Key != "Enter")
         {
@@ -142,22 +139,23 @@ public partial class Chat : IDisposable
     public void Dispose()
     {
         _persistingSubscription.Dispose();
+        _dotNetRef?.Dispose();
     }
 }
-    
+
 public class ChatState
 {
     public List<ChatMessage> Messages { get; set; } = new();
     public string UserInput { get; set; } = "";
 }
-    
+
 public class ChatMessage
 {
     public string Id { get; set; }
     public string? Text { get; set; }
     public bool? IsUser { get; set; }
 }
-    
+
 public class AgentStream
 {
     [JsonProperty("type")]
