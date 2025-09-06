@@ -19,7 +19,7 @@ public static class ResourceAiExtensions
         var ollama = builder.AddOllama("ollama")
             .WaitFor(mcp)
             .WithParentRelationship(mcp)
-            .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "n8n-http", isProxied: false)
+            .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "ollama-http", isProxied: false)
             .WithExternalHttpEndpoints()
             .WithDataVolume()
             .AddModel("llama32", "llama3.2:latest");
