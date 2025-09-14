@@ -8,3 +8,4 @@ langserve
 python-dotenv
 sse_starlette
 typing-extensions
+langsmith
