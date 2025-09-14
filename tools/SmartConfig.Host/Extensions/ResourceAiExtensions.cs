@@ -51,6 +51,16 @@ public static class ResourceAiExtensions
             .WithBindMount("Volumes/AnythingLLM/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
             .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
             .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
+
+        // LangGraph
+        builder.AddDockerfile("langgraph", "../../src/SmartConfig.LangGraph")
+            .WaitFor(ollama)
+            .WaitFor(mcp)
+            .WithParentRelationship(mcp)
+            .WithHttpEndpoint(port: 8000, targetPort: 8000, name: "langgraph-http")
+            .WithExternalHttpEndpoints()
+            .WithEnvironment("OLLAMA_BASE_URL", "http://localhost:11434")
+            .WithReference(mcp);
     }
 
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,
