@@ -60,7 +60,7 @@ public static class ResourceAiExtensions
             .WithHttpEndpoint(port: 8000, targetPort: 8000, name: "langgraph-http")
             .WithExternalHttpEndpoints()
             .WithEnvironment("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
-            // .WithEnvironment("LANGCHAIN_TRACING_V2", "false")
+            // .WithEnvironment("LANGCHAIN_TRACING_V2", "true")
             // .WithEnvironment("LANGCHAIN_API_KEY", "LANGCHAIN_API_KEY")
             // .WithEnvironment("LANGCHAIN_PROJECT", "SmartConfig")
             .WithReference(mcp);
