@@ -3,7 +3,7 @@ uvicorn[standard]
 langchain
 langgraph
 langchain_community
-ollama
+langchain-ollama
 langserve
 python-dotenv
 sse_starlette

@@ -2,7 +2,7 @@ import os
 import operator
 from typing import Annotated, List
 
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama.chat_models import ChatOllama
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph import StateGraph, END
 from typing_extensions import TypedDict
