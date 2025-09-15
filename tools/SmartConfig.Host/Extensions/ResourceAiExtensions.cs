@@ -7,7 +7,8 @@ public static class ResourceAiExtensions
 {
     public static void AddAiResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
     {
-        if (!bool.Parse(builder.Configuration["SmartConfig:Clients:Mcp"] ?? "true")) return;
+        var clients = builder.Configuration.GetSection("SmartConfig:Ai:Clients").Get<string[]>();
+        if (!clients?.Any() ?? true) return;
         
         // Mcp Server
         var mcp = builder.AddProject<SmartConfig_McpServer>("mcp")
@@ -24,8 +25,6 @@ public static class ResourceAiExtensions
             .WithDataVolume()
             .AddModel("llama32", "llama3.2:latest");
         
-        var clients = builder.Configuration.GetSection("SmartConfig:Ai:Clients").Get<string[]>();
-
         // n8n
         if (clients?.Contains("n8n") ?? false)
             builder.AddContainer("n8n", "n8nio/n8n", "latest")
