@@ -18,18 +18,18 @@ The LangGraph service is automatically launched as a Docker container when runni
 You can test the service directly using cURL:
 
 ```bash
-curl -X POST http://localhost:8000/agent/invoke \
--H "Content-Type: application/json" \
--d '{"input": {"messages": [{"type": "human", "content": "Hello! What is LangGraph?"}]}}'
+  curl -X POST http://localhost:8000/agent/invoke \
+  -H "Content-Type: application/json" \
+  -d '{"input": {"messages": [{"type": "human", "content": "Hello! What is LangGraph?"}]}}'
 ```
 
 You can also build and run the project standalone:
 
 ```bash
-# Build the image
-docker build -t langgraph-image ./src/SmartConfig.LangGraph
+  # Build the image
+  docker build -t langgraph-image ./src/SmartConfig.LangGraph
 
-# Run the container
-docker run -p 8000:8000 -e OLLAMA_BASE_URL=http://host.docker.internal:11434 langgraph-image
+  # Run the container
+  docker run -p 8000:8000 -e OLLAMA_BASE_URL=http://host.docker.internal:11434 langgraph-image
 ```
 
