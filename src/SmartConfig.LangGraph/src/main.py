@@ -1,101 +1,56 @@
 #!/usr/bin/env python3
-"""
-Main entry point for the LangGraph Content Creation Supervisor.
-"""
-
-import os
 import uuid
-import argparse
-from dotenv import load_dotenv
-from .supervisor_graph import graph
+from typing import List
+from fastapi import FastAPI
+from langserve import add_routes
+from pydantic import BaseModel
+from langchain_core.runnables import RunnableLambda
 
-# Load environment variables
-load_dotenv()
+from .supervisor_graph import graph  # <- keep this import
 
+api = FastAPI(
+    title="LangGraph Content Creation Supervisor",
+    version="1.0",
+    description="An API for a multi-agent content creation workflow.",
+)
 
-# Creates content using the LLM supervisor workflow
-def create_content(prompt: str) -> dict:
-    """
-    Create content using the LLM supervisor workflow.
-    
-    Args:
-        prompt: The user's content creation request
-        
-    Returns:
-        dict: The final state with the created content
-    """
-    
-    # Create a completely fresh state with unique identifier
-    session_id = str(uuid.uuid4())[:8]  # Short unique ID for this session
-    
-    initial_state = {
-        "messages": [
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        "current_stage": "",
-        "completed_stages": [],
-        "session_id": session_id  # Add unique session ID
-    }
-    
-    print(f"🚀 Starting LLM Supervisor Content Creation Workflow (Session: {session_id})")
-    print("=" * 60)
-    
-    # Run the workflow with fresh state
-    result = graph.invoke(initial_state)
-    
-    print(f"\n🎉 Workflow completed successfully! (Session: {session_id})")
-    print(f"📊 Total messages processed: {len(result['messages'])}")
-    print(f"✅ Stages completed: {result.get('completed_stages', [])}")
-    
-    return result
+class AgentInput(BaseModel):
+    prompt: str
 
+class Message(BaseModel):
+    role: str
+    content: str
 
-# Main CLI function for interactive content creation
-def main():
-    """Main function for command-line usage."""
-    parser = argparse.ArgumentParser(description="LangGraph Content Creation Supervisor")
-    parser.add_argument("prompt", nargs="?", help="The content creation request.")
-    args = parser.parse_args()
+class State(BaseModel):
+    messages: List[Message]
+    current_stage: str
+    completed_stages: List[str]
+    session_id: str
 
-    print("🤖 LangGraph Content Creation Supervisor")
-    print("=" * 50)
-    
-    prompt = args.prompt
-    if not prompt:
-        # Get user input if no argument is provided
-        prompt = input("Enter your content creation request: ")
-    
-    if not prompt.strip():
-        print("❌ No prompt provided. Exiting.")
-        return
-    
-    try:
-        # Create content with fresh state
-        result = create_content(prompt)
-        
-        # Show final content
-        print("\n📄 FINAL CONTENT:")
-        print("=" * 60)
-        
-        final_message = result['messages'][-1]
-        if hasattr(final_message, 'content'):
-            final_content = final_message.content
-            print(final_content)
-            print(f"\n📝 Content length: {len(final_content)} characters")
-        else:
-            print("No final content found.")
-            
-    except Exception as e:
-        print(f"❌ Error during content creation: {e}")
-        import traceback
-        traceback.print_exc()
+def create_initial_state(inputs: dict) -> dict:
+    # Convert dict input to Pydantic model
+    agent_input = AgentInput.model_validate(inputs)
 
+    state = State(
+        messages=[Message(role="user", content=agent_input.prompt)],
+        current_stage="",
+        completed_stages=[],
+        session_id=str(uuid.uuid4()),
+    )
+    return state.model_dump()
+
+# Chain input mapping into graph
+api_runnable = RunnableLambda(create_initial_state) | graph
+
+# Expose API endpoint
+add_routes(
+    api,
+    api_runnable,
+    path="/agent",
+    input_type=AgentInput,
+    output_type=State,  # BaseModel is fine here
+)
 
 if __name__ == "__main__":
-    main()
-
-
-
+    import uvicorn
+    uvicorn.run(api, host="0.0.0.0", port=8000)
