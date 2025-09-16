@@ -5,6 +5,7 @@ Main entry point for the LangGraph Content Creation Supervisor.
 
 import os
 import uuid
+import argparse
 from dotenv import load_dotenv
 from .supervisor_graph import graph
 
@@ -55,12 +56,17 @@ def create_content(prompt: str) -> dict:
 # Main CLI function for interactive content creation
 def main():
     """Main function for command-line usage."""
-    
+    parser = argparse.ArgumentParser(description="LangGraph Content Creation Supervisor")
+    parser.add_argument("prompt", nargs="?", help="The content creation request.")
+    args = parser.parse_args()
+
     print("🤖 LangGraph Content Creation Supervisor")
     print("=" * 50)
     
-    # Get user input
-    prompt = input("Enter your content creation request: ")
+    prompt = args.prompt
+    if not prompt:
+        # Get user input if no argument is provided
+        prompt = input("Enter your content creation request: ")
     
     if not prompt.strip():
         print("❌ No prompt provided. Exiting.")
@@ -90,5 +96,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 

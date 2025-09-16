@@ -9,4 +9,5 @@ COPY ./src /app/src
 
 ENV OLLAMA_BASE_URL="http://host.docker.internal:11434"
 
-CMD ["python", "-m", "src.main"]
+ENTRYPOINT ["python", "-m", "src.main"]
+CMD ["Write a blog post about the future of AI in content creation."]
