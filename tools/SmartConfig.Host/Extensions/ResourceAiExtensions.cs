@@ -59,7 +59,7 @@ public static class ResourceAiExtensions
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,
         IConfiguration configuration) where T : ContainerResource
     {
-        if (bool.Parse(configuration["SmartConfig:Clients:Ai:n8nDefaultAgent"] ?? "false"))
+        if (bool.Parse(configuration["SmartConfig:Ai:n8nDefaultAgent"] ?? "false"))
         {
             builder.WithBindMount("Volumes/n8n/config", "/home/node/.n8n/config")
                 .WithBindMount("Volumes/n8n/database.sqlite", "/home/node/.n8n/database.sqlite");
