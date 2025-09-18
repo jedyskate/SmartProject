@@ -10,14 +10,15 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>agenthost</ToolCommandName>
   </PropertyGroup>
-  
+
+    <!--  <ItemGroup>-->
+    <!--    <ContainerEnvironmentVariable Include="ASPNETCORE_HTTP_PORTS" Value="5001" />-->
+    <!--    <ContainerPort Include="5001" Type="tcp" />-->
+    <!--  </ItemGroup>-->
   <ItemGroup>
-    <ContainerEnvironmentVariable Include="ASPNETCORE_HTTP_PORTS" Value="5001" />
-    <ContainerPort Include="5001" Type="tcp" />
-  </ItemGroup>
-  <ItemGroup>
-	   <PackageReference Include="Microsoft.AutoGen.RuntimeGateway.Grpc" Version="0.4.0-dev.3" />
-	   <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+      <PackageReference Include="Microsoft.AutoGen.Core" Version="0.4.0-dev.3" /> 
+      <PackageReference Include="Microsoft.AutoGen.RuntimeGateway.Grpc" Version="0.4.0-dev.3" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj" />

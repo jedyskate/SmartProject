@@ -59,12 +59,11 @@ public static class ResourceAiExtensions
         var agentHost = builder.AddProject<SmartConfig_AgentHost>("agent-host")
             .WithExternalHttpEndpoints();
 
-        var test = agentHost.GetEndpoint("https");
-        
         var helloAgent = builder.AddProject<SmartConfig_HelloAgent>("hello-agent")
             .WithReference(agentHost)
             .WithParentRelationship(agentHost)
             .WithEnvironment("AGENT_HOST", agentHost.GetEndpoint("https"))
+            // .WithEnvironment("AGENT_HOST", "https://localhost:54152")
             .WithEnvironment("STAY_ALIVE_ON_GOODBYE", "true")
             .WaitFor(agentHost)
             .WaitFor(ollama);
