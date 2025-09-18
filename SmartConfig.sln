@@ -58,6 +58,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.McpServer", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.ServiceDefaults", "tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj", "{BB2CA8EA-E189-4EED-9490-8AA754128B41}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartConfig.AutoGen", "SmartConfig.AutoGen", "{3A6F4720-D12B-4A2A-865F-69C028B8D134}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.HelloAgent", "src\SmartConfig.AutoGen\SmartConfig.AutoGen.HelloAgent\SmartConfig.HelloAgent.csproj", "{0E21A9EE-49A9-4050-B66E-C9BA3933ACD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.AgentHost", "src\SmartConfig.AutoGen\SmartConfig.AutoGen.AgentHost\SmartConfig.AgentHost.csproj", "{785DFFE4-D68A-40E0-8FD4-3476D1268FC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +142,14 @@ Global
 		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2CA8EA-E189-4EED-9490-8AA754128B41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E21A9EE-49A9-4050-B66E-C9BA3933ACD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E21A9EE-49A9-4050-B66E-C9BA3933ACD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E21A9EE-49A9-4050-B66E-C9BA3933ACD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E21A9EE-49A9-4050-B66E-C9BA3933ACD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{785DFFE4-D68A-40E0-8FD4-3476D1268FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{785DFFE4-D68A-40E0-8FD4-3476D1268FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{785DFFE4-D68A-40E0-8FD4-3476D1268FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{785DFFE4-D68A-40E0-8FD4-3476D1268FC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,6 +174,9 @@ Global
 		{F01B68F3-8F88-4877-B947-104ACFA9FB9A} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
 		{BB2CA8EA-E189-4EED-9490-8AA754128B41} = {6809FF4D-C35F-4680-987F-8E44360460ED}
 		{8BE37253-A1F6-4936-BC8A-D522C59D9CCE} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
+		{3A6F4720-D12B-4A2A-865F-69C028B8D134} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
+		{0E21A9EE-49A9-4050-B66E-C9BA3933ACD8} = {3A6F4720-D12B-4A2A-865F-69C028B8D134}
+		{785DFFE4-D68A-40E0-8FD4-3476D1268FC1} = {3A6F4720-D12B-4A2A-865F-69C028B8D134}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC340CDE-8425-405E-BD4E-A3D7AC737862}

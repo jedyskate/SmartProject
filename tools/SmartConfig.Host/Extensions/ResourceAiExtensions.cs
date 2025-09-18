@@ -54,6 +54,20 @@ public static class ResourceAiExtensions
                 .WithBindMount("Volumes/AnythingLLM/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
+        
+        // Agent Host
+        var agentHost = builder.AddProject<SmartConfig_AgentHost>("agent-host")
+            .WithExternalHttpEndpoints();
+
+        var test = agentHost.GetEndpoint("https");
+        
+        var helloAgent = builder.AddProject<SmartConfig_HelloAgent>("hello-agent")
+            .WithReference(agentHost)
+            .WithParentRelationship(agentHost)
+            .WithEnvironment("AGENT_HOST", agentHost.GetEndpoint("https"))
+            .WithEnvironment("STAY_ALIVE_ON_GOODBYE", "true")
+            .WaitFor(agentHost)
+            .WaitFor(ollama);
     }
 
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,

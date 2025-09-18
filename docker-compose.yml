@@ -17,4 +17,23 @@ services:
 networks:
   proxy:
     external: true
-    
+      smartconfig.autogen:
+    image: smartconfig.autogen
+    build:
+      context: .
+      dockerfile: src/SmartConfig.AutoGen/Dockerfile
+
+services:
+  consoleapp1:
+    image: consoleapp1
+    build:
+      context: .
+      dockerfile: src/SmartConfig.Blazor/ConsoleApp1/Dockerfile
+
+services:
+  smartconfig.autogen:
+    image: smartconfig.autogen
+    build:
+      context: .
+      dockerfile: src/SmartConfig.AutoGen/Dockerfile
+
