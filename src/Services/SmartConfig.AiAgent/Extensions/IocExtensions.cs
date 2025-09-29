@@ -10,16 +10,29 @@ public static class IocExtensions
 {
     public static WebApplicationBuilder AddAiAgentIoc(this WebApplicationBuilder builder)
     {
-        var ollama = new OllamaApiClient(new Uri("http://localhost:11434"), "llama3.2");
+        var config = builder.Configuration;
+        builder.Services.AddHttpClient("ollama", client =>
+        {
+            client.BaseAddress = new Uri(config["SemanticKernel:Ollama:Url"]!);
+        });
+        
+        builder.Services.AddSingleton<IOllamaApiClient>(sp =>
+        {
+            var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
+            var httpClient = clientFactory.CreateClient("ollama");
+            var model = config["SemanticKernel:Ollama:Model"]!;
+            
+            return new OllamaApiClient(httpClient, model);
+        });
 
         builder.Services.AddScoped<IKernelService, KernelService>();
         builder.Services.AddSingleton<Kernel>(sp =>
         {
-            // var ollamaClient = sp.GetRequiredKeyedService<IOllamaApiClient>("ollama-llama32");
-
+            var ollamaClient = sp.GetRequiredService<IOllamaApiClient>();
+            
             var kernel = Kernel.CreateBuilder()
                 .AddOllamaChatCompletion(
-                    ollamaClient: ollama,
+                    ollamaClient: (OllamaApiClient)ollamaClient,
                     serviceId: "ollama")
                 .Build();
 

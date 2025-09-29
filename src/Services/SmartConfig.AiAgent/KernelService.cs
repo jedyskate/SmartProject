@@ -9,7 +9,7 @@ public interface IKernelService
     IAsyncEnumerable<string> CompleteChatStreamingAsync(IEnumerable<ChatMessageContent> messages);
 }
 
-public class KernelService(Kernel kernel, IConfiguration config) : IKernelService
+public class KernelService(Kernel kernel, IConfiguration configuration) : IKernelService
 {
     public async IAsyncEnumerable<string> CompleteChatStreamingAsync(IEnumerable<ChatMessageContent> messages)
     {
@@ -19,7 +19,7 @@ public class KernelService(Kernel kernel, IConfiguration config) : IKernelServic
         var service = kernel.GetRequiredService<IChatCompletionService>();
         var settings = new PromptExecutionSettings
         {
-            ServiceId = config["SemanticKernel:ServiceId"]!
+            ServiceId = configuration["SemanticKernel:ServiceId"]!
         };
 
         var result = service.GetStreamingChatMessageContentsAsync(history, settings, kernel);
