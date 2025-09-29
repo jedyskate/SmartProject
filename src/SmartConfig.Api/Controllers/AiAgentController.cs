@@ -16,7 +16,7 @@ public class AiAgentController : BaseController
 
     [HttpPost]
     [ProducesResponseType(typeof(IAsyncEnumerable<ChatResponse>), (int)HttpStatusCode.OK)]
-    public IAsyncEnumerable<ChatResponse> HelloWorld([FromBody] CompleteChatCommand command)
+    public IAsyncEnumerable<ChatResponse> CompleteChatStreaming([FromBody] CompleteChatCommand command)
     {
         return _mediator.CreateStream(command);
     }
