@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\SmartConfig.Common\SmartConfig.Common.csproj" />
+      <ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
     </ItemGroup>
     
 </Project>
