@@ -2,7 +2,7 @@
 using SmartConfig.Data;
 using SmartConfig.Orleans.Silo.Grains.Tests;
 
-namespace SmartConfig.Application.Application.Orleans;
+namespace SmartConfig.Application.Application.Orleans.Commands;
 
 public class HelloWorldCommand : IRequest<string>
 {

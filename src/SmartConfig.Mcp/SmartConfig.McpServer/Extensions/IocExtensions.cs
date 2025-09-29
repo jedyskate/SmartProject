@@ -1,7 +1,6 @@
 using SmartConfig.McpServer.Tools;
 using SmartConfig.Sdk;
 using SmartConfig.Sdk.Extensions;
-using SmartConfig.Sdk.Queue;
 
 namespace SmartConfig.McpServer.Extensions;
 

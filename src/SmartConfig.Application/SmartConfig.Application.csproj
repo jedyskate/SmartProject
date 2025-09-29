@@ -15,6 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Services\SmartConfig.AiAgent\SmartConfig.AiAgent.csproj" />
 		<ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
 		<ProjectReference Include="..\SmartConfig.Core\SmartConfig.Core.csproj" />
 		<ProjectReference Include="..\SmartConfig.Data\SmartConfig.Data.csproj" />

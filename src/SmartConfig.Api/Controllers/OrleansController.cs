@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartConfig.Api.Extensions;
 using SmartConfig.Api.Models;
-using SmartConfig.Application.Application.Orleans;
+using SmartConfig.Application.Application.Orleans.Commands;
 
 namespace SmartConfig.Api.Controllers;
 
