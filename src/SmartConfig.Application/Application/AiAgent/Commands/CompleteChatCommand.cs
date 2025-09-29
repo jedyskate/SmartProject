@@ -29,8 +29,7 @@ public class CompleteChatCommand : IStreamRequest<ChatResponse>
             _kernelService = kernelService;
         }
 
-        public async IAsyncEnumerable<ChatResponse> Handle(
-            CompleteChatCommand request,
+        public async IAsyncEnumerable<ChatResponse> Handle(CompleteChatCommand request,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             // Map incoming messages to SK ChatMessageContent

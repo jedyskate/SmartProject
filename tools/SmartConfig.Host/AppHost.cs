@@ -16,9 +16,19 @@ var migration = builder.AddProject<SmartConfig_Migration>("migration")
     .WaitFor(dbs.SmartConfigDb)
     .WaitFor(dbs.SchedulerDb);
 
+// Ollama
+var ollama = builder.AddOllama("ollama")
+    .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "ollama-http", isProxied: false)
+    .WithExternalHttpEndpoints()
+    .WithDataVolume()
+    // .AddModel("phi4-mini", "phi4-mini:latest");
+    .AddModel("llama32", "llama3.2:latest");
+
 // Backend
 var api = builder.AddProject<SmartConfig_Api>("api")
     .WithReference(dbs.SmartConfigDb)
+    .WithReference(ollama)
+    .WaitFor(ollama)
     .WaitFor(rabbitMq)
     .WaitForCompletion(migration);
 
