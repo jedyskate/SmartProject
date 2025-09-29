@@ -11,10 +11,11 @@
 		<PackageReference Include="EntityFrameworkCore.Exceptions.SqlServer" />
 		<PackageReference Include="MediatR" Version="12.5.0" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\SmartConfig.AiAgent\SmartConfig.AiAgent.csproj" />
 		<ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
 		<ProjectReference Include="..\SmartConfig.Core\SmartConfig.Core.csproj" />
 		<ProjectReference Include="..\SmartConfig.Data\SmartConfig.Data.csproj" />

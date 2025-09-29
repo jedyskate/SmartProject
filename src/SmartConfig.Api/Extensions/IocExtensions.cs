@@ -22,9 +22,10 @@ public static class IocExtensions
             .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
         services.AddMvc();
-        services.AddMediatR();
 
-        services.AddApplication(configuration);
+        builder.AddServiceDefaults();
+        builder.AddApplication();
+
         services.AddCommon();
         services.AddOrleansInterface(configuration);
         services.AddRabbitMqConsumer(configuration);
@@ -32,9 +33,7 @@ public static class IocExtensions
         services.AddAppSettingsIoc(configuration);
         services.AddSecurityIoc();
         services.AddCorsConfiguration();
-
-        builder.AddServiceDefaults();
-
+        
         return builder;
     }
     

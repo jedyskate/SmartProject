@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using shortid;
+using SmartConfig.Sdk;
 
 
 namespace SmartConfig.Blazor.Client.Components;
 
 public partial class Chat : IDisposable
 {
-    private HttpClient _http;
     private DotNetObjectReference<Chat> _dotNetRef;
     private ElementReference _chatBody;
     private PersistingComponentStateSubscription _persistingSubscription;
@@ -20,7 +20,6 @@ public partial class Chat : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        _http = HttpClientFactory.CreateClient("n8n");
         _dotNetRef = DotNetObjectReference.Create(this);
         _persistingSubscription = ApplicationState.RegisterOnPersisting(PersistData);
 
@@ -43,7 +42,13 @@ public partial class Chat : IDisposable
         if (string.IsNullOrWhiteSpace(_userInput)) return;
 
         _messages.Add(new ChatMessage { Id = ShortId.Generate(), Text = _userInput, IsUser = true });
-        var chatRequest = new { message = _userInput };
+        var chatRequest = new
+        {
+            messages = new[]
+            {
+                new { role = "user", content = _userInput }
+            }
+        };
 
         _userInput = string.Empty;
         _currentAgentMessageId = ShortId.Generate();
@@ -51,7 +56,7 @@ public partial class Chat : IDisposable
 
         // BLAZOR WASM STREAMING DOESN'T PROPERLY WORK DUE TO THE HTTPCLIENT.
         // This is an alternative solution.
-        var url = $"{Configuration["SmartConfig:n8nEndpoint"]}/webhook/smartconfig-chat";
+        var url = $"{Configuration["SmartConfig:ApiEndpoint"]}/api/AiAgent/CompleteChatStreaming";
         await JSRuntime.InvokeVoidAsync("streamChat", url, chatRequest, _dotNetRef);
     }
 
@@ -61,21 +66,17 @@ public partial class Chat : IDisposable
         if (string.IsNullOrWhiteSpace(line)) return;
 
         var agentStream = TryDeserializeStream(line);
-        if (agentStream?.Type == "item" && agentStream.Content != null &&
-            agentStream.Metadata?.NodeName == "AI Agent")
+        var existingMessage = _messages.FirstOrDefault(r => r.Id == _currentAgentMessageId);
+        if (existingMessage != null)
         {
-            var existingMessage = _messages.FirstOrDefault(r => r.Id == _currentAgentMessageId);
-            if (existingMessage != null)
-            {
-                existingMessage.Text += agentStream.Content;
-            }
-            else
-            {
-                _messages.Add(new ChatMessage { Id = _currentAgentMessageId, Text = agentStream.Content, IsUser = false });
-            }
-
-            InvokeAsync(StateHasChanged);
+            existingMessage.Text += agentStream?.Content;
         }
+        else
+        {
+            _messages.Add(new ChatMessage { Id = _currentAgentMessageId, Text = agentStream?.Content, IsUser = false });
+        }
+
+        InvokeAsync(StateHasChanged);
     }
 
     [JSInvokable]
@@ -91,12 +92,12 @@ public partial class Chat : IDisposable
         InvokeAsync(StateHasChanged);
     }
 
-    private AgentStream? TryDeserializeStream(string line)
+    private ChatResponse? TryDeserializeStream(string line)
     {
-        AgentStream? agentStream = null;
+        ChatResponse? agentStream = null;
         try
         {
-            agentStream = JsonConvert.DeserializeObject<AgentStream>(line);
+            agentStream = JsonConvert.DeserializeObject<ChatResponse>(line);
         }
         catch (JsonException jex)
         {
@@ -154,34 +155,4 @@ public class ChatMessage
     public string Id { get; set; }
     public string? Text { get; set; }
     public bool? IsUser { get; set; }
-}
-
-public class AgentStream
-{
-    [JsonProperty("type")]
-    public string Type { get; set; } = string.Empty;
-
-    [JsonProperty("content")]
-    public string? Content { get; set; }
-
-    [JsonProperty("metadata")]
-    public Metadata? Metadata { get; set; }
-}
-
-public class Metadata
-{
-    [JsonProperty("nodeId")]
-    public string NodeId { get; set; } = string.Empty;
-
-    [JsonProperty("nodeName")]
-    public string NodeName { get; set; } = string.Empty;
-
-    [JsonProperty("itemIndex")]
-    public int ItemIndex { get; set; }
-
-    [JsonProperty("runIndex")]
-    public int RunIndex { get; set; }
-
-    [JsonProperty("timestamp")]
-    public long Timestamp { get; set; }
 }

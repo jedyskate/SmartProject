@@ -2,7 +2,7 @@
 using SmartConfig.Data;
 using SmartConfig.Orleans.Silo.Grains.Tools;
 
-namespace SmartConfig.Application.Application.Orleans;
+namespace SmartConfig.Application.Application.Orleans.Commands;
 
 public class SuspiciousEmailDomainsCommand : IRequest<List<string>>
 {

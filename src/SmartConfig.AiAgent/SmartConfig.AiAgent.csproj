@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NoWarn>SKEXP0001;SKEXP0070;SKEXP0110</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      <PackageReference Include="Microsoft.Orleans.Core" Version="9.1.2" />
+      <PackageReference Include="Microsoft.SemanticKernel" Version="1.65.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.65.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.65.0-alpha" />
+      <PackageReference Include="Microsoft.SemanticKernel.Plugins.Core" Version="1.65.0-preview" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
+      <ProjectReference Include="..\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
+    </ItemGroup>
+    
+</Project>

@@ -1,17 +1,20 @@
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using SmartConfig.AiAgent.Extensions;
 using SmartConfig.Orleans.Silo.Extensions;
 
 namespace SmartConfig.Application.Extensions;
 
 public static class ApplicationExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
+    public static WebApplicationBuilder AddApplication(this WebApplicationBuilder builder)
     {
-        services.AddOrleansSiloIoc(configuration);
-            
-        services.AddHttpClient();
+        builder.Services.AddMediatR();
+        builder.Services.AddHttpClient();
 
-        return services;
+        builder.Services.AddOrleansSiloIoc(builder.Configuration);
+        builder.AddAiAgentIoc();
+        
+        return builder;
     }
 }
