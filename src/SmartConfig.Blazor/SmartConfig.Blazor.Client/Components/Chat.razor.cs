@@ -156,21 +156,3 @@ public class ChatMessage
     public string? Text { get; set; }
     public bool? IsUser { get; set; }
 }
-
-public class Metadata
-{
-    [JsonProperty("nodeId")]
-    public string NodeId { get; set; } = string.Empty;
-
-    [JsonProperty("nodeName")]
-    public string NodeName { get; set; } = string.Empty;
-
-    [JsonProperty("itemIndex")]
-    public int ItemIndex { get; set; }
-
-    [JsonProperty("runIndex")]
-    public int RunIndex { get; set; }
-
-    [JsonProperty("timestamp")]
-    public long Timestamp { get; set; }
-}
