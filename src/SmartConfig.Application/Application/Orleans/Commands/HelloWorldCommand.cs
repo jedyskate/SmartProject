@@ -25,7 +25,7 @@ public class HelloWorldCommand : IRequest<string>
 
         public async Task<string> Handle(HelloWorldCommand request, CancellationToken cancellationToken)
         {
-            var grain = _clusterClient.GetGrain<IHelloWorldUserGrain>($"my-first-grain-identifier-{request.Name}");
+            var grain = _clusterClient.GetGrain<IHelloWorldUserGrain>($"hello-grain-identifier-{request.Name}");
             var result = await grain.SayHelloWorld(request.Name);
                 
             return result;

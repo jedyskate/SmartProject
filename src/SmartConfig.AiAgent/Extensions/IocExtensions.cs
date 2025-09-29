@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.SemanticKernel;
 using OllamaSharp;
+using SmartConfig.AiAgent.Plugins;
 
 namespace SmartConfig.AiAgent.Extensions;
 
@@ -24,6 +25,8 @@ public static class IocExtensions
             
             return new OllamaApiClient(httpClient, model);
         });
+        
+        builder.Services.AddSingleton<HelloWorldPlugin>();
 
         builder.Services.AddScoped<IKernelService, KernelService>();
         builder.Services.AddSingleton<Kernel>(sp =>
@@ -35,6 +38,8 @@ public static class IocExtensions
                     ollamaClient: (OllamaApiClient)ollamaClient,
                     serviceId: "ollama")
                 .Build();
+            
+            kernel.ImportPluginFromObject(sp.GetRequiredService<HelloWorldPlugin>(), "HelloWorld");
 
             return kernel;
         });

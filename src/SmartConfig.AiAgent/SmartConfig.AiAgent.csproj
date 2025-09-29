@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <FrameworkReference Include="Microsoft.AspNetCore.App" />
+      <PackageReference Include="Microsoft.Orleans.Core" Version="9.1.2" />
       <PackageReference Include="Microsoft.SemanticKernel" Version="1.65.0" />
       <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.65.0" />
       <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.65.0-alpha" />
@@ -20,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
+      <ProjectReference Include="..\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
     </ItemGroup>
     
 </Project>
