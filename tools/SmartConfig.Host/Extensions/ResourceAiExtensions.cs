@@ -43,6 +43,16 @@ public static class ResourceAiExtensions
                 .WithBindMount("Volumes/AnythingLLM/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
+        
+        // autogenstudio
+        if (clients?.Contains("autogenstudio") ?? false)
+            builder.AddContainer("autogenstudio", "ghcr.io/lludlow/autogen-studio:latest")
+                .WithHttpEndpoint(port: 8081, targetPort: 8081, name: "autogenstudio-http")
+                .WaitFor(mcp)
+                .WithParentRelationship(mcp);
+                // .WithEnvironment("OPENAI_API_KEY", "your_openai_api_key_here")
+                // .WithVolume("autogenstudio-storage", "/app/.autogenstudio")
+                // .WaitFor(ollama);
     }
 
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,
