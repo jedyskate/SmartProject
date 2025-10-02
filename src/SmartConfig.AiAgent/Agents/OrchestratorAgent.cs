@@ -6,16 +6,9 @@ using SmartConfig.AiAgent.Agents.Workers;
 
 namespace SmartConfig.AiAgent.Agents;
 
-public class OrchestratorAgent
+public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
 {
-    private readonly List<IWorkerAgent> _agents;
-    private readonly Kernel _kernel;
-
-    public OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
-    {
-        _agents = agents.ToList();
-        _kernel = kernel;
-    }
+    private readonly List<IWorkerAgent> _agents = agents.ToList();
 
     public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessageContent> messages)
     {
@@ -94,7 +87,7 @@ public class OrchestratorAgent
                           {jsonResponse}
                       """;
 
-        var chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
+        var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
         var result = await chatCompletionService.GetChatMessageContentAsync(prompt);
 
         try
