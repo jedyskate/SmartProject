@@ -1,8 +1,10 @@
 using System.Text.Json;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
+using SmartConfig.AiAgent.Agents.Models;
+using SmartConfig.AiAgent.Agents.Workers;
 
-namespace SmartConfig.AiAgent.Agents.Orchestrator;
+namespace SmartConfig.AiAgent.Agents;
 
 public class OrchestratorAgent
 {
@@ -90,10 +92,5 @@ public class OrchestratorAgent
         {
             return null;
         }
-    }
-
-    private class Plan
-    {
-        public List<string> Steps { get; set; } = new();
     }
 }

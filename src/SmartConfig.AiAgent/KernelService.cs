@@ -1,5 +1,5 @@
 ﻿using Microsoft.SemanticKernel;
-using SmartConfig.AiAgent.Agents.Orchestrator;
+using SmartConfig.AiAgent.Agents;
 
 namespace SmartConfig.AiAgent;
 

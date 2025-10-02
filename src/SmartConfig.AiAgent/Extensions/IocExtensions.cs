@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
 using OllamaSharp;
 using SmartConfig.AiAgent.Agents;
-using SmartConfig.AiAgent.Agents.Orchestrator;
 using SmartConfig.AiAgent.Agents.Workers;
 using SmartConfig.AiAgent.Plugins;
 
