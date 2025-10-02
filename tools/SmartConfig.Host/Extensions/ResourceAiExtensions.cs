@@ -54,8 +54,22 @@ public static class ResourceAiExtensions
         //         .WithEnvironment("OLLAMA_MODEL", "llama3.2")
         //         .WithBindMount("Volumes/AutoGenStudio", "/app/.autogenstudio");
         
+        //https://www.youtube.com/watch?v=W6nMkzVcELQ
+        builder.AddContainer("kaggle", "python", "latest")
+            .WaitFor(mcp)
+            .WithParentRelationship(mcp)
+            .WithHttpEndpoint(port: 8888, targetPort: 8888, name: "jupyter-http", isProxied: false)
+            .WithExternalHttpEndpoints()
+            .WithVolume("kaggle-storage", "/root/.kaggle")
+            .WithEntrypoint("/bin/sh")
+            .WithArgs("-c", @"pip install --upgrade kaggle jupyterlab --root-user-action=ignore && jupyter lab --ip=0.0.0.0 --port=8888 --ServerApp.open_browser=False --allow-root");
+
+
         
+        //https://www.youtube.com/watch?v=CRgK70LIEjw&t=470s
         var autogenStudio = builder.AddDockerfile("autogen-studio", "Containers/AutoGenStudio")
+            .WaitFor(mcp)
+            .WithParentRelationship(mcp)
             .WithHttpEndpoint(port: 8081, targetPort: 8081, name: "autogenstudio-http")
             .WithExternalHttpEndpoints()
             .WithEnvironment("OLLAMA_API_BASE_URL", "http://ollama:11434")

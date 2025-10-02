@@ -2,7 +2,8 @@
 
 WORKDIR /code
 
-RUN pip install -U gunicorn autogenstudio
+# Install autogenstudio and ollama
+RUN pip install -U gunicorn autogenstudio ollama
 
 RUN useradd -m -u 1000 user
 USER user
