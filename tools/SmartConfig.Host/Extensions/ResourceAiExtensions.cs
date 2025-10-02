@@ -44,15 +44,23 @@ public static class ResourceAiExtensions
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
         
-        // autogenstudio
-        if (clients?.Contains("autogenstudio") ?? false)
-            builder.AddContainer("autogenstudio", "ghcr.io/lludlow/autogen-studio:latest")
-                .WithHttpEndpoint(port: 8081, targetPort: 8081, name: "autogenstudio-http")
-                .WaitFor(mcp)
-                .WithParentRelationship(mcp)
-                .WithEnvironment("OLLAMA_BASE_URL", "http://localhost:11434")
-                .WithEnvironment("OLLAMA_MODEL", "llama3.2")
-                .WithBindMount("Volumes/AutoGenStudio", "/app/.autogenstudio");
+        // // autogenstudio
+        // if (clients?.Contains("autogenstudio") ?? false)
+        //     builder.AddContainer("autogenstudio", "ghcr.io/lludlow/autogen-studio:latest")
+        //         .WithHttpEndpoint(port: 8081, targetPort: 8081, name: "autogenstudio-http")
+        //         .WaitFor(mcp)
+        //         .WithParentRelationship(mcp)
+        //         .WithEnvironment("OLLAMA_BASE_URL", "http://localhost:11434")
+        //         .WithEnvironment("OLLAMA_MODEL", "llama3.2")
+        //         .WithBindMount("Volumes/AutoGenStudio", "/app/.autogenstudio");
+        
+        
+        var autogenStudio = builder.AddDockerfile("autogen-studio", "Containers/AutoGenStudio")
+            .WithHttpEndpoint(port: 8081, targetPort: 8081, name: "autogenstudio-http")
+            .WithExternalHttpEndpoints()
+            .WithEnvironment("OLLAMA_API_BASE_URL", "http://ollama:11434")
+            .WithEnvironment("OLLAMA_MODEL", "llama3.2")
+            .WithBindMount("Volumes/AutoGenStudio/gallery", "/app/gallery");
     }
 
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,
