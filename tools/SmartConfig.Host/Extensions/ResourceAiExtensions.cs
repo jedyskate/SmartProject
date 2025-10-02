@@ -49,10 +49,10 @@ public static class ResourceAiExtensions
             builder.AddContainer("autogenstudio", "ghcr.io/lludlow/autogen-studio:latest")
                 .WithHttpEndpoint(port: 8081, targetPort: 8081, name: "autogenstudio-http")
                 .WaitFor(mcp)
-                .WithParentRelationship(mcp);
-                // .WithEnvironment("OPENAI_API_KEY", "your_openai_api_key_here")
-                // .WithVolume("autogenstudio-storage", "/app/.autogenstudio")
-                // .WaitFor(ollama);
+                .WithParentRelationship(mcp)
+                .WithEnvironment("OLLAMA_BASE_URL", "http://localhost:11434")
+                .WithEnvironment("OLLAMA_MODEL", "llama3.2")
+                .WithBindMount("Volumes/AutoGenStudio", "/app/.autogenstudio");
     }
 
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,

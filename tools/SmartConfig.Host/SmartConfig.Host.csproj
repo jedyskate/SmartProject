@@ -25,4 +25,8 @@
         <ProjectReference Include="..\SmartConfig.Migration\SmartConfig.Migration.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Volumes\AutoGenStudio\" />
+    </ItemGroup>
+
 </Project>
