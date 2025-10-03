@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.SemanticKernel;
 using OllamaSharp;
+using SmartConfig.AiAgent.Agents;
+using SmartConfig.AiAgent.Agents.Workers;
 using SmartConfig.AiAgent.Plugins;
 
 namespace SmartConfig.AiAgent.Extensions;
@@ -26,9 +27,10 @@ public static class IocExtensions
             return new OllamaApiClient(httpClient, model);
         });
         
-        builder.Services.AddSingleton<HelloWorldPlugin>();
-
         builder.Services.AddScoped<IKernelService, KernelService>();
+        builder.Services.AddAgents();
+        builder.Services.AddPlugins();
+
         builder.Services.AddSingleton<Kernel>(sp =>
         {
             var ollamaClient = sp.GetRequiredService<IOllamaApiClient>();
@@ -45,5 +47,23 @@ public static class IocExtensions
         });
         
         return builder;
+    }
+
+    private static IServiceCollection AddAgents(this IServiceCollection services)
+    {
+        // Register the orchestrator and worker agents
+        services.AddScoped<OrchestratorAgent>();
+        services.AddScoped<IWorkerAgent, HelloWorldAgent>();
+        services.AddScoped<IWorkerAgent, JokeAgent>();
+        services.AddScoped<IWorkerAgent, GeneralPurposeAgent>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddPlugins(this IServiceCollection services)
+    {
+        services.AddSingleton<HelloWorldPlugin>();
+        
+        return services;
     }
 }
