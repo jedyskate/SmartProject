@@ -1,5 +1,5 @@
-using Microsoft.Agents.AI;
-using SmartConfig.AiAgent.Models;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace SmartConfig.AiAgent.Agents.Workers;
 
@@ -7,30 +7,31 @@ public interface IWorkerAgent
 {
     string Name { get; }
     string Description { get; }
-    IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessage> messages);
+    IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessageContent> messages);
 }
 
-public class GeneralPurposeAgent(AIAgent agent) : IWorkerAgent
+public class GeneralPurposeAgent(Kernel kernel) : IWorkerAgent
 {
     public string Name => "GeneralPurposeAgent";
     public string Description => "Provides a general AI response to the user's question.";
 
-    public async IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessage> messages)
+    public async IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessageContent> messages)
     {
-        var history = new List<ChatMessage>
+        var history = new ChatHistory
         {
-            new(
-                RoleType.System,
+            new ChatMessageContent(
+                AuthorRole.System,
                 "You are a helpful AI assistant. Answer the user's question."
             )
         };
         history.AddRange(messages);
 
-        var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
-        
-        await foreach (var response in agent.RunStreamingAsync(prompt))
+        var service = kernel.GetRequiredService<IChatCompletionService>();
+        var result = service.GetStreamingChatMessageContentsAsync(history, null, kernel);
+
+        await foreach (var text in result)
         {
-            yield return response.Text;
+            yield return text.ToString();
         }
     }
 }

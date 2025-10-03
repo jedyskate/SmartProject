@@ -1,33 +1,30 @@
-using Microsoft.Agents.AI;
-using SmartConfig.AiAgent.Models;
-using SmartConfig.AiAgent.Tools;
-using ChatMessage = SmartConfig.AiAgent.Models.ChatMessage;
+using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.ChatCompletion;
 
 namespace SmartConfig.AiAgent.Agents.Workers;
 
-public class JokeAgent(AIAgent agent) : IWorkerAgent
+public class JokeAgent(Kernel kernel) : IWorkerAgent
 {
     public string Name => "JokeAgent";
     public string Description => "Tells a short, funny joke.";
 
-    public async IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessage> messages)
+    public async IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessageContent> messages)
     {
-        var history = new List<ChatMessage>
+        var history = new ChatHistory
         {
-            new(
-                RoleType.System,
+            new ChatMessageContent(
+                AuthorRole.System,
                 "You are a comedian AI. Tell a short, funny joke."
             )
         };
         history.AddRange(messages);
-        
-        // var tool = agent.GetService<HelloWorldTool>();
 
-        var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
+        var service = kernel.GetRequiredService<IChatCompletionService>();
+        var result = service.GetStreamingChatMessageContentsAsync(history, null, kernel);
 
-        await foreach (var response in agent.RunStreamingAsync(prompt))
+        await foreach (var text in result)
         {
-            yield return response.Text;
+            yield return text.ToString();
         }
     }
 }
