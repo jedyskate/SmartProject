@@ -1,6 +1,5 @@
 using Microsoft.Agents.AI;
 using SmartConfig.AiAgent.Models;
-using SmartConfig.AiAgent.Tools;
 using ChatMessage = SmartConfig.AiAgent.Models.ChatMessage;
 
 namespace SmartConfig.AiAgent.Agents.Workers;
@@ -20,9 +19,7 @@ public class JokeAgent(AIAgent agent) : IWorkerAgent
             )
         };
         history.AddRange(messages);
-        
-        // var tool = agent.GetService<HelloWorldTool>();
-
+       
         var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
 
         await foreach (var response in agent.RunStreamingAsync(prompt))

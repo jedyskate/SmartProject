@@ -5,6 +5,7 @@ using Microsoft.Extensions.AI;
 using OllamaSharp;
 using SmartConfig.AiAgent.Agents;
 using SmartConfig.AiAgent.Agents.Workers;
+using SmartConfig.AiAgent.Tools;
 
 namespace SmartConfig.AiAgent.Extensions;
 
@@ -29,6 +30,7 @@ public static class IocExtensions
         
         builder.Services.AddScoped<IAgentService, AgentService>();
         builder.Services.AddAgents();
+        builder.Services.AddTools();
 
         builder.Services.AddSingleton<IChatClient>(sp =>
         {
@@ -45,6 +47,14 @@ public static class IocExtensions
             return new ChatClientAgent(chatClient);
         });
         
+        // builder.Services.AddAgents(options => 
+        // {
+        //     // ...
+        // });
+        //
+        // builder.Services.addage options.AddAgent<JokeAgent>()
+        //     .WithTool<HelloWorldTool>();
+        
         return builder;
     }
 
@@ -55,6 +65,13 @@ public static class IocExtensions
         services.AddScoped<IWorkerAgent, HelloWorldAgent>();
         services.AddScoped<IWorkerAgent, JokeAgent>();
         services.AddScoped<IWorkerAgent, GeneralPurposeAgent>();
+        
+        return services;
+    }
+    
+    private static IServiceCollection AddTools(this IServiceCollection services)
+    {
+        services.AddSingleton<HelloWorldTool>();
         
         return services;
     }

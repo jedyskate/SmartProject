@@ -1,9 +1,13 @@
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
 using SmartConfig.AiAgent.Models;
+using SmartConfig.AiAgent.Tools;
+using ChatMessage = SmartConfig.AiAgent.Models.ChatMessage;
 
 namespace SmartConfig.AiAgent.Agents.Workers;
 
-public class HelloWorldAgent(AIAgent agent) : IWorkerAgent
+public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool helloWorldTool) : IWorkerAgent
 {
     public string Name => "HelloWorldAgent";
     public string Description => "Greets the user or a person by name.";
@@ -23,6 +27,20 @@ public class HelloWorldAgent(AIAgent agent) : IWorkerAgent
             )
         };
         history.AddRange(messages);
+        
+        var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
+            new ChatClientAgentOptions
+            {
+                Name = "Writer",
+                Instructions = "Write stories that are engaging and creative.",
+                ChatOptions = new ChatOptions
+                {
+                    Tools =
+                    [
+                        AIFunctionFactory.Create(helloWorldTool.SayHelloAsync)
+                    ],
+                }
+            });
         
         var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
 
