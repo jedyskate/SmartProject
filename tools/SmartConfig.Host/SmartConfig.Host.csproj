@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\SmartConfig.Agent\SmartConfig.Agent\SmartConfig.Agent.csproj" />
         <ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Api.csproj" />
         <ProjectReference Include="..\..\src\SmartConfig.Blazor\SmartConfig.Blazor\SmartConfig.Blazor.csproj" />
         <ProjectReference Include="..\..\src\SmartConfig.Mcp\SmartConfig.McpServer\SmartConfig.McpServer.csproj" />
