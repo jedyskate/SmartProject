@@ -4,7 +4,7 @@ using Microsoft.SemanticKernel;
 using OllamaSharp;
 using SmartConfig.AiAgent.Agents;
 using SmartConfig.AiAgent.Agents.Workers;
-using SmartConfig.AiAgent.Plugins;
+// using SmartConfig.AiAgent.Plugins;
 
 namespace SmartConfig.AiAgent.Extensions;
 
@@ -41,7 +41,7 @@ public static class IocExtensions
                     serviceId: "ollama")
                 .Build();
             
-            kernel.ImportPluginFromObject(sp.GetRequiredService<HelloWorldPlugin>(), "HelloWorld");
+            // kernel.ImportPluginFromObject(sp.GetRequiredService<HelloWorldPlugin>(), "HelloWorld");
 
             return kernel;
         });
@@ -62,7 +62,7 @@ public static class IocExtensions
     
     private static IServiceCollection AddPlugins(this IServiceCollection services)
     {
-        services.AddSingleton<HelloWorldPlugin>();
+        // services.AddSingleton<HelloWorldPlugin>();
         
         return services;
     }

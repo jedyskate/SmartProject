@@ -1,4 +1,5 @@
 using SmartConfig.Agent.Extensions;
+using SmartConfig.AiAgent.Extensions;
 
 namespace SmartConfig.Agent;
 
@@ -14,6 +15,7 @@ public class Program
 
         builder.AddServiceDefaults();
         builder.AddSwaggerDocumentation();
+        builder.AddAiAgentIoc();
 
         var app = builder.Build();
 

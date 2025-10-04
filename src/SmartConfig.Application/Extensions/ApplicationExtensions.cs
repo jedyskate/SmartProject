@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using SmartConfig.AiAgent.Extensions;
 using SmartConfig.Orleans.Silo.Extensions;
 
 namespace SmartConfig.Application.Extensions;
@@ -13,7 +12,6 @@ public static class ApplicationExtensions
         builder.Services.AddHttpClient();
 
         builder.Services.AddOrleansSiloIoc(builder.Configuration);
-        builder.AddAiAgentIoc();
         
         return builder;
     }
