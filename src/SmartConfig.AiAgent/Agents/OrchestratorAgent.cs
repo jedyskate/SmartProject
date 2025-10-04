@@ -1,18 +1,50 @@
 using System.Text.Json;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Embeddings;
 using SmartConfig.AiAgent.Agents.Models;
 using SmartConfig.AiAgent.Agents.Workers;
+using SmartConfig.AiAgent.Services;
 
 namespace SmartConfig.AiAgent.Agents;
 
-public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
+public class OrchestratorAgent
 {
-    private readonly List<IWorkerAgent> _agents = agents.ToList();
+    private readonly List<IWorkerAgent> _agents;
+    private readonly Kernel _kernel;
+    private readonly IMemoryService _memoryService;
 
-    public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessageContent> messages)
+    public OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel, IMemoryService memoryService)
     {
-        var lastUserMessage = messages.LastOrDefault(m => m.Role == AuthorRole.User);
+        _agents = agents.ToList();
+        _kernel = kernel;
+        _memoryService = memoryService;
+        // Removed: Initialization of _embeddingService
+    }
+
+    public async IAsyncEnumerable<string> RouteAsync(Guid sessionId, string userId, IEnumerable<ChatMessageContent> messages)
+    {
+        var session = await _memoryService.GetSessionAsync(sessionId) ?? new Session { Id = sessionId, UserId = userId };
+        await _memoryService.SaveSessionAsync(session);
+
+        var messagesList = messages.ToList();
+        var lastUserMessage = messagesList.LastOrDefault(m => m.Role == AuthorRole.User);
+
+        if (lastUserMessage?.Content == null)
+        {
+            yield break;
+        }
+
+        // FIX: Use the Kernel extension method for embedding generation
+        var embeddingService = _kernel.GetRequiredService<ITextEmbeddingGenerationService>();
+        var userMessageEmbedding = await embeddingService.GenerateEmbeddingAsync(lastUserMessage.Content);
+        var relevantHistory = await _memoryService.QueryMemoryAsync(sessionId, userMessageEmbedding.ToArray());
+
+        var historyMessages = relevantHistory
+            .Select(m => new ChatMessageContent(AuthorRole.User, m.Content)) // This is a simplification.
+            .ToList();
+
+        var messagesWithHistory = historyMessages.Concat(messagesList).ToList();
 
         var plan = await GetPlanAsync(lastUserMessage);
         if (plan?.Steps.Any() == true)
@@ -22,41 +54,52 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
             {
                 var agent = _agents.FirstOrDefault(a => a.Name == step.Agent);
                 if (agent == null) continue;
-                
-                // Replacing User Message for Orchestrator Subtask
-                var orchestratedMessages = messages.Where(m => m != lastUserMessage).ToList();
+
+                var orchestratedMessages = messagesWithHistory.Where(m => m != lastUserMessage).ToList();
                 orchestratedMessages.Add(new ChatMessageContent(AuthorRole.User, step.Request));
-                
-                // Stream agent output
+
+                var agentResponse = "";
                 await foreach (var response in agent.ExecuteAsync(orchestratedMessages))
                 {
+                    agentResponse += response;
                     yield return response;
                 }
+
+                await _memoryService.SaveMemoryAsync(sessionId, lastUserMessage.Content, userMessageEmbedding.ToArray());
+                // FIX: Use the Kernel extension method for embedding generation
+                var agentResponseEmbedding = await embeddingService.GenerateEmbeddingAsync(agentResponse);
+                await _memoryService.SaveMemoryAsync(sessionId, agentResponse, agentResponseEmbedding.ToArray());
+
                 executedSteps.Add(step);
             }
 
-            // This is a simplification. A real implementation should handle unexecuted steps.
             if (executedSteps.Count == plan.Steps.Count)
             {
                 yield break;
             }
         }
 
-        // Fallback to default agent if no plan or plan failed
         var defaultAgent = _agents.FirstOrDefault(a => a.Name == "GeneralPurposeAgent");
         if (defaultAgent != null)
         {
-            await foreach (var response in defaultAgent.ExecuteAsync(messages))
+            var agentResponse = "";
+            await foreach (var response in defaultAgent.ExecuteAsync(messagesWithHistory))
             {
+                agentResponse += response;
                 yield return response;
             }
+            
+            await _memoryService.SaveMemoryAsync(sessionId, lastUserMessage.Content, userMessageEmbedding.ToArray());
+            // FIX: Use the Kernel extension method for embedding generation
+            var agentResponseEmbedding = await embeddingService.GenerateEmbeddingAsync(agentResponse);
+            await _memoryService.SaveMemoryAsync(sessionId, agentResponse, agentResponseEmbedding.ToArray());
         }
     }
 
     private async Task<Plan?> GetPlanAsync(ChatMessageContent? message)
     {
-        if  (message == null) return null;
-        
+        if (message == null) return null;
+
         var agentList = string.Join("\n", _agents.Select(a => $"- {a.Name}: {a.Description}"));
 
         var jsonResponse = @"{
@@ -64,7 +107,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
             { ""agent"": ""AgentName"", ""request"": ""Subtask"" }
           ]
         }";
-    
+
         var prompt = $"""
                           You are an orchestrator AI. Your job is to break down the user's request into a plan.
                           Each step in the plan contains:
@@ -87,7 +130,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
                           {jsonResponse}
                       """;
 
-        var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
+        var chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
         var result = await chatCompletionService.GetChatMessageContentAsync(prompt);
 
         try

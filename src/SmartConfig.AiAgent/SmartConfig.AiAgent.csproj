@@ -17,6 +17,10 @@
       <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.65.0" />
       <PackageReference Include="Microsoft.SemanticKernel.Connectors.Ollama" Version="1.65.0-alpha" />
       <PackageReference Include="Microsoft.SemanticKernel.Plugins.Core" Version="1.65.0-preview" />
+      <PackageReference Include="Dapper" Version="2.1.35" />
+      <PackageReference Include="Npgsql" Version="9.0.0" />
+      <PackageReference Include="Pgvector" Version="0.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     </ItemGroup>
 
     <ItemGroup>
