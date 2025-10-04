@@ -21,7 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\sdk\SmartConfig.Sdk\SmartConfig.Sdk.csproj" />
-		<ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Api.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Api\SmartConfig.Api.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

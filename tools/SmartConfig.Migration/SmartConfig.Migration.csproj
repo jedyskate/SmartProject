@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SmartConfig.Data\SmartConfig.Data.csproj" />
+    <ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Data\SmartConfig.Data.csproj" />
     <ProjectReference Include="..\..\src\SmartConfig.Scheduler\SmartConfig.Scheduler.csproj" />
   </ItemGroup>
 
