@@ -1,3 +1,6 @@
+using Microsoft.OpenApi.Models;
+using SmartConfig.Agent.Filters;
+
 namespace SmartConfig.Agent.Extensions;
 
 public static class SwaggerExtensions
@@ -7,12 +10,15 @@ public static class SwaggerExtensions
         builder.Services.AddEndpointsApiExplorer(); // Required for minimal APIs
         builder.Services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+            options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Title = "AI Agent API",
                 Version = "v1",
                 Description = "AI Agent API"
             });
+            
+            options.MapType<decimal>(() => new OpenApiSchema { Type = "number", Format = "decimal" });
+            options.SchemaFilter<EnumSchemaFilter>();
         });
         
         return builder;

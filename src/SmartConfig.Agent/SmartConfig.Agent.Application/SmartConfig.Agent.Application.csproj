@@ -20,9 +20,4 @@
       <PackageReference Include="Microsoft.SemanticKernel.Plugins.Core" Version="1.65.0-preview" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
-      <ProjectReference Include="..\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
-    </ItemGroup>
-    
 </Project>
