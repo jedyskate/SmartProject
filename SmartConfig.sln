@@ -60,6 +60,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.ServiceDefaults
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.AiAgent", "src\SmartConfig.AiAgent\SmartConfig.AiAgent.csproj", "{9414CF94-1239-4FEA-B5CD-BF88EF9C2778}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartConfig.Agent", "SmartConfig.Agent", "{5128FC56-1186-4559-AA77-15B0C62A818F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Agent", "src\SmartConfig.Agent\SmartConfig.Agent\SmartConfig.Agent.csproj", "{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +146,10 @@ Global
 		{9414CF94-1239-4FEA-B5CD-BF88EF9C2778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9414CF94-1239-4FEA-B5CD-BF88EF9C2778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9414CF94-1239-4FEA-B5CD-BF88EF9C2778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +175,8 @@ Global
 		{BB2CA8EA-E189-4EED-9490-8AA754128B41} = {6809FF4D-C35F-4680-987F-8E44360460ED}
 		{8BE37253-A1F6-4936-BC8A-D522C59D9CCE} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
 		{9414CF94-1239-4FEA-B5CD-BF88EF9C2778} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
+		{5128FC56-1186-4559-AA77-15B0C62A818F} = {43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}
+		{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998} = {5128FC56-1186-4559-AA77-15B0C62A818F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC340CDE-8425-405E-BD4E-A3D7AC737862}
