@@ -5,11 +5,9 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43BA3FBE-2D51-4E52-8669-730D7FE7EF8C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdk", "sdk", "{9A2E00EB-1E66-4A48-91AB-6708CEF1EB5E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdks", "sdks", "{9A2E00EB-1E66-4A48-91AB-6708CEF1EB5E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{782A6962-D7A2-4848-BA77-373DB7CB59BC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartConfig.Sdk", "sdk\SmartConfig.Sdk\SmartConfig.Sdk.csproj", "{945DEEB3-E87C-4EE2-ABF8-AA8C9D57E1AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartConfig.IntegrationTests", "tests\SmartConfig.IntegrationTests\SmartConfig.IntegrationTests.csproj", "{8579D210-864A-4D29-8A9C-5A9FAA824658}"
 EndProject
@@ -66,16 +64,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Data", "src\Sma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Orleans.Silo", "src\SmartConfig.Api\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj", "{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Sdk", "sdks\SmartConfig.Sdk\SmartConfig.Sdk.csproj", "{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{945DEEB3-E87C-4EE2-ABF8-AA8C9D57E1AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{945DEEB3-E87C-4EE2-ABF8-AA8C9D57E1AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{945DEEB3-E87C-4EE2-ABF8-AA8C9D57E1AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{945DEEB3-E87C-4EE2-ABF8-AA8C9D57E1AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8579D210-864A-4D29-8A9C-5A9FAA824658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8579D210-864A-4D29-8A9C-5A9FAA824658}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8579D210-864A-4D29-8A9C-5A9FAA824658}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -152,12 +148,15 @@ Global
 		{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{945DEEB3-E87C-4EE2-ABF8-AA8C9D57E1AE} = {9A2E00EB-1E66-4A48-91AB-6708CEF1EB5E}
 		{8579D210-864A-4D29-8A9C-5A9FAA824658} = {782A6962-D7A2-4848-BA77-373DB7CB59BC}
 		{EDC4445F-0193-486E-B2DF-D5C71855ACDC} = {782A6962-D7A2-4848-BA77-373DB7CB59BC}
 		{4588941D-4833-4A02-96AC-E208279C9EE4} = {6809FF4D-C35F-4680-987F-8E44360460ED}
@@ -180,6 +179,7 @@ Global
 		{EBB7665C-4D5C-4AF9-AB53-0A270EDD2593} = {56D5017E-00B3-42DB-9D3B-9BD6BA14017C}
 		{ED32E080-BF83-4350-A761-31ED1376C91C} = {56D5017E-00B3-42DB-9D3B-9BD6BA14017C}
 		{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4} = {56D5017E-00B3-42DB-9D3B-9BD6BA14017C}
+		{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A} = {9A2E00EB-1E66-4A48-91AB-6708CEF1EB5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC340CDE-8425-405E-BD4E-A3D7AC737862}

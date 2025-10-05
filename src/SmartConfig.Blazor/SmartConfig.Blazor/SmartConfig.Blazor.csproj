@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\sdk\SmartConfig.Sdk\SmartConfig.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.Sdk\SmartConfig.Sdk.csproj" />
         <ProjectReference Include="..\..\..\tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj" />
         <ProjectReference Include="..\SmartConfig.Blazor.Client\SmartConfig.Blazor.Client.csproj"/>
     </ItemGroup>
