@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SmartConfig.Blazor.Client.Extensions;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

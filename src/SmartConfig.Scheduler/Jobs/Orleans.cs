@@ -1,4 +1,4 @@
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 using TickerQ.Utilities.Base;
 using TickerQ.Utilities.Models;
 

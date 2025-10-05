@@ -2,7 +2,7 @@ using AutoFixture;
 using NUnit.Framework;
 using Shouldly;
 using SmartConfig.IntegrationTests.Infrastructure;
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.IntegrationTests.Tests;
 

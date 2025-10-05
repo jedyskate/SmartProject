@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using ModelContextProtocol.Server;
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.McpServer.Tools;
 

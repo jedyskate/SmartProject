@@ -64,7 +64,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Data", "src\Sma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Orleans.Silo", "src\SmartConfig.Api\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj", "{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Sdk", "sdks\SmartConfig.Sdk\SmartConfig.Sdk.csproj", "{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.BE.Sdk", "sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj", "{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

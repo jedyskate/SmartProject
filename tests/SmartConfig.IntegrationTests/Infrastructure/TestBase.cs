@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.IntegrationTests.Infrastructure;
 

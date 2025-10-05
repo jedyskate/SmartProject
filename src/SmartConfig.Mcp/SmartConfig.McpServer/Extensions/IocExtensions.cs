@@ -1,6 +1,6 @@
 using SmartConfig.McpServer.Tools;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 namespace SmartConfig.McpServer.Extensions;
 

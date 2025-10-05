@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.AiAgent.Plugins;
 

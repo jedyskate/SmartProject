@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NBomber.Contracts;
 using NBomber.CSharp;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 namespace SmartConfig.LoadTests.Tests;
 

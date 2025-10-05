@@ -1,9 +1,9 @@
 using SmartConfig.Blazor.Client.Extensions;
 using SmartConfig.Blazor.Components;
 using SmartConfig.Blazor.Extensions;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
-using SmartConfig.Sdk.Queue;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
+using SmartConfig.BE.Sdk.Queue;
 
 namespace SmartConfig.Blazor;
 
