@@ -31,7 +31,7 @@ public class SwaggerApiTests : TestBase
 
         var settings = new CSharpClientGeneratorSettings
         {
-            ClassName = "SmartConfigClient",
+            ClassName = "SmartConfigApiClient",
             CSharpGeneratorSettings =
             {
                 Namespace = @namespace,
@@ -91,7 +91,7 @@ public class SwaggerApiTests : TestBase
     {
         string solutionPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location)!
                                   .Parent?.Parent?.Parent?.Parent?.Parent?.FullName +
-                              $"{Path.DirectorySeparatorChar}sdk";
+                              $"{Path.DirectorySeparatorChar}sdks";
 
         if (solutionPath == string.Empty)
             return string.Empty;

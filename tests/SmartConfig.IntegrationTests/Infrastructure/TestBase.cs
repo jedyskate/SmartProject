@@ -18,12 +18,12 @@ public class TestBase
     {
         // API CLIENT
         _factoryApi = new CustomWebApplicationFactory<Api.Program>();
-
+        
         var apiSettings = new SmartConfigApiSettings();
         var apiHttpClient = _factoryApi.CreateClient();
         apiHttpClient.BaseAddress = new Uri(apiSettings.SmartConfigApiEndpoint);
         apiHttpClient.DefaultRequestHeaders.Add("Authorization", AccessToken);
-
+        
         SmartConfigApiClient = new SmartConfigApiClient(apiHttpClient);
         
         
