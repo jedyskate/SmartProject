@@ -3,6 +3,7 @@ using SmartConfig.Api.Filters;
 using SmartConfig.Application.Extensions;
 using SmartConfig.Common.Extensions;
 using SmartConfig.Data;
+using SmartConfig.ServiceDefaults;
 
 namespace SmartConfig.Api.Extensions;
 

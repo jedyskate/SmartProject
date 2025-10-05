@@ -8,20 +8,20 @@ namespace SmartConfig.BE.Sdk.Extensions;
 
 public static class IocExtensions
 {
-    public static IServiceCollection AddSmartConfigClient(this IServiceCollection services, bool? queueEnabled = false)
+    public static IServiceCollection AddSmartConfigApiClient(this IServiceCollection services, bool? queueEnabled = false)
     {
         //HTTP CLIENT
-        services.AddHttpClient<ISmartConfigClient, SmartConfigClient>("SmartConfig", (provider, client) =>
+        services.AddHttpClient<ISmartConfigApiClient, SmartConfigApiClient>("SmartConfig", (provider, client) =>
         {
-            var settings = provider.GetService<SmartConfigSettings>()!;
+            var settings = provider.GetService<SmartConfigApiSettings>()!;
             client.BaseAddress = new Uri(settings.SmartConfigApiEndpoint);
         });
-        services.AddTransient<ISmartConfigClient>(provider =>
+        services.AddTransient<ISmartConfigApiClient>(provider =>
         {
             var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
             var httpClient = httpClientFactory.CreateClient("SmartConfig");
     
-            var smartConfigClient = new SmartConfigClient(httpClient)
+            var smartConfigClient = new SmartConfigApiClient(httpClient)
             {
                 JsonSerializerSettings =
                 {

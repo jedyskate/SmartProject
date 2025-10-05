@@ -4,6 +4,7 @@ using SmartConfig.Blazor.Extensions;
 using SmartConfig.BE.Sdk;
 using SmartConfig.BE.Sdk.Extensions;
 using SmartConfig.BE.Sdk.Queue;
+using SmartConfig.ServiceDefaults;
 
 namespace SmartConfig.Blazor;
 
@@ -34,7 +35,7 @@ public class Program
         builder.Services.AddCommonClientIoc(builder.Configuration);
 
         // Add SmartConfig API.
-        builder.Services.AddSingleton(new SmartConfigSettings
+        builder.Services.AddSingleton(new SmartConfigApiSettings
         {
             SmartConfigApiEndpoint = builder.Configuration["SmartConfig:ApiEndpoint"]!,
             ApplicationName = "SmartConfig.Blazor",
@@ -52,7 +53,7 @@ public class Program
             RoutingKey = builder.Configuration["RabbitMq:SmartConfigMq:RoutingKey"]!,
             Environment = builder.Environment.EnvironmentName
         });
-        builder.Services.AddSmartConfigClient(true);
+        builder.Services.AddSmartConfigApiClient(true);
 
         // Add YARP to proxy FE requests to SmartConfig API
         builder.AddYarp();

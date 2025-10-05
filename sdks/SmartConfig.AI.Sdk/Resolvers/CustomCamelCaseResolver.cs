@@ -2,7 +2,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace SmartConfig.Sdk.Resolvers;
+namespace SmartConfig.AI.Sdk.Resolvers;
 
 public class CustomCamelCaseResolver : DefaultContractResolver
 {

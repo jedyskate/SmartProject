@@ -7,13 +7,13 @@ namespace SmartConfig.Scheduler.Jobs;
 public class Orleans
 {
     private readonly ILogger<Orleans> _logger;
-    private readonly ISmartConfigClient _smartConfigClient;
+    private readonly ISmartConfigApiClient _smartConfigApiClient;
     private readonly ISmartConfigQueue _smartConfigQueue;
 
-    public Orleans(ILogger<Orleans> logger, ISmartConfigClient smartConfigClient, ISmartConfigQueue smartConfigQueue)
+    public Orleans(ILogger<Orleans> logger, ISmartConfigApiClient smartConfigApiClient, ISmartConfigQueue smartConfigQueue)
     {
         _logger = logger;
-        _smartConfigClient = smartConfigClient;
+        _smartConfigApiClient = smartConfigApiClient;
         _smartConfigQueue = smartConfigQueue;
     }
 
@@ -22,7 +22,7 @@ public class Orleans
     {
         _logger.LogInformation($"Hello World Context: {context}");
 
-        var response = await _smartConfigClient.HelloWorldAsync(new HelloWorldCommand
+        var response = await _smartConfigApiClient.HelloWorldAsync(new HelloWorldCommand
         {
             Name = string.IsNullOrEmpty(context.Request) ? "Scheduler" : context.Request
         });

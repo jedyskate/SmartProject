@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartConfig.Scheduler.Database;
 using SmartConfig.Scheduler.Extensions;
+using SmartConfig.ServiceDefaults;
 using TickerQ.Dashboard.DependencyInjection;
 using TickerQ.DependencyInjection;
 using TickerQ.EntityFrameworkCore.DependencyInjection;

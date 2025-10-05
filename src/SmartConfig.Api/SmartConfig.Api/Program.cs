@@ -1,6 +1,7 @@
 using SmartConfig.Api.Extensions;
 using SmartConfig.Application.Extensions;
 using SmartConfig.Data;
+using SmartConfig.ServiceDefaults;
 
 namespace SmartConfig.Api;
 

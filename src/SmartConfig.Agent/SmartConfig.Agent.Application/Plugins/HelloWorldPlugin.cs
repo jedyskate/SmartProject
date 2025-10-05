@@ -5,7 +5,7 @@ using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.AiAgent.Plugins;
 
-public class HelloWorldPlugin(ILogger<HelloWorldPlugin> logger, ISmartConfigClient smartConfigClient)
+public class HelloWorldPlugin(ILogger<HelloWorldPlugin> logger, ISmartConfigApiClient smartConfigApiClient)
 {
     [KernelFunction("say_hello")]
     [Description("Says hello to a user using Orleans grain")]
@@ -13,7 +13,7 @@ public class HelloWorldPlugin(ILogger<HelloWorldPlugin> logger, ISmartConfigClie
     {
         logger.LogInformation($"Hello World Name: {name}");
 
-        var result = await smartConfigClient.HelloWorldAsync(new HelloWorldCommand
+        var result = await smartConfigApiClient.HelloWorldAsync(new HelloWorldCommand
         {
             Name = name
         });

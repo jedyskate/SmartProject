@@ -18,7 +18,7 @@ public class UserConfigTests : TestBase
         input.Options.CreatePreferences = true;
         input.Options.CreateSettings = true;
 
-        var response = await SmartConfigClient.CreateUserConfigAsync(input);
+        var response = await SmartConfigApiClient.CreateUserConfigAsync(input);
         response.Response.Identifier.ShouldNotBeNullOrEmpty();
 
         Identifier = response.Response.Identifier;
@@ -27,7 +27,7 @@ public class UserConfigTests : TestBase
     [Test, Order(20)]
     public async Task GetUserConfig_Test()
     {
-        var response = await SmartConfigClient.GetUserConfigAsync(new GetUserConfigQuery
+        var response = await SmartConfigApiClient.GetUserConfigAsync(new GetUserConfigQuery
         {
             Identifier = Identifier
         });

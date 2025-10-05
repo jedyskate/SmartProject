@@ -25,7 +25,7 @@ public class SwaggerTests : TestBase
 
         Console.WriteLine("Rest C# client generator initialized");
 
-        var targetFileName = "SmartConfigClient.cs";
+        var targetFileName = "SmartConfigApiClient.cs";
         var @namespace = "SmartConfig.BE.Sdk";
         var outputPath = GetSdkOutputPath(@namespace);
 

@@ -1,6 +1,6 @@
-﻿namespace SmartConfig.Sdk;
+﻿namespace SmartConfig.BE.Sdk;
 
-public class SmartConfigSettings
+public class SmartConfigApiSettings
 {
     public string SmartConfigApiEndpoint { get; set; } = "https://localhost:5111/";
     public string ApplicationName { get; set; }

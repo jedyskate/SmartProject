@@ -12,18 +12,18 @@ namespace SmartConfig.BE.Sdk
 
     public class SmartConfigQueue : ISmartConfigQueue
     {
-        private readonly SmartConfigSettings _settings;
+        private readonly SmartConfigApiSettings _apiSettings;
         private readonly ISmartConfigQueueManager _queueManager;
 
-        public SmartConfigQueue(SmartConfigSettings settings, ISmartConfigQueueManager queueManager)
+        public SmartConfigQueue(SmartConfigApiSettings apiSettings, ISmartConfigQueueManager queueManager)
         {
-            _settings = settings;
+            _apiSettings = apiSettings;
             _queueManager = queueManager;
         }
 
         public Task<QueueResponse> Request<T>(T command, string? accessToken = null)
         {
-            if (_settings.DryRun)
+            if (_apiSettings.DryRun)
             {
                 return Task.FromResult(new QueueResponse
                 {
@@ -47,8 +47,8 @@ namespace SmartConfig.BE.Sdk
                 if (!string.IsNullOrEmpty(accessToken))
                     headers.Add("Authorization", accessToken);
 
-                if (!string.IsNullOrEmpty(_settings.ApplicationName))
-                    headers.Add("AppId", _settings.ApplicationName);
+                if (!string.IsNullOrEmpty(_apiSettings.ApplicationName))
+                    headers.Add("AppId", _apiSettings.ApplicationName);
 
                 _queueManager.SendSmartConfigMessage(new SmartConfigQueueMessage
                 {

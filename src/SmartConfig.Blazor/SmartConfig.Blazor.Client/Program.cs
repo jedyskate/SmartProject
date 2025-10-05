@@ -8,12 +8,12 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddCommonClientIoc(builder.Configuration);
 
 // Add SmartConfig Proxy.
-builder.Services.AddSingleton(new SmartConfigSettings
+builder.Services.AddSingleton(new SmartConfigApiSettings
 {
     SmartConfigApiEndpoint = builder.HostEnvironment.BaseAddress,
     ApplicationName = "SmartConfig.Blazor.Client",
     DryRun = false
 });
-builder.Services.AddSmartConfigClient();
+builder.Services.AddSmartConfigApiClient();
 
 await builder.Build().RunAsync();

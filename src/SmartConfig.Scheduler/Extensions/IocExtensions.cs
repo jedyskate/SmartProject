@@ -9,7 +9,7 @@ public static class IocExtensions
     public static WebApplicationBuilder AddSmartConfig(this WebApplicationBuilder builder)
     {
         // Add SmartConfig API.
-        builder.Services.AddSingleton(new SmartConfigSettings
+        builder.Services.AddSingleton(new SmartConfigApiSettings
         {
             SmartConfigApiEndpoint = builder.Configuration["SmartConfig:ApiEndpoint"]!,
             ApplicationName = "SmartConfig.Scheduler",
@@ -27,7 +27,7 @@ public static class IocExtensions
             RoutingKey = builder.Configuration["RabbitMq:SmartConfigMq:RoutingKey"]!,
             Environment = builder.Environment.EnvironmentName
         });
-        builder.Services.AddSmartConfigClient(true);
+        builder.Services.AddSmartConfigApiClient(true);
 
         return builder;
     }
