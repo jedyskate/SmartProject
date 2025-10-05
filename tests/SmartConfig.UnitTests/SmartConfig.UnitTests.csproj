@@ -18,9 +18,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\SmartConfig.Application\SmartConfig.Application.csproj" />
-		<ProjectReference Include="..\..\src\SmartConfig.Data\SmartConfig.Data.csproj" />
-		<ProjectReference Include="..\..\src\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Application\SmartConfig.Application.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Data\SmartConfig.Data.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
 	</ItemGroup>
 
 </Project>

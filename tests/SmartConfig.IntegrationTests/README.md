@@ -6,7 +6,7 @@ This project contains the integration tests for the `SmartConfig.Api`. It is des
 
 The integration tests use `Microsoft.AspNetCore.Mvc.Testing` to host an in-memory instance of the API. This allows the tests to run without needing to deploy the actual application.
 
-API requests are made using a strongly-typed client, `SmartConfigClient`, which is auto-generated from the API's OpenAPI specification and is located in the `SmartConfig.Sdk` project. This ensures that the tests are always in sync with the API's contract.
+API requests are made using a strongly-typed client, `SmartConfigClient`, which is auto-generated from the API's OpenAPI specification and is located in the `SmartConfig.BE.Sdk` project. This ensures that the tests are always in sync with the API's contract.
 
 ## How to Run
 

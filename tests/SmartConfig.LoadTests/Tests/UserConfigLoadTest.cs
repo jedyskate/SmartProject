@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NBomber.Contracts;
 using NBomber.CSharp;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 namespace SmartConfig.LoadTests.Tests
 {
@@ -15,8 +15,8 @@ namespace SmartConfig.LoadTests.Tests
         public void GlobalSetup()
         {
             var services = new ServiceCollection();
-            services.AddSingleton(new SmartConfigSettings());
-            services.AddSmartConfigClient();
+            services.AddSingleton(new SmartConfigApiSettings());
+            services.AddSmartConfigApiClient();
 
             _serviceProvider = services.BuildServiceProvider();
         }
@@ -26,7 +26,7 @@ namespace SmartConfig.LoadTests.Tests
         {
             var scenario = Scenario.Create("user_config_crud_scenario", async context =>
             {
-                var smartConfigClient = _serviceProvider.GetRequiredService<ISmartConfigClient>();
+                var smartConfigClient = _serviceProvider.GetRequiredService<ISmartConfigApiClient>();
                 var identifier = $"test-user-{Guid.NewGuid()}";
                 var name = $"Test User {context.ScenarioInfo.InstanceId}";
 

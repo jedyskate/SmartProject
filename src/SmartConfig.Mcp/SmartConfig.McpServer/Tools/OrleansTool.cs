@@ -1,24 +1,24 @@
 using System.ComponentModel;
 using ModelContextProtocol.Server;
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.McpServer.Tools;
 
 [McpServerToolType]
 public sealed class OrleansTool
 {
-    private readonly ISmartConfigClient _smartConfigClient;
+    private readonly ISmartConfigApiClient _smartConfigApiClient;
 
-    public OrleansTool(ISmartConfigClient smartConfigClient)
+    public OrleansTool(ISmartConfigApiClient smartConfigApiClient)
     {
-        _smartConfigClient = smartConfigClient;
+        _smartConfigApiClient = smartConfigApiClient;
     }
 
     [McpServerTool]
     [Description("Say hello to the orlenas backend.")]
     public async Task<string> HelloOrleans([Description("Name who's sying hello.")] string name)
     {
-        var result = await _smartConfigClient.HelloWorldAsync(new HelloWorldCommand { Name = name });
+        var result = await _smartConfigApiClient.HelloWorldAsync(new HelloWorldCommand { Name = name });
         
         return result.Response;
     }

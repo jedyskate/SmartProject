@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using shortid;
-using SmartConfig.Sdk;
+using SmartConfig.AI.Sdk;
 
 
 namespace SmartConfig.Blazor.Client.Components;
@@ -56,7 +56,7 @@ public partial class Chat : IDisposable
 
         // BLAZOR WASM STREAMING DOESN'T PROPERLY WORK DUE TO THE HTTPCLIENT.
         // This is an alternative solution.
-        var url = $"{Configuration["SmartConfig:ApiEndpoint"]}/api/AiAgent/CompleteChatStreaming";
+        var url = $"{Configuration["SmartConfig:AgentEndpoint"]}/Agent/CompleteChatStreaming";
         await JSRuntime.InvokeVoidAsync("streamChat", url, chatRequest, _dotNetRef);
     }
 

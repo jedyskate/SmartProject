@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Shouldly;
 using SmartConfig.IntegrationTests.Infrastructure;
-using SmartConfig.Sdk;
+using SmartConfig.BE.Sdk;
 
 namespace SmartConfig.IntegrationTests.Tests;
 
@@ -11,7 +11,7 @@ public class OrleansTests : TestBase
     [Test, Order(10)]
     public async Task FirstHelloWorld_Test()
     {
-        var smartConfigClient = SmartConfigClient;
+        var smartConfigClient = SmartConfigApiClient;
             
         // First hello
         var firstCommand = new HelloWorldCommand { Name = "Tester" };
@@ -25,7 +25,7 @@ public class OrleansTests : TestBase
         
         // Third hello
         var thirdCommand = new HelloWorldCommand { Name = "Tester" };
-        var thirdResponse = await SmartConfigClient.HelloWorldAsync(thirdCommand);
+        var thirdResponse = await SmartConfigApiClient.HelloWorldAsync(thirdCommand);
         thirdResponse.Response.ShouldBe("Hello world number 2 from Tester. Total hello world count: 3");
     }
 }

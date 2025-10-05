@@ -1,7 +1,7 @@
 @page "/userconfig/search"
 @using System.Linq
-@using SmartConfig.Sdk
-@inject ISmartConfigClient SmartConfigClient
+@using SmartConfig.BE.Sdk
+@inject ISmartConfigApiClient SmartConfigApiClient
 @inject NavigationManager NavigationManager
 
 <PageTitle>User Config Search</PageTitle>
@@ -177,7 +177,7 @@ else
 
         try
         {
-            var apiResponse = await SmartConfigClient.SearchUserConfigsAsync(query);
+            var apiResponse = await SmartConfigApiClient.SearchUserConfigsAsync(query);
             _searchResult = apiResponse.Response;
         }
         catch (ApiException ex)
