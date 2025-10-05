@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using shortid;
-using SmartConfig.BE.Sdk;
+using SmartConfig.AI.Sdk;
 
 
 namespace SmartConfig.Blazor.Client.Components;

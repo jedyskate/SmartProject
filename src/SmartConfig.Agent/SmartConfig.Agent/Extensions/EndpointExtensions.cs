@@ -10,12 +10,12 @@ public static class EndpointExtensions
     public static WebApplication AddApiEndpoints(this WebApplication app)
     {
         // Weather
-        app.MapGet("/weatherforecast", async (IMediator mediator) => await mediator.Send(new WeatherForecastQuery()))
+        app.MapGet("/agent/weatherforecast", async (IMediator mediator) => await mediator.Send(new WeatherForecastQuery()))
             .WithName("WeatherForecast")
             .WithOpenApi();
         
         // Chat Agent
-        app.MapPost("/completechatstreaming", async (CompleteChatCommand command, IMediator mediator, HttpContext httpContext, ILogger<Program> logger) =>
+        app.MapPost("/agent/completechatstreaming", async (CompleteChatCommand command, IMediator mediator, HttpContext httpContext, ILogger<Program> logger) =>
             {
                 httpContext.Response.StatusCode = StatusCodes.Status200OK;
                 httpContext.Response.ContentType = "application/json";

@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
       <ProjectReference Include="..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
     </ItemGroup>
 

@@ -102,8 +102,8 @@ namespace SmartConfig.AI.Sdk
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "weatherforecast"
-                    urlBuilder_.Append("weatherforecast");
+                    // Operation Path: "agent/weatherforecast"
+                    urlBuilder_.Append("agent/weatherforecast");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -187,8 +187,8 @@ namespace SmartConfig.AI.Sdk
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "completechatstreaming"
-                    urlBuilder_.Append("completechatstreaming");
+                    // Operation Path: "agent/completechatstreaming"
+                    urlBuilder_.Append("agent/completechatstreaming");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
