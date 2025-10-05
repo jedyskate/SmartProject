@@ -7,7 +7,7 @@ using SmartConfig.IntegrationTests.Infrastructure;
 namespace SmartConfig.IntegrationTests.Tests;
 
 [TestFixture, Order(1)]
-public class SwaggerTests : TestBase
+public class SwaggerApiTests : TestBase
 {
     [Test, Order(10)]
     public async Task CreateProxyClient_Test()
@@ -31,7 +31,7 @@ public class SwaggerTests : TestBase
 
         var settings = new CSharpClientGeneratorSettings
         {
-            ClassName = "SmartConfigClient",
+            ClassName = "SmartConfigApiClient",
             CSharpGeneratorSettings =
             {
                 Namespace = @namespace,
@@ -91,7 +91,7 @@ public class SwaggerTests : TestBase
     {
         string solutionPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location)!
                                   .Parent?.Parent?.Parent?.Parent?.Parent?.FullName +
-                              $"{Path.DirectorySeparatorChar}sdk";
+                              $"{Path.DirectorySeparatorChar}sdks";
 
         if (solutionPath == string.Empty)
             return string.Empty;
