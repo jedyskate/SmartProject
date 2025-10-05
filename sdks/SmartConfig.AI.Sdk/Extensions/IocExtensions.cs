@@ -10,27 +10,21 @@ public static class IocExtensions
     public static IServiceCollection AddSmartConfigAgentClient(this IServiceCollection services)
     {
         //HTTP CLIENT
-        services.AddHttpClient<ISmartConfigAgentClient, SmartConfigAgentClient>("SmartConfig", (provider, client) =>
-        {
-            var settings = provider.GetService<SmartConfigAgentSettings>()!;
-            client.BaseAddress = new Uri(settings.SmartConfigApiEndpoint);
-        });
-        services.AddTransient<ISmartConfigAgentClient>(provider =>
-        {
-            var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
-            var httpClient = httpClientFactory.CreateClient("SmartConfig");
-    
-            var smartConfigClient = new SmartConfigAgentClient(httpClient)
+        services.AddHttpClient("SmartConfig", (provider, client) =>
             {
-                JsonSerializerSettings =
+                var settings = provider.GetRequiredService<SmartConfigAgentSettings>();
+                client.BaseAddress = new Uri(settings.SmartConfigAgentEndpoint);
+            })
+            .AddTypedClient<ISmartConfigAgentClient>((httpClient, provider) =>
+                new SmartConfigAgentClient(httpClient)
                 {
-                    ContractResolver = new CustomCamelCaseResolver(),
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                }
-            };
-            return smartConfigClient;
-        });
+                    JsonSerializerSettings =
+                    {
+                        ContractResolver = new CustomCamelCaseResolver(),
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    }
+                });
 
         return services;
     }
