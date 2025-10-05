@@ -2,6 +2,7 @@ using System.Text.Json;
 using MediatR;
 using SmartConfig.Agent.Endpoints.Commands;
 using SmartConfig.Agent.Endpoints.Queries;
+using SmartConfig.AiAgent.Models;
 
 namespace SmartConfig.Agent.Extensions;
 
@@ -43,6 +44,7 @@ public static class EndpointExtensions
                 }
             })
             .WithName("CompleteChatStreaming")
+            .Produces<ChatResponse>()
             .WithOpenApi();
         
         return app;

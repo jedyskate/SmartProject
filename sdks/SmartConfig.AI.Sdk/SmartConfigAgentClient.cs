@@ -38,12 +38,12 @@ namespace SmartConfig.AI.Sdk
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Void> CompleteChatStreamingAsync(CompleteChatCommand body);
+        System.Threading.Tasks.Task<ChatResponse> CompleteChatStreamingAsync(CompleteChatCommand body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<Void> CompleteChatStreamingAsync(CompleteChatCommand body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ChatResponse> CompleteChatStreamingAsync(CompleteChatCommand body, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -159,7 +159,7 @@ namespace SmartConfig.AI.Sdk
 
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<Void> CompleteChatStreamingAsync(CompleteChatCommand body)
+        public virtual System.Threading.Tasks.Task<ChatResponse> CompleteChatStreamingAsync(CompleteChatCommand body)
         {
             return CompleteChatStreamingAsync(body, System.Threading.CancellationToken.None);
         }
@@ -167,7 +167,7 @@ namespace SmartConfig.AI.Sdk
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<Void> CompleteChatStreamingAsync(CompleteChatCommand body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ChatResponse> CompleteChatStreamingAsync(CompleteChatCommand body, System.Threading.CancellationToken cancellationToken)
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -183,7 +183,7 @@ namespace SmartConfig.AI.Sdk
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
@@ -215,9 +215,12 @@ namespace SmartConfig.AI.Sdk
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            var result_ = (Void)System.Convert.ChangeType(responseData_, typeof(Void));
-                            return result_;
+                            var objectResponse_ = await ReadObjectResponseAsync<ChatResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         {
@@ -364,6 +367,14 @@ namespace SmartConfig.AI.Sdk
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ChatResponse
+    {
+        [Newtonsoft.Json.JsonProperty("content", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Content { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CompleteChatCommand
     {
         [Newtonsoft.Json.JsonProperty("messages", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -389,12 +400,6 @@ namespace SmartConfig.AI.Sdk
 
         [System.Runtime.Serialization.EnumMember(Value = @"Tool")]
         Tool = 4,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Void
-    {
 
     }
 

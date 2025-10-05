@@ -25,12 +25,14 @@ public class Program
         builder.AddSwaggerDocumentation();
         builder.AddAiAgentIoc();
         builder.AddSmartConfigApi();
+        builder.AddCorsConfig();
 
         var app = builder.Build();
 
         app.UseSwaggerDocumentation();
         app.UseHttpsRedirection();
         app.AddApiEndpoints();
+        app.UseCorsConfig();
         
         app.Run();
     }
