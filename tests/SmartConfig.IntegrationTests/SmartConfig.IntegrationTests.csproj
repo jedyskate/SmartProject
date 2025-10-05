@@ -20,7 +20,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
 		<ProjectReference Include="..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
+		<ProjectReference Include="..\..\src\SmartConfig.Agent\SmartConfig.Agent\SmartConfig.Agent.csproj" />
 		<ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Api\SmartConfig.Api.csproj" />
 	</ItemGroup>
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using SmartConfig.AI.Sdk.Resolvers;
-using SmartConfig.Sdk;
 
 namespace SmartConfig.AI.Sdk.Extensions;
 

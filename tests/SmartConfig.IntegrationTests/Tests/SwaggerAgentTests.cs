@@ -7,7 +7,7 @@ using SmartConfig.IntegrationTests.Infrastructure;
 namespace SmartConfig.IntegrationTests.Tests;
 
 [TestFixture, Order(1)]
-public class SwaggerTests : TestBase
+public class SwaggerAgentTests : TestBase
 {
     [Test, Order(10)]
     public async Task CreateProxyClient_Test()
@@ -25,13 +25,13 @@ public class SwaggerTests : TestBase
 
         Console.WriteLine("Rest C# client generator initialized");
 
-        var targetFileName = "SmartConfigApiClient.cs";
-        var @namespace = "SmartConfig.BE.Sdk";
+        var targetFileName = "SmartConfigAgentClient.cs";
+        var @namespace = "SmartConfig.AI.Sdk";
         var outputPath = GetSdkOutputPath(@namespace);
 
         var settings = new CSharpClientGeneratorSettings
         {
-            ClassName = "SmartConfigClient",
+            ClassName = "SmartConfigAgentClient",
             CSharpGeneratorSettings =
             {
                 Namespace = @namespace,
@@ -64,7 +64,7 @@ public class SwaggerTests : TestBase
         {
             Console.WriteLine("Initializing API instance in memory");
 
-            var factory = new CustomWebApplicationFactory<Api.Program>();
+            var factory = new CustomWebApplicationFactory<Agent.Program>();
             using var client = factory.CreateClient();
 
             Console.WriteLine("Fetching open Api document from API instance");
