@@ -23,6 +23,7 @@ public class Program
         builder.AddServiceDefaults();
         builder.AddSwaggerDocumentation();
         builder.AddAiAgentIoc();
+        builder.AddSmartConfigApi();
 
         var app = builder.Build();
 

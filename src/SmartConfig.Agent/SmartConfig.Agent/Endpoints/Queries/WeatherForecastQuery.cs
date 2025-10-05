@@ -5,7 +5,7 @@ namespace SmartConfig.Agent.Endpoints.Queries;
 
 public record WeatherForecastQuery : IRequest<WeatherForecast[]>;
 
-public class GetWeatherForecastHandler : IRequestHandler<WeatherForecastQuery, WeatherForecast[]>
+public class Handler : IRequestHandler<WeatherForecastQuery, WeatherForecast[]>
 {
     public Task<WeatherForecast[]> Handle(WeatherForecastQuery request, CancellationToken cancellationToken)
     {
