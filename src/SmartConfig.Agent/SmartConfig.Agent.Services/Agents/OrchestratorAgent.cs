@@ -1,18 +1,18 @@
 using System.Text.Json;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.Agents.AI;
 using SmartConfig.Agent.Services.Agents.Models;
 using SmartConfig.Agent.Services.Agents.Workers;
+using SmartConfig.Agent.Services.Models;
 
 namespace SmartConfig.Agent.Services.Agents;
 
-public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
+public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, AIAgent aiAgent)
 {
     private readonly List<IWorkerAgent> _agents = agents.ToList();
 
-    public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessageContent> messages)
+    public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessage> messages)
     {
-        var lastUserMessage = messages.LastOrDefault(m => m.Role == AuthorRole.User);
+        var lastUserMessage = messages.LastOrDefault(m => m.Role == RoleType.User);
 
         var plan = await GetPlanAsync(lastUserMessage);
         if (plan?.Steps.Any() == true)
@@ -25,7 +25,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
                 
                 // Replacing User Message for Orchestrator Subtask
                 var orchestratedMessages = messages.Where(m => m != lastUserMessage).ToList();
-                orchestratedMessages.Add(new ChatMessageContent(AuthorRole.User, step.Request));
+                orchestratedMessages.Add(new ChatMessage(RoleType.User, step.Request));
                 
                 // Stream agent output
                 await foreach (var response in agent.ExecuteAsync(orchestratedMessages))
@@ -53,7 +53,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
         }
     }
 
-    private async Task<Plan?> GetPlanAsync(ChatMessageContent? message)
+    private async Task<Plan?> GetPlanAsync(ChatMessage? message)
     {
         if  (message == null) return null;
         
@@ -87,12 +87,11 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
                           {jsonResponse}
                       """;
 
-        var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
-        var result = await chatCompletionService.GetChatMessageContentAsync(prompt);
+        var result = await aiAgent.RunAsync(prompt);
 
         try
         {
-            return JsonSerializer.Deserialize<Plan>(result.Content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<Plan>(result.Text, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
         catch (JsonException)
         {

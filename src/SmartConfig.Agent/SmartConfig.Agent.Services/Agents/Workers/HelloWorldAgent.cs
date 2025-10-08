@@ -1,20 +1,23 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
+using SmartConfig.Agent.Services.Models;
+using SmartConfig.Agent.Services.Tools;
+using ChatMessage = SmartConfig.Agent.Services.Models.ChatMessage;
 
 namespace SmartConfig.Agent.Services.Agents.Workers;
 
-public class HelloWorldAgent(IConfiguration configuration, Kernel kernel) : IWorkerAgent
+public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool helloWorldTool) : IWorkerAgent
 {
     public string Name => "HelloWorldAgent";
     public string Description => "Greets the user or a person by name.";
 
-    public async IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessageContent> messages)
+    public async IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessage> messages)
     {
-        var history = new ChatHistory
+        var history = new List<ChatMessage>
         {
-            new ChatMessageContent(
-                AuthorRole.System,
+            new(
+                RoleType.System,
                 """
                 You are a helpful AI assistant. 
                 When the user asks you to greet someone by name, you MUST call the 'say_hello' function in the 'HelloWorld' plugin.
@@ -24,18 +27,26 @@ public class HelloWorldAgent(IConfiguration configuration, Kernel kernel) : IWor
             )
         };
         history.AddRange(messages);
+        
+        var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
+            new ChatClientAgentOptions
+            {
+                Name = "Writer",
+                Instructions = "Write stories that are engaging and creative.",
+                ChatOptions = new ChatOptions
+                {
+                    Tools =
+                    [
+                        AIFunctionFactory.Create(helloWorldTool.SayHelloAsync)
+                    ],
+                }
+            });
+        
+        var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
 
-        var service = kernel.GetRequiredService<IChatCompletionService>();
-        var settings = new PromptExecutionSettings
+        await foreach (var response in agent.RunStreamingAsync(prompt))
         {
-            ServiceId = configuration["SemanticKernel:ServiceId"]!,
-            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
-        };
-
-        var result = service.GetStreamingChatMessageContentsAsync(history, settings, kernel);
-        await foreach (var text in result)
-        {
-            yield return text.ToString();
+            yield return response.Text;
         }
     }
 }
