@@ -1,4 +1,3 @@
-using Microsoft.Agents.AI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,21 +30,6 @@ public static class AiIocExtensions
         builder.Services.AddScoped<IAgentService, AgentService>();
         builder.Services.AddAgents();
         builder.Services.AddTools();
-
-        builder.Services.AddSingleton<IChatClient>(sp =>
-        {
-            var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
-            var httpClient = clientFactory.CreateClient("ollama");
-            var model = config["Agent:Ollama:Model"]!;
-            
-            return new OllamaApiClient(httpClient, model);
-        });
-
-        builder.Services.AddSingleton<AIAgent>(sp =>
-        {
-            var chatClient = sp.GetRequiredService<IChatClient>();
-            return new ChatClientAgent(chatClient);
-        });
         
         return builder;
     }

@@ -20,8 +20,8 @@ public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool he
                 RoleType.System,
                 """
                 You are a helpful AI assistant. 
-                When the user asks you to greet someone by name, you MUST call the 'say_hello' function in the 'HelloWorld' plugin.
-                Return **only** the response from the plugin. Do not generate any greetings yourself.
+                When the user asks you to greet someone by name, you MUST call the 'SayHelloAsync'.
+                Return ONLY the response from the plugin. Do not generate any greetings yourself.
                 Do not respond with anything else unless explicitly instructed by the user.
                 """
             )
@@ -31,14 +31,16 @@ public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool he
         var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
             new ChatClientAgentOptions
             {
-                Name = "Writer",
-                Instructions = "Write stories that are engaging and creative.",
+                Name = nameof(HelloWorldAgent),
+                Instructions = "You are an AI assistant that uses a hello tool.",
                 ChatOptions = new ChatOptions
                 {
                     Tools =
                     [
                         AIFunctionFactory.Create(helloWorldTool.SayHelloAsync)
                     ],
+                    ToolMode = ChatToolMode.Auto,
+                    ResponseFormat = ChatResponseFormat.Text
                 }
             });
         

@@ -1,12 +1,15 @@
 using System.Text.Json;
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
 using SmartConfig.Agent.Services.Agents.Models;
 using SmartConfig.Agent.Services.Agents.Workers;
 using SmartConfig.Agent.Services.Models;
+using ChatMessage = SmartConfig.Agent.Services.Models.ChatMessage;
 
 namespace SmartConfig.Agent.Services.Agents;
 
-public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, AIAgent aiAgent)
+public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, IOllamaApiClient ollamaApiClient)
 {
     private readonly List<IWorkerAgent> _agents = agents.ToList();
 
@@ -64,7 +67,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, AIAgent aiAgent
             { ""agent"": ""AgentName"", ""request"": ""Subtask"" }
           ]
         }";
-    
+        
         var prompt = $"""
                           You are an orchestrator AI. Your job is to break down the user's request into a plan.
                           Each step in the plan contains:
@@ -86,8 +89,19 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, AIAgent aiAgent
                           Expected response format:
                           {jsonResponse}
                       """;
+        
+        var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
+            new ChatClientAgentOptions
+            {
+                Name = nameof(OrchestratorAgent),
+                Instructions = "You are an orchestrator AI Agent",
+                ChatOptions = new ChatOptions
+                {
+                    ResponseFormat = ChatResponseFormat.ForJsonSchema<Plan>()
+                }
+            });
 
-        var result = await aiAgent.RunAsync(prompt);
+        var result = await agent.RunAsync(prompt);
 
         try
         {
