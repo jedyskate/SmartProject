@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NBomber.Contracts;
 using NBomber.CSharp;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 namespace SmartConfig.LoadTests.Tests;
 
@@ -15,8 +15,8 @@ public class HelloWorldTest : IDisposable
     public void GlobalSetup()
     {
         var services = new ServiceCollection();
-        services.AddSingleton(new SmartConfigSettings());
-        services.AddSmartConfigClient();
+        services.AddSingleton(new SmartConfigApiSettings());
+        services.AddSmartConfigApiClient();
 
         _serviceProvider = services.BuildServiceProvider();
     }
@@ -26,7 +26,7 @@ public class HelloWorldTest : IDisposable
     {
         var scenario = Scenario.Create("hello_world_scenario", async context =>
             {
-                var smartConfigClient = _serviceProvider.GetRequiredService<ISmartConfigClient>();
+                var smartConfigClient = _serviceProvider.GetRequiredService<ISmartConfigApiClient>();
                 var response = await smartConfigClient.HelloWorldAsync(new HelloWorldCommand
                 {
                     Name = "NBomber"

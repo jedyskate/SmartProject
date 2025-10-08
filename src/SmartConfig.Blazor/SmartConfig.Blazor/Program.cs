@@ -1,9 +1,12 @@
+using SmartConfig.AI.Sdk;
+using SmartConfig.AI.Sdk.Extensions;
 using SmartConfig.Blazor.Client.Extensions;
 using SmartConfig.Blazor.Components;
 using SmartConfig.Blazor.Extensions;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
-using SmartConfig.Sdk.Queue;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
+using SmartConfig.BE.Sdk.Queue;
+using SmartConfig.ServiceDefaults;
 
 namespace SmartConfig.Blazor;
 
@@ -33,8 +36,8 @@ public class Program
         builder.AddServiceDefaults();
         builder.Services.AddCommonClientIoc(builder.Configuration);
 
-        // Add SmartConfig API.
-        builder.Services.AddSingleton(new SmartConfigSettings
+        // Add SmartConfig API Proxy.
+        builder.Services.AddSingleton(new SmartConfigApiSettings
         {
             SmartConfigApiEndpoint = builder.Configuration["SmartConfig:ApiEndpoint"]!,
             ApplicationName = "SmartConfig.Blazor",
@@ -52,7 +55,16 @@ public class Program
             RoutingKey = builder.Configuration["RabbitMq:SmartConfigMq:RoutingKey"]!,
             Environment = builder.Environment.EnvironmentName
         });
-        builder.Services.AddSmartConfigClient(true);
+        builder.Services.AddSmartConfigApiClient(true);
+        
+        // Add SmartConfig Agent Proxy.
+        builder.Services.AddSingleton(new SmartConfigAgentSettings
+        {
+            SmartConfigAgentEndpoint = builder.Configuration["SmartConfig:AgentEndpoint"]!,
+            ApplicationName = "SmartConfig.Blazor.Client",
+            DryRun = false
+        });
+        builder.Services.AddSmartConfigAgentClient();
 
         // Add YARP to proxy FE requests to SmartConfig API
         builder.AddYarp();

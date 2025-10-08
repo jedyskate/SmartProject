@@ -6,7 +6,7 @@ This project contains the load tests for the `SmartConfig.Api`. It is designed t
 
 The load tests are built using the [NBomber](https://nbomber.com/) framework. NBomber provides a declarative way to define scenarios, load simulations, and performance thresholds.
 
-API requests are made using a strongly-typed client, `SmartConfigClient`, which is auto-generated from the API's OpenAPI specification and is located in the `SmartConfig.Sdk` project.
+API requests are made using a strongly-typed client, `SmartConfigClient`, which is auto-generated from the API's OpenAPI specification and is located in the `SmartConfig.BE.Sdk` project.
 
 ## How to Run
 

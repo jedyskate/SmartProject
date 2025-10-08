@@ -14,11 +14,10 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="1.12.0-beta.1" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.6"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.9"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\sdk\SmartConfig.Sdk\SmartConfig.Sdk.csproj" />
         <ProjectReference Include="..\..\..\tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj" />
         <ProjectReference Include="..\SmartConfig.Blazor.Client\SmartConfig.Blazor.Client.csproj"/>
     </ItemGroup>

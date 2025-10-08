@@ -1,7 +1,6 @@
 using SmartConfig.McpServer.Tools;
-using SmartConfig.Sdk;
-using SmartConfig.Sdk.Extensions;
-using SmartConfig.Sdk.Queue;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 namespace SmartConfig.McpServer.Extensions;
 
@@ -19,13 +18,13 @@ public static class IocExtensions
     public static WebApplicationBuilder AddSmartConfig(this WebApplicationBuilder builder)
     {
         // Add SmartConfig API.
-        builder.Services.AddSingleton(new SmartConfigSettings
+        builder.Services.AddSingleton(new SmartConfigApiSettings
         {
             SmartConfigApiEndpoint = builder.Configuration["SmartConfig:ApiEndpoint"]!,
             ApplicationName = "SmartConfig.MpcServer",
             DryRun = false
         });
-        builder.Services.AddSmartConfigClient();
+        builder.Services.AddSmartConfigApiClient();
 
         return builder;
     }

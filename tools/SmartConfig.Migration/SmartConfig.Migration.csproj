@@ -7,11 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.3.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SmartConfig.Data\SmartConfig.Data.csproj" />
+    <ProjectReference Include="..\..\src\SmartConfig.Api\SmartConfig.Data\SmartConfig.Data.csproj" />
     <ProjectReference Include="..\..\src\SmartConfig.Scheduler\SmartConfig.Scheduler.csproj" />
   </ItemGroup>
 

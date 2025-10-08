@@ -15,8 +15,8 @@ The solution is organized into the following high-level folders:
     -   **`SmartConfig.NextJs`**: The Next.js-based frontend application.
     -   **`SmartConfig.Orleans.Silo`**: Hosts the Orleans grains for distributed, stateful logic.
 
--   **`/sdk`**: Contains the Software Development Kit for interacting with the API.
-    -   **`SmartConfig.Sdk`**: A strongly-typed client for the `SmartConfig.Api`.
+-   **`/sdks`**: Contains th~~~~e Software Development Kit for interacting with the API.
+    -   **`SmartConfig.BE.Sdk`**: A strongly-typed client for the `SmartConfig.Api`.
 
 -   **`/tools`**: Contains development and operational tools.
     -   **`SmartConfig.Host`**: A **.NET Aspire** application host that orchestrates the entire application stack for local development.

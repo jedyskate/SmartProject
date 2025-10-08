@@ -1,4 +1,5 @@
 ﻿using SmartConfig.McpServer.Extensions;
+using SmartConfig.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 

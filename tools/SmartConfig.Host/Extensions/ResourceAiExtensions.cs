@@ -16,20 +16,10 @@ public static class ResourceAiExtensions
             .WithReference(api)
             .WithExternalHttpEndpoints();
         
-        // Ollama
-        var ollama = builder.AddOllama("ollama")
-            .WaitFor(mcp)
-            .WithParentRelationship(mcp)
-            .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "ollama-http", isProxied: false)
-            .WithExternalHttpEndpoints()
-            .WithDataVolume()
-            .AddModel("llama32", "llama3.2:latest");
-        
         // n8n
         if (clients?.Contains("n8n") ?? false)
             builder.AddContainer("n8n", "n8nio/n8n", "latest")
                 .WaitFor(mcp)
-                .WaitFor(ollama)
                 .WithParentRelationship(mcp)
                 .WithHttpEndpoint(port: 5678, targetPort: 5678, name: "n8n-http", isProxied: false)
                 .WithExternalHttpEndpoints()
@@ -44,7 +34,6 @@ public static class ResourceAiExtensions
         if (clients?.Contains("anythingLlm") ?? false)
             builder.AddContainer("anythingllm", "mintplexlabs/anythingllm", "latest")
                 .WaitFor(mcp)
-                .WaitFor(ollama)
                 .WithParentRelationship(mcp)
                 .WithHttpEndpoint(port: 3001, targetPort: 3001, name: "anythingLlm-http", isProxied: false)
                 .WithExternalHttpEndpoints()

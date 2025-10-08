@@ -1,6 +1,6 @@
 @page "/userconfig/create"
-@using SmartConfig.Sdk
-@inject ISmartConfigClient SmartConfigClient
+@using SmartConfig.BE.Sdk
+@inject ISmartConfigApiClient SmartConfigApiClient
 @inject NavigationManager NavigationManager
 
 <PageTitle>Create User Config</PageTitle>
@@ -127,7 +127,7 @@
     private async Task Save()
     {
         _isSaving = true;
-        await SmartConfigClient.UpsertUserConfigAsync(_userConfig);
+        await SmartConfigApiClient.UpsertUserConfigAsync(_userConfig);
         _isSaving = false;
         NavigationManager.NavigateTo("/userconfig/search");
     }

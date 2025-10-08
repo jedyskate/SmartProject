@@ -1,6 +1,6 @@
 @page "/userconfig/{Identifier}/edit"
-@using SmartConfig.Sdk
-@inject ISmartConfigClient SmartConfigClient
+@using SmartConfig.BE.Sdk
+@inject ISmartConfigApiClient SmartConfigApiClient
 @inject NavigationManager NavigationManager
 
 <PageTitle>Edit User Config</PageTitle>
@@ -120,7 +120,7 @@ else
             Identifier = Identifier,
             Options = new GetUserConfigOptions { ReturnPreferences = true, ReturnSettings = true }
         };
-        var response = await SmartConfigClient.GetUserConfigAsync(query);
+        var response = await SmartConfigApiClient.GetUserConfigAsync(query);
         _userConfig = response.Response;
     }
 
@@ -142,7 +142,7 @@ else
                 ReturnSettings = false
             }
         };
-        await SmartConfigClient.UpsertUserConfigAsync(command);
+        await SmartConfigApiClient.UpsertUserConfigAsync(command);
         _isSaving = false;
         NavigationManager.NavigateTo("/userconfig/search");
     }
