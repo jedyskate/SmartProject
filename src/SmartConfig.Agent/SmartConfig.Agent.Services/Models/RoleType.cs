@@ -1,4 +1,4 @@
-namespace SmartConfig.AiAgent.Models;
+namespace SmartConfig.Agent.Services.Models;
 
 public enum RoleType
 {

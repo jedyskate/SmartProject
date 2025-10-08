@@ -1,7 +1,7 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace SmartConfig.AiAgent.Agents.Workers;
+namespace SmartConfig.Agent.Services.Agents.Workers;
 
 public interface IWorkerAgent
 {

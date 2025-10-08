@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using SmartConfig.Agent.Extensions;
-using SmartConfig.AiAgent.Extensions;
+using SmartConfig.Agent.Services.Extensions;
 using SmartConfig.ServiceDefaults;
 
 namespace SmartConfig.Agent;

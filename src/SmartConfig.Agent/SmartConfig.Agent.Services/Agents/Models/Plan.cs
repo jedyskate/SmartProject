@@ -1,4 +1,4 @@
-namespace SmartConfig.AiAgent.Agents.Models;
+namespace SmartConfig.Agent.Services.Agents.Models;
 
 public class Plan
 {

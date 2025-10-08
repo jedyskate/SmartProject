@@ -2,7 +2,7 @@ using System.Text.Json;
 using MediatR;
 using SmartConfig.Agent.Endpoints.Commands;
 using SmartConfig.Agent.Endpoints.Queries;
-using SmartConfig.AiAgent.Models;
+using SmartConfig.Agent.Services.Models;
 
 namespace SmartConfig.Agent.Extensions;
 

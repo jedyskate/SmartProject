@@ -48,7 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartConfig.Agent", "SmartC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Agent", "src\SmartConfig.Agent\SmartConfig.Agent\SmartConfig.Agent.csproj", "{98EC48DA-6E9E-4FA2-A2CD-994EA9AA1998}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Agent.Application", "src\SmartConfig.Agent\SmartConfig.Agent.Application\SmartConfig.Agent.Application.csproj", "{A7F03C37-4073-4D2B-8FF6-28DEF45919EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Agent.Services", "src\SmartConfig.Agent\SmartConfig.Agent.Services\SmartConfig.Agent.Services.csproj", "{A7F03C37-4073-4D2B-8FF6-28DEF45919EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartConfig.Api", "SmartConfig.Api", "{56D5017E-00B3-42DB-9D3B-9BD6BA14017C}"
 EndProject

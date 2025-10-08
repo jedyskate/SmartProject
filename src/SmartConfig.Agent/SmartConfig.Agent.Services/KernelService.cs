@@ -1,7 +1,7 @@
 ﻿using Microsoft.SemanticKernel;
-using SmartConfig.AiAgent.Agents;
+using SmartConfig.Agent.Services.Agents;
 
-namespace SmartConfig.AiAgent;
+namespace SmartConfig.Agent.Services;
 
 public interface IKernelService
 {

@@ -1,10 +1,10 @@
 using System.Text.Json;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
-using SmartConfig.AiAgent.Agents.Models;
-using SmartConfig.AiAgent.Agents.Workers;
+using SmartConfig.Agent.Services.Agents.Models;
+using SmartConfig.Agent.Services.Agents.Workers;
 
-namespace SmartConfig.AiAgent.Agents;
+namespace SmartConfig.Agent.Services.Agents;
 
 public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
 {

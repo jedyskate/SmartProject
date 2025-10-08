@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
 using OllamaSharp;
-using SmartConfig.AiAgent.Agents;
-using SmartConfig.AiAgent.Agents.Workers;
-using SmartConfig.AiAgent.Plugins;
+using SmartConfig.Agent.Services.Agents;
+using SmartConfig.Agent.Services.Agents.Workers;
+using SmartConfig.Agent.Services.Plugins;
 
-namespace SmartConfig.AiAgent.Extensions;
+namespace SmartConfig.Agent.Services.Extensions;
 
 public static class AiIocExtensions
 {

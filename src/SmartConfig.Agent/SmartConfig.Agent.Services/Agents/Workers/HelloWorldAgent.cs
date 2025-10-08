@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace SmartConfig.AiAgent.Agents.Workers;
+namespace SmartConfig.Agent.Services.Agents.Workers;
 
 public class HelloWorldAgent(IConfiguration configuration, Kernel kernel) : IWorkerAgent
 {

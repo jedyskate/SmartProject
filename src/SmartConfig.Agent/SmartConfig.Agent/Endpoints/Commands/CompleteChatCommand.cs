@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
-using SmartConfig.AiAgent;
-using SmartConfig.AiAgent.Models;
+using SmartConfig.Agent.Services;
+using SmartConfig.Agent.Services.Models;
 
 namespace SmartConfig.Agent.Endpoints.Commands;
 

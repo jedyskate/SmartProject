@@ -4,7 +4,7 @@ using SmartConfig.BE.Sdk;
 using SmartConfig.BE.Sdk.Extensions;
 using SmartConfig.BE.Sdk.Queue;
 
-namespace SmartConfig.AiAgent.Extensions;
+namespace SmartConfig.Agent.Services.Extensions;
 
 public static class ApiExtensions
 {

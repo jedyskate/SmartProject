@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using SmartConfig.BE.Sdk;
 
-namespace SmartConfig.AiAgent.Plugins;
+namespace SmartConfig.Agent.Services.Plugins;
 
 public class HelloWorldPlugin(ILogger<HelloWorldPlugin> logger, ISmartConfigApiClient smartConfigApiClient)
 {
