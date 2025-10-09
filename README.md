@@ -6,17 +6,24 @@ This repository contains the source code for the **SmartConfig** application sui
 
 The solution is organized into the following high-level folders:
 
--   **`/src`**: Contains the source code for the main application projects, following a Clean Architecture approach.
+-   **`/src/SmartConfig.Api`**: Contains the source code for the main API application projects, following a Clean Architecture approach.
     -   **`SmartConfig.Api`**: The core backend REST API.
     -   **`SmartConfig.Application`**: The application layer containing business logic (CQRS).
     -   **`SmartConfig.Core`**: The domain layer with core models and business rules.
     -   **`SmartConfig.Data`**: The infrastructure layer for data persistence (Entity Framework).
-    -   **`SmartConfig.Blazor`**: The Blazor-based frontend application.
-    -   **`SmartConfig.NextJs`**: The Next.js-based frontend application.
     -   **`SmartConfig.Orleans.Silo`**: Hosts the Orleans grains for distributed, stateful logic.
 
--   **`/sdks`**: Contains th~~~~e Software Development Kit for interacting with the API.
+-   **`/src/SmartConfig.Blazor`**: Contain Blazor-based frontend applications auto-render mode.
+    -   **`SmartConfig.Blazor`**: The Blazor Server Side.
+    -   **`SmartConfig.Blazor.Client`**: The Blazor Client Side.
+
+-   **`/src/SmartConfig.NextJs`**: The Next.js-based frontend application.
+-   **`/src/SmartConfig.Angular`**: The Angular.js-based frontend application.
+-   **`/src/SmartConfig.React`**: The React.js-based frontend application.
+
+-   **`/sdks`**: Contains the Software Development Kit for interacting with the API and Agent.
     -   **`SmartConfig.BE.Sdk`**: A strongly-typed client for the `SmartConfig.Api`.
+    -   **`SmartConfig.AI.Sdk`**: A strongly-typed client for the `SmartConfig.Agent`.
 
 -   **`/tools`**: Contains development and operational tools.
     -   **`SmartConfig.Host`**: A **.NET Aspire** application host that orchestrates the entire application stack for local development.
@@ -24,7 +31,7 @@ The solution is organized into the following high-level folders:
 
 -   **`/tests`**: Contains the automated tests for the solution.
     -   **`SmartConfig.UnitTests`**: Unit tests for the application logic.
-    -   **`SmartConfig.IntegrationTests`**: Integration tests for the API.
+    -   **`SmartConfig.IntegrationTests`**: Integration tests for the API and Agent.
     -   **`SmartConfig.E2ETests`**: End-to-end tests that simulate user interaction with the frontends.
     -   **`SmartConfig.LoadTests`**: Load tests for measuring the performance and stability of the API.
 
