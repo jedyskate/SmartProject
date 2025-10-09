@@ -30,8 +30,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{2D1C41C0-9B75-459E-A29C-3BB5706804D4}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		Dockerfile = Dockerfile
-		docker-compose.yml = docker-compose.yml
 		nuget.config = nuget.config
 		.gitignore = .gitignore
 	EndProjectSection

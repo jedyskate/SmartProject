@@ -1,19 +1,23 @@
 using System.Text.Json;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
+using Microsoft.Extensions.Configuration;
+using OpenAI;
 using SmartConfig.Agent.Services.Agents.Models;
 using SmartConfig.Agent.Services.Agents.Workers;
+using SmartConfig.Agent.Services.Models;
+using ChatMessage = SmartConfig.Agent.Services.Models.ChatMessage;
 
 namespace SmartConfig.Agent.Services.Agents;
 
-public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
+public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, OpenAIClient openAiClient, IConfiguration configuration)
 {
     private readonly List<IWorkerAgent> _agents = agents.ToList();
 
-    public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessageContent> messages)
+    public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessage> messages)
     {
-        var lastUserMessage = messages.LastOrDefault(m => m.Role == AuthorRole.User);
-
+        var lastUserMessage = messages.LastOrDefault(m => m.Role == RoleType.User);
+        
         var plan = await GetPlanAsync(lastUserMessage);
         if (plan?.Steps.Any() == true)
         {
@@ -25,7 +29,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
                 
                 // Replacing User Message for Orchestrator Subtask
                 var orchestratedMessages = messages.Where(m => m != lastUserMessage).ToList();
-                orchestratedMessages.Add(new ChatMessageContent(AuthorRole.User, step.Request));
+                orchestratedMessages.Add(new ChatMessage(RoleType.User, step.Request));
                 
                 // Stream agent output
                 await foreach (var response in agent.ExecuteAsync(orchestratedMessages))
@@ -34,7 +38,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
                 }
                 executedSteps.Add(step);
             }
-
+        
             // This is a simplification. A real implementation should handle unexecuted steps.
             if (executedSteps.Count == plan.Steps.Count)
             {
@@ -53,7 +57,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
         }
     }
 
-    private async Task<Plan?> GetPlanAsync(ChatMessageContent? message)
+    private async Task<Plan?> GetPlanAsync(ChatMessage? message)
     {
         if  (message == null) return null;
         
@@ -64,7 +68,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
             { ""agent"": ""AgentName"", ""request"": ""Subtask"" }
           ]
         }";
-    
+        
         var prompt = $"""
                           You are an orchestrator AI. Your job is to break down the user's request into a plan.
                           Each step in the plan contains:
@@ -87,12 +91,22 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, Kernel kernel)
                           {jsonResponse}
                       """;
 
-        var chatCompletionService = kernel.GetRequiredService<IChatCompletionService>();
-        var result = await chatCompletionService.GetChatMessageContentAsync(prompt);
+        var client = openAiClient.GetChatClient(configuration["Agent:OpenRouter:Model"]).AsIChatClient();
+        var agent = new ChatClientAgent(client,
+            new ChatClientAgentOptions
+            {
+                Name = nameof(OrchestratorAgent),
+                Instructions = "You are an orchestrator AI Agent",
+                ChatOptions = new ChatOptions
+                {
+                    ResponseFormat = ChatResponseFormat.ForJsonSchema<Plan>()
+                }
+            });
+        var result = await agent.RunAsync(prompt);
 
         try
         {
-            return JsonSerializer.Deserialize<Plan>(result.Content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<Plan>(result.Text, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
         catch (JsonException)
         {

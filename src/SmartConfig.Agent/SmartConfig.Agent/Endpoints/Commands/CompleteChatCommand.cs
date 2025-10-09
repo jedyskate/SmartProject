@@ -1,7 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using MediatR;
-using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.ChatCompletion;
 using SmartConfig.Agent.Services;
 using SmartConfig.Agent.Services.Models;
 
@@ -17,33 +15,33 @@ public class CompleteChatCommand : IStreamRequest<ChatResponse>
 
     public class Handler : IStreamRequestHandler<CompleteChatCommand, ChatResponse>
     {
-        private readonly IKernelService _kernelService;
+        private readonly IAgentService _agentService;
 
-        public Handler(IKernelService kernelService)
+        public Handler(IAgentService agentService)
         {
-            _kernelService = kernelService;
+            _agentService = agentService;
         }
 
         public async IAsyncEnumerable<ChatResponse> Handle(CompleteChatCommand request,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             // Map incoming messages to SK ChatMessageContent
-            var messages = new List<ChatMessageContent>();
+            var messages = new List<ChatMessage>();
             foreach (var msg in request.Messages)
             {
-                ChatMessageContent message = msg.Role switch
+                var message = msg.Role switch
                 {
-                    RoleType.System    => new ChatMessageContent(AuthorRole.System, msg.Content),
-                    RoleType.User      => new ChatMessageContent(AuthorRole.User, msg.Content),
-                    RoleType.Assistant => new ChatMessageContent(AuthorRole.Assistant, msg.Content),
-                    RoleType.Tool      => new ChatMessageContent(AuthorRole.Tool, msg.Content),
+                    RoleType.System    => new ChatMessage(RoleType.System, msg.Content),
+                    RoleType.User      => new ChatMessage(RoleType.User, msg.Content),
+                    RoleType.Assistant => new ChatMessage(RoleType.Assistant, msg.Content),
+                    RoleType.Tool      => new ChatMessage(RoleType.Tool, msg.Content),
                     _ => throw new ArgumentException($"Invalid role: {msg.Role}")
                 };
                 messages.Add(message);
             }
 
-            // Stream responses from KernelService
-            await foreach (var chunk in _kernelService.CompleteChatStreamingAsync(messages)
+            // Stream responses from AgentService
+            await foreach (var chunk in _agentService.CompleteChatStreamingAsync(messages)
                                .WithCancellation(cancellationToken))
             {
                 yield return new ChatResponse(chunk);
