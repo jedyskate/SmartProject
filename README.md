@@ -13,13 +13,19 @@ The solution is organized into the following high-level folders:
     -   **`SmartConfig.Data`**: The infrastructure layer for data persistence (Entity Framework).
     -   **`SmartConfig.Orleans.Silo`**: Hosts the Orleans grains for distributed, stateful logic.
 
+-   **`/src/SmartConfig.Agent`**: A dotnet micro-service that hosts the AI agents logic.
+    -   **`SmartConfig.Agent`**: Minimal API with MediatR.
+    -   **`SmartConfig.Services`**: Business/Agent layer.
+
 -   **`/src/SmartConfig.Blazor`**: Contain Blazor-based frontend applications auto-render mode.
     -   **`SmartConfig.Blazor`**: The Blazor Server Side.
     -   **`SmartConfig.Blazor.Client`**: The Blazor Client Side.
 
+-   **`/src/SmartConfig.Mcp`**: A .NET application for managing and coordinating other parts of the system.
+-   **`/src/SmartConfig.Scheduler`**: A .NET application for running scheduled jobs.
 -   **`/src/SmartConfig.NextJs`**: The Next.js-based frontend application.
--   **`/src/SmartConfig.Angular`**: The Angular.js-based frontend application.
--   **`/src/SmartConfig.React`**: The React.js-based frontend application.
+-   **`/src/SmartConfig.Angular`**: The Angular-based frontend application.
+-   **`/src/SmartConfig.React`**: The React-based frontend application.
 
 -   **`/sdks`**: Contains the Software Development Kit for interacting with the API and Agent.
     -   **`SmartConfig.BE.Sdk`**: A strongly-typed client for the `SmartConfig.Api`.
@@ -28,6 +34,7 @@ The solution is organized into the following high-level folders:
 -   **`/tools`**: Contains development and operational tools.
     -   **`SmartConfig.Host`**: A **.NET Aspire** application host that orchestrates the entire application stack for local development.
     -   **`SmartConfig.Migration`**: Handles database migrations.
+    -   **`SmartConfig.ServiceDefaults`**: Provides default service configurations for the solution.
 
 -   **`/tests`**: Contains the automated tests for the solution.
     -   **`SmartConfig.UnitTests`**: Unit tests for the application logic.
