@@ -1,14 +1,12 @@
 using System.ComponentModel;
 using Microsoft.Extensions.Logging;
-using Microsoft.SemanticKernel;
 using SmartConfig.BE.Sdk;
 
-namespace SmartConfig.Agent.Services.Plugins;
+namespace SmartConfig.Agent.Services.Tools;
 
-public class HelloWorldPlugin(ILogger<HelloWorldPlugin> logger, ISmartConfigApiClient smartConfigApiClient)
+public class HelloWorldTool(ILogger<HelloWorldTool> logger, ISmartConfigApiClient smartConfigApiClient)
 {
-    [KernelFunction("say_hello")]
-    [Description("Says hello to a user using Orleans grain")]
+    [Description("Says hello to a user")]
     public async Task<string> SayHelloAsync([Description("The name of the user to greet")] string name)
     {
         logger.LogInformation($"Hello World Name: {name}");
