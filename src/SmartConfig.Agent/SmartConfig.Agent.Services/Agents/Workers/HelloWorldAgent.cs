@@ -1,13 +1,15 @@
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
-using OllamaSharp;
+using Microsoft.Extensions.Configuration;
+using OpenAI;
 using SmartConfig.Agent.Services.Models;
 using SmartConfig.Agent.Services.Tools;
 using ChatMessage = SmartConfig.Agent.Services.Models.ChatMessage;
 
 namespace SmartConfig.Agent.Services.Agents.Workers;
 
-public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool helloWorldTool) : IWorkerAgent
+public class HelloWorldAgent(OpenAIClient openAiClient, HelloWorldTool helloWorldTool, 
+    IConfiguration configuration) : IWorkerAgent
 {
     public string Name => "HelloWorldAgent";
     public string Description => "Greets the user or a person by name.";
@@ -27,8 +29,9 @@ public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool he
             )
         };
         history.AddRange(messages);
-        
-        var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
+
+        var client = openAiClient.GetChatClient(configuration["Agent:OpenRouter:Model"]).AsIChatClient();
+        var agent = new ChatClientAgent(client,
             new ChatClientAgentOptions
             {
                 Name = nameof(HelloWorldAgent),
@@ -43,7 +46,6 @@ public class HelloWorldAgent(IOllamaApiClient ollamaApiClient, HelloWorldTool he
                     ResponseFormat = ChatResponseFormat.Text
                 }
             });
-        
         var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
 
         await foreach (var response in agent.RunStreamingAsync(prompt))

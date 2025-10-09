@@ -1,6 +1,9 @@
+using DotNetEnv;
 using Projects;
 using SmartConfig.Host.Extensions;
 
+
+Env.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env.local")); // HIDDEN SECRETS
 var builder = DistributedApplication.CreateBuilder(args);
 
 // Databases
@@ -27,7 +30,8 @@ var ollama = builder.AddOllama("ollama")
 // Agent
 var agent = builder.AddProject<SmartConfig_Agent>("agent")
     .WithReference(ollama)
-    .WaitFor(ollama);
+    .WaitFor(ollama)
+    .WithEnvironment("Agent__OpenRouter__ApiKey", builder.Configuration["Agent:OpenRouter:ApiKey"]);
 
 // Backend
 var api = builder.AddProject<SmartConfig_Api>("api")

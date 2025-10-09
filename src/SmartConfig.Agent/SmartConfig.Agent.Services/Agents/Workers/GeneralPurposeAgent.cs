@@ -1,6 +1,7 @@
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
-using OllamaSharp;
+using Microsoft.Extensions.Configuration;
+using OpenAI;
 using SmartConfig.Agent.Services.Models;
 using ChatMessage = SmartConfig.Agent.Services.Models.ChatMessage;
 
@@ -13,7 +14,7 @@ public interface IWorkerAgent
     IAsyncEnumerable<string> ExecuteAsync(IEnumerable<ChatMessage> messages);
 }
 
-public class GeneralPurposeAgent(IOllamaApiClient ollamaApiClient) : IWorkerAgent
+public class GeneralPurposeAgent(OpenAIClient openAiClient, IConfiguration configuration) : IWorkerAgent
 {
     public string Name => "GeneralPurposeAgent";
     public string Description => "Provides a general AI response to the user's question.";
@@ -28,14 +29,14 @@ public class GeneralPurposeAgent(IOllamaApiClient ollamaApiClient) : IWorkerAgen
             )
         };
         history.AddRange(messages);
-
-        var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
+        
+        var client = openAiClient.GetChatClient(configuration["Agent:OpenRouter:Model"]).AsIChatClient();
+        var agent = new ChatClientAgent(client,
             new ChatClientAgentOptions
             {
                 Name = nameof(GeneralPurposeAgent),
                 Instructions = "You are a helpful AI assistant."
             });
-        
         var prompt = string.Join("\n", history.Select(m => $"{m.Role}: {m.Content}"));
 
         await foreach (var response in agent.RunStreamingAsync(prompt))

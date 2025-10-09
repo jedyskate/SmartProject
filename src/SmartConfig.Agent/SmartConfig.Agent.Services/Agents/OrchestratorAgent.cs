@@ -1,7 +1,8 @@
 using System.Text.Json;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
-using OllamaSharp;
+using Microsoft.Extensions.Configuration;
+using OpenAI;
 using SmartConfig.Agent.Services.Agents.Models;
 using SmartConfig.Agent.Services.Agents.Workers;
 using SmartConfig.Agent.Services.Models;
@@ -9,14 +10,14 @@ using ChatMessage = SmartConfig.Agent.Services.Models.ChatMessage;
 
 namespace SmartConfig.Agent.Services.Agents;
 
-public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, IOllamaApiClient ollamaApiClient)
+public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, OpenAIClient openAiClient, IConfiguration configuration)
 {
     private readonly List<IWorkerAgent> _agents = agents.ToList();
 
     public async IAsyncEnumerable<string> RouteAsync(IEnumerable<ChatMessage> messages)
     {
         var lastUserMessage = messages.LastOrDefault(m => m.Role == RoleType.User);
-
+        
         var plan = await GetPlanAsync(lastUserMessage);
         if (plan?.Steps.Any() == true)
         {
@@ -37,7 +38,7 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, IOllamaApiClien
                 }
                 executedSteps.Add(step);
             }
-
+        
             // This is a simplification. A real implementation should handle unexecuted steps.
             if (executedSteps.Count == plan.Steps.Count)
             {
@@ -89,8 +90,9 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, IOllamaApiClien
                           Expected response format:
                           {jsonResponse}
                       """;
-        
-        var agent = new ChatClientAgent((IChatClient)ollamaApiClient,
+
+        var client = openAiClient.GetChatClient(configuration["Agent:OpenRouter:Model"]).AsIChatClient();
+        var agent = new ChatClientAgent(client,
             new ChatClientAgentOptions
             {
                 Name = nameof(OrchestratorAgent),
@@ -100,7 +102,6 @@ public class OrchestratorAgent(IEnumerable<IWorkerAgent> agents, IOllamaApiClien
                     ResponseFormat = ChatResponseFormat.ForJsonSchema<Plan>()
                 }
             });
-
         var result = await agent.RunAsync(prompt);
 
         try
