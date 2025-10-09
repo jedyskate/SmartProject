@@ -44,4 +44,10 @@
 		<ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Include="..\..\..\.dockerignore">
+	    <Link>.dockerignore</Link>
+	  </Content>
+	</ItemGroup>
+
 </Project>
