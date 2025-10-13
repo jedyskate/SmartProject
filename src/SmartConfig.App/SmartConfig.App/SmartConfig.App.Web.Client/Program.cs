@@ -20,7 +20,7 @@ builder.Services.AddCommonClientIoc(builder.Configuration);
 builder.Services.AddSingleton(new SmartConfigApiSettings
 {
     SmartConfigApiEndpoint = builder.HostEnvironment.BaseAddress,
-    ApplicationName = "SmartConfig.Blazor.Client",
+    ApplicationName = "SmartConfig.App.Web.Client",
     DryRun = false
 });
 builder.Services.AddSmartConfigApiClient();
@@ -29,7 +29,7 @@ builder.Services.AddSmartConfigApiClient();
 builder.Services.AddSingleton(new SmartConfigAgentSettings
 {
     SmartConfigAgentEndpoint = builder.HostEnvironment.BaseAddress,
-    ApplicationName = "SmartConfig.Blazor.Client",
+    ApplicationName = "SmartConfig.App.Web.Client",
     DryRun = false
 });
 builder.Services.AddSmartConfigAgentClient();

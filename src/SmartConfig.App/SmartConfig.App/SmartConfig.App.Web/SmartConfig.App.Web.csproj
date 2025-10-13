@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\..\tools\SmartConfig.ServiceDefaults\SmartConfig.ServiceDefaults.csproj" />
         <ProjectReference Include="..\SmartConfig.App.Web.Client\SmartConfig.App.Web.Client.csproj"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.5"/>
     </ItemGroup>
