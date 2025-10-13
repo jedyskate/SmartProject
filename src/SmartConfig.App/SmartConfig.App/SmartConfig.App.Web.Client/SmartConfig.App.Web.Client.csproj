@@ -9,11 +9,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.5"/>
+        <PackageReference Include="Markdig" Version="0.41.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.9"/>
+        <PackageReference Include="shortid" Version="4.0.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\SmartConfig.App.Shared\SmartConfig.App.Shared.csproj"/>
+        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
     </ItemGroup>
 
 </Project>
