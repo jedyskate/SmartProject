@@ -11,7 +11,7 @@ public partial class Chat : IDisposable
 {
     private DotNetObjectReference<Chat> _dotNetRef;
     private ElementReference _chatBody;
-    private PersistingComponentStateSubscription _persistingSubscription;
+    // private PersistingComponentStateSubscription _persistingSubscription;
 
     private List<ChatMessage> _messages = new();
     private string _userInput = "";
@@ -20,13 +20,15 @@ public partial class Chat : IDisposable
     protected override async Task OnInitializedAsync()
     {
         _dotNetRef = DotNetObjectReference.Create(this);
-        _persistingSubscription = ApplicationState.RegisterOnPersisting(PersistData);
-
-        if (ApplicationState.TryTakeFromJson<ChatState>("chat_state", out var restoredState))
-        {
-            _messages = restoredState.Messages;
-            _userInput = restoredState.UserInput;
-        }
+        
+#if !MAUI
+        // _persistingSubscription = ApplicationState.RegisterOnPersisting(PersistData);
+        // if (ApplicationState.TryTakeFromJson<ChatState>("chat_state", out var restoredState))
+        // {
+        //     _messages = restoredState.Messages;
+        //     _userInput = restoredState.UserInput;
+        // }
+#endif
 
         await base.OnInitializedAsync();
     }
@@ -113,18 +115,18 @@ public partial class Chat : IDisposable
     }
 
     // This method is called by the framework to save the state
-    private Task PersistData()
-    {
-        // Bundle the data into the state object and save it
-        var state = new ChatState
-        {
-            Messages = _messages,
-            UserInput = _userInput
-        };
-        ApplicationState.PersistAsJson("chat_state", state);
-
-        return Task.CompletedTask;
-    }
+    // private Task PersistData()
+    // {
+    //     // Bundle the data into the state object and save it
+    //     var state = new ChatState
+    //     {
+    //         Messages = _messages,
+    //         UserInput = _userInput
+    //     };
+    //     ApplicationState.PersistAsJson("chat_state", state);
+    //
+    //     return Task.CompletedTask;
+    // }
 
     private async Task OnKeyDownAsync(KeyboardEventArgs e)
     {
@@ -138,7 +140,9 @@ public partial class Chat : IDisposable
 
     public void Dispose()
     {
-        _persistingSubscription.Dispose();
+// #if !MAUI
+//         _persistingSubscription.Dispose();
+// #endif
         _dotNetRef?.Dispose();
     }
 }

@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using SmartConfig.AI.Sdk;
+using SmartConfig.AI.Sdk.Extensions;
 using SmartConfig.App.Shared.Services;
 using SmartConfig.App.Services;
+using SmartConfig.BE.Sdk;
+using SmartConfig.BE.Sdk.Extensions;
 
 namespace SmartConfig.App;
 
@@ -22,6 +26,24 @@ public static class MauiProgram
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Logging.AddDebug();
 #endif
+        
+        // Add SmartConfig Api Proxy.
+        builder.Services.AddSingleton(new SmartConfigApiSettings
+        {
+            SmartConfigApiEndpoint = "https://localhost:7230",
+            ApplicationName = "SmartConfig.App.Web.Client",
+            DryRun = false
+        });
+        builder.Services.AddSmartConfigApiClient();
+
+        // Add SmartConfig Agent Proxy.
+        builder.Services.AddSingleton(new SmartConfigAgentSettings
+        {
+            SmartConfigAgentEndpoint = "https://localhost:7230",
+            ApplicationName = "SmartConfig.App.Web.Client",
+            DryRun = false
+        });
+        builder.Services.AddSmartConfigAgentClient();
 
         return builder.Build();
     }
