@@ -14,4 +14,15 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.5"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\UserConfig\UserConfigCreate.razor" />
+      <AdditionalFiles Include="Pages\UserConfig\UserConfigEdit.razor" />
+      <AdditionalFiles Include="Pages\UserConfig\UserConfigSearch.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
+    </ItemGroup>
+    
 </Project>

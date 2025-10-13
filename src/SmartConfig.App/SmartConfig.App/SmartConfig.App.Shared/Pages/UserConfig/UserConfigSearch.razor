@@ -1,0 +1,211 @@
+@page "/userconfig/search"
+@using System.Linq
+@using SmartConfig.BE.Sdk
+@inject ISmartConfigApiClient SmartConfigApiClient
+@inject NavigationManager NavigationManager
+
+<PageTitle>User Config Search</PageTitle>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">User Config Search</h1>
+    <button class="btn btn-success" @onclick="Create">Create New</button>
+</div>
+
+@if (_errorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @_errorMessage
+    </div>
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Search Criteria</h5>
+    </div>
+    <div class="card-body">
+        <EditForm Model="_searchModel" OnValidSubmit="Search">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label for="search-name" class="form-label">Name</label>
+                    <InputText id="search-name" class="form-control" placeholder="Search by name..." @bind-Value="_searchModel.Name" />
+                </div>
+                <div class="col-md-5">
+                    <label for="search-status" class="form-label">Status</label>
+                    <InputSelect id="search-status" class="form-select" @bind-Value="_searchModel.Status">
+                        <option value="">All</option>
+                        @foreach (var status in Enum.GetValues(typeof(UserConfigStatus)))
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100" disabled="@_isLoading">
+                        @if (_isLoading)
+                        {
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span>Loading...</span>
+                        }
+                        else
+                        {
+                            <span>Search</span>
+                        }
+                    </button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@if (_isLoading)
+{
+    <div class="text-center p-4">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2"><em>Loading...</em></p>
+    </div>
+}
+else if (_searchResult == null)
+{
+    <div class="alert alert-info">
+        <em>Enter a search term and click "Search" to find user configs.</em>
+    </div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Search Results</h5>
+            <span>Showing @_searchResult.Results.Count of @_searchResult.RowCount results.</span>
+        </div>
+        <div class="card-body p-0">
+            @if (!_searchResult.Results.Any())
+            {
+                <p class="text-center p-4"><em>No results found.</em></p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Identifier</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Language</th>
+                                <th>Notifications</th>
+                                <th>Settings</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var config in _searchResult.Results)
+                            {
+                                <tr>
+                                    <td>@config.Identifier</td>
+                                    <td>@config.Name</td>
+                                    <td><span class="badge bg-secondary">@config.Status</span></td>
+                                    <td>@(config.UserPreferences?.Language)</td>
+                                    <td>
+                                        @if (config.UserPreferences?.NotificationType != null)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" disabled @bind="config.UserPreferences.NotificationType.Email" />
+                                                <label class="form-check-label">Email</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" disabled @bind="config.UserPreferences.NotificationType.Sms" />
+                                                <label class="form-check-label">SMS</label>
+                                            </div>
+                                        }
+                                        @if (config.UserPreferences?.UserNotifications != null)
+                                        {
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" disabled @bind="config.UserPreferences.UserNotifications.NewsLetter" />
+                                                <label class="form-check-label">Newsletter</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" disabled @bind="config.UserPreferences.UserNotifications.Billings" />
+                                                <label class="form-check-label">Billings</label>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (config.UserSettings != null && config.UserSettings.Any())
+                                        {
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach (var setting in config.UserSettings)
+                                                {
+                                                    <li><strong>@setting.Key:</strong> @setting.Value</li>
+                                                }
+                                            </ul>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <button class="btn btn-sm btn-outline-primary" @onclick="() => Edit(config.Identifier)">Edit</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private SearchModel _searchModel = new();
+    private UserConfigResultSet? _searchResult;
+    private bool _isLoading = false;
+    private string? _errorMessage;
+
+    private async Task Search()
+    {
+        _isLoading = true;
+        _errorMessage = null;
+
+        var query = new SearchUserConfigsQuery
+        {
+            Name = _searchModel.Name,
+            Status = _searchModel.Status.HasValue ? new[] { _searchModel.Status.Value } : null,
+            ConfigPagination = new ConfigPagination { Page = 1, PageSize = 25 },
+            ConfigOrder = new ConfigOrder { OrderBy = "name", OrderType = ConfigSearchOrderType.Ascending },
+            Options = new GetUserConfigOptions { ReturnPreferences = true, ReturnSettings = true }
+        };
+
+        try
+        {
+            var apiResponse = await SmartConfigApiClient.SearchUserConfigsAsync(query);
+            _searchResult = apiResponse.Response;
+        }
+        catch (ApiException ex)
+        {
+            _errorMessage = $"Error searching for user configs: {ex.Message}";
+            Console.WriteLine(_errorMessage);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private void Edit(string identifier)
+    {
+        NavigationManager.NavigateTo($"/userconfig/{identifier}/edit");
+    }
+
+    private void Create()
+    {
+        NavigationManager.NavigateTo("/userconfig/create");
+    }
+
+    private class SearchModel
+    {
+        public string? Name { get; set; }
+        public UserConfigStatus? Status { get; set; }
+    }
+}
+
+

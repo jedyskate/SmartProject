@@ -1,6 +1,7 @@
 ﻿@page "/Error"
 @using System.Diagnostics
 
+
 <PageTitle>Error</PageTitle>
 
 <h1 class="text-danger">Error.</h1>
@@ -25,12 +26,9 @@
 </p>
 
 @code{
-    [CascadingParameter] private HttpContext? HttpContext { get; set; }
-
     private string? RequestId { get; set; }
     private bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
     protected override void OnInitialized() =>
-        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
-
+        RequestId = Activity.Current?.Id ?? "123";
 }
