@@ -11,10 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Markdig" Version="0.41.3" />
         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.5"/>
+        <PackageReference Include="shortid" Version="4.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <AdditionalFiles Include="Components\Chat.razor" />
       <AdditionalFiles Include="Pages\UserConfig\UserConfigCreate.razor" />
       <AdditionalFiles Include="Pages\UserConfig\UserConfigEdit.razor" />
       <AdditionalFiles Include="Pages\UserConfig\UserConfigSearch.razor" />

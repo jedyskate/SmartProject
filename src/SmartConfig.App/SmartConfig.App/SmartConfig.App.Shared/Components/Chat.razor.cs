@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using shortid;
 using SmartConfig.AI.Sdk;
 
-namespace SmartConfig.App.Web.Client.Components;
+namespace SmartConfig.App.Shared.Components;
 
 public partial class Chat : IDisposable
 {
