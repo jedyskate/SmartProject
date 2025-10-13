@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using SmartConfig.AI.Sdk;
 using SmartConfig.AI.Sdk.Extensions;
 using SmartConfig.App.Shared.Services;
@@ -16,7 +17,16 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .ConfigureFonts(fonts => { fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular"); });
-
+        
+        using var stream = FileSystem.OpenAppPackageFileAsync("appsettings.json").Result;
+        builder.Configuration.AddJsonStream(stream);
+        
+        var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Production";
+        var envFile = $"appsettings.{environment}.json";
+        
+        using var envStream = FileSystem.OpenAppPackageFileAsync(envFile).Result;
+        builder.Configuration.AddJsonStream(envStream);
+        
         // Add device-specific services used by the SmartConfig.App.Shared project
         builder.Services.AddSingleton<IFormFactor, FormFactor>();
 
