@@ -61,7 +61,7 @@ public partial class Chat : IDisposable
 
         var agentEndpoint = Configuration["SmartConfig:AgentEndpoint"];
         if (DeviceInfo.Platform ==  DevicePlatform.Android)
-            agentEndpoint = "http://10.0.2.2:7153";
+            agentEndpoint = "https://10.0.2.2:7153";
         
         var url = $"{agentEndpoint}/Agent/CompleteChatStreaming";
         await JSRuntime.InvokeVoidAsync("streamChat", url, chatRequest, _dotNetRef);
