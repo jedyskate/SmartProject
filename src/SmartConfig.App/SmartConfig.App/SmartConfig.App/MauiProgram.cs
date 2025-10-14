@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SmartConfig.AI.Sdk;
 using SmartConfig.AI.Sdk.Extensions;
@@ -18,14 +19,23 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .ConfigureFonts(fonts => { fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular"); });
         
-        using var stream = FileSystem.OpenAppPackageFileAsync("appsettings.json").Result;
-        builder.Configuration.AddJsonStream(stream);
+       
         
-        var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Production";
-        var envFile = $"appsettings.{environment}.json";
+        var assembly = typeof(MauiProgram).GetTypeInfo().Assembly;
+        using var streamMain = assembly.GetManifestResourceStream("appsettings.json");
+        if (streamMain != null)
+        {
+            builder.Configuration.AddJsonStream(streamMain);
+        }
+
+        var resourceName = $"appsettings.{builder.Configuration["Environment"]}.json";
+        using var streamEnv = assembly.GetManifestResourceStream(resourceName);
+        if (streamEnv != null)
+        {
+            builder.Configuration.AddJsonStream(streamEnv);
+        }
         
-        using var envStream = FileSystem.OpenAppPackageFileAsync(envFile).Result;
-        builder.Configuration.AddJsonStream(envStream);
+        
         
         // Add device-specific services used by the SmartConfig.App.Shared project
         builder.Services.AddSingleton<IFormFactor, FormFactor>();
@@ -41,7 +51,7 @@ public static class MauiProgram
         builder.Services.AddSingleton(new SmartConfigApiSettings
         {
             SmartConfigApiEndpoint = "https://localhost:7230",
-            ApplicationName = "SmartConfig.App.Web.Client",
+            ApplicationName = "SmartConfig.App",
             DryRun = false
         });
         builder.Services.AddSmartConfigApiClient();
@@ -50,7 +60,7 @@ public static class MauiProgram
         builder.Services.AddSingleton(new SmartConfigAgentSettings
         {
             SmartConfigAgentEndpoint = "https://localhost:7230",
-            ApplicationName = "SmartConfig.App.Web.Client",
+            ApplicationName = "SmartConfig.App",
             DryRun = false
         });
         builder.Services.AddSmartConfigAgentClient();

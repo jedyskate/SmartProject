@@ -70,4 +70,13 @@
         <ProjectReference Include="..\SmartConfig.App.Shared\SmartConfig.App.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="appsettings.json" LogicalName="appsettings.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="appsettings.Development.json" LogicalName="appsettings.Development.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

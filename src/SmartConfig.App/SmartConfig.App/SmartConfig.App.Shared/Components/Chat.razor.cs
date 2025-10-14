@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using Microsoft.Maui.Devices;
 using Newtonsoft.Json;
 using shortid;
 using SmartConfig.AI.Sdk;
@@ -57,7 +58,12 @@ public partial class Chat : IDisposable
 
         // BLAZOR WASM STREAMING DOESN'T PROPERLY WORK DUE TO THE HTTPCLIENT.
         // This is an alternative solution.
-        var url = $"{Configuration["SmartConfig:AgentEndpoint"]}/Agent/CompleteChatStreaming";
+
+        var agentEndpoint = Configuration["SmartConfig:AgentEndpoint"];
+        if (DeviceInfo.Platform ==  DevicePlatform.Android)
+            agentEndpoint = "http://10.0.2.2:7153";
+        
+        var url = $"{agentEndpoint}/Agent/CompleteChatStreaming";
         await JSRuntime.InvokeVoidAsync("streamChat", url, chatRequest, _dotNetRef);
     }
 
