@@ -1,6 +1,7 @@
 # SmartConfig Solution
 
-This repository contains the source code for the **SmartConfig** application suite, a comprehensive system designed for managing user configurations and settings.
+The SmartConfig Solution provides a comprehensive and modular foundation for exploring and building within the .NET AI ecosystem.
+It’s designed to help developers get started easily by combining modern .NET technologies, AI agent infrastructure, and cloud-native development practices — all in one cohesive setup.
 
 ## Solution Structure
 
