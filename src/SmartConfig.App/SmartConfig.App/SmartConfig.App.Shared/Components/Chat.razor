@@ -1,0 +1,14 @@
+<div class="chat-container">
+    <div class="chat-messages" @ref="_chatBody">
+        @foreach (var message in _messages)
+        {
+            <div class="chat-message @((message.IsUser ?? false) ? "user-message" : "bot-message")">
+                @((MarkupString)Markdown.ToHtml(message.Text ?? string.Empty))
+            </div>
+        }
+    </div>
+    <div class="chat-input">
+        <input @bind="_userInput" @onkeydown="OnKeyDownAsync" @bind:event="oninput" placeholder="Type your message..." />
+        <button @onclick="SendMessage">Send</button>
+    </div>
+</div>

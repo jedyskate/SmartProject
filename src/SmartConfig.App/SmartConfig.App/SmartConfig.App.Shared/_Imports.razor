@@ -1,0 +1,24 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.Extensions.Configuration
+@using Microsoft.JSInterop
+@using Newtonsoft.Json
+@using Markdig
+@using shortid
+@using System.Linq
+@using SmartConfig.BE.Sdk
+@using System.ComponentModel.DataAnnotations
+@using SmartConfig.App.Shared.Components
+
+
+
+@inject IJSRuntime JSRuntime
+@inject IConfiguration Configuration
+@inject IHttpClientFactory HttpClientFactory
+@inject ISmartConfigApiClient SmartConfigApiClient
+@inject NavigationManager NavigationManager

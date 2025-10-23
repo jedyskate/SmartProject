@@ -53,10 +53,10 @@ public static class ResourceFrontendExtensions
         
         // Blazor
         if (frontends?.Contains("blazor") ?? false)
-            builder.AddProject<SmartConfig_Blazor>("blazor")
+            builder.AddProject<SmartConfig_App_Web>("blazor")
                 .WaitFor(api)
                 .WithReference(api)
-                .WithHttpsEndpoint(7052, name: "blazor-https")
+                .WithHttpsEndpoint(7230, name: "blazor-https")
                 .WithParentRelationship(api);
     }
 }
