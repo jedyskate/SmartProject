@@ -13,15 +13,14 @@ public static class EntityFrameworkExtensions
     public static WebApplicationBuilder AddEntityFramework(this WebApplicationBuilder builder)
     {
         var env = builder.Environment.EnvironmentName;
-        var isAspire = Environment.GetEnvironmentVariable("ASPNETCORE_HOSTINGSTARTUPASSEMBLIES")
-            ?.Contains("Microsoft.AspNetCore") == true;
+        var isAspire = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ConnectionStrings__SmartConfig"));
         
         if (isAspire)
         {
             builder.AddSqlServerDbContext<SmartConfigContext>("SmartConfig",
                 configureDbContextOptions: options =>
                 {
-                    var connectionString = builder.Configuration.GetConnectionString("SmartConfig");
+                    var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__SmartConfig");
 
                     options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
                     options.UseExceptionProcessor();
