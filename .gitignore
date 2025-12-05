@@ -69,3 +69,31 @@ docker-compose.override.yml
 
 # Optional: Ignore Docker logs
 **/docker-logs/
+
+# MAUI / Xamarin specific
+**/Resource.designer.cs
+**/Resources/Resource.designer.cs
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+**/android_m2repository/
+
+# iOS
+*.ipa
+*.dSYM/
+*.app/
+**/iOSInjectionProject/
+
+# Mac
+**/maccatalyst/
+
+# MAUI Build Artifacts
+**/AppPackages/
+**/BundleArtifacts/
+**/*.jfm
+
+# Visual Studio / Rider MAUI-specific
+*.DotSettings.user

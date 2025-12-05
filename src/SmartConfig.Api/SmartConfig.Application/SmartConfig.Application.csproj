@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="9.3.1" />
-		<PackageReference Include="EntityFrameworkCore.Exceptions.SqlServer" />
+		<PackageReference Include="EntityFrameworkCore.Exceptions.SqlServer" Version="8.0.0" />
 		<PackageReference Include="MediatR" Version="12.5.0" />
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.9" />
