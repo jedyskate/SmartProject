@@ -1,6 +1,6 @@
 # SmartConfig API
 
-This project is the core backend API for the SmartConfig application suite. It is built using .NET 9, ASP.NET Core, and Microsoft Orleans to create a scalable, distributed, and maintainable system.
+This project is the core backend API for the SmartConfig application suite. It is built using .NET 10, ASP.NET Core, and Microsoft Orleans to create a scalable, distributed, and maintainable system.
 
 ## Architecture Overview
 
@@ -44,7 +44,7 @@ The solution is structured into the following layers:
 ## How to Run
 
 1.  **Prerequisites**:
-    -   .NET 9 SDK
+    -   .NET 10 SDK
     -   (Optional) SQL Server, Redis, and RabbitMQ instances for running with non-local configurations.
 
 2.  **Running Locally**:
