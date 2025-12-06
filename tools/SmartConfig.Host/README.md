@@ -23,7 +23,7 @@ When you run this project, it automatically performs the following actions:
     -   Starts the **Next.js** frontend (`SmartConfig.NextJs`).
     -   Starts the **React** frontend (`SmartConfig.React`).
     -   Starts the **Angular** frontend (`SmartConfig.Angular`).
-    -   Starts the **Blazor** frontend (`SmartConfig.Blazor`).
+    -   Starts the **Blazor Web** frontend (`SmartConfig.App.Web`).
 6.  **Orchestrates Service Discovery**: .NET Aspire handles the communication between the services, injecting the correct environment variables (like the API URL for the frontends) automatically.
 7.  **Provides a Developer Dashboard**: Launches the .NET Aspire Dashboard, which provides a centralized view of all running services, their logs, metrics, and traces.
 
@@ -32,7 +32,7 @@ In short, this project is the **master conductor** for the entire application, m
 ## How to Run
 
 1.  **Prerequisites**:
-    -   .NET 9 SDK
+    -   .NET 10 SDK
     -   Docker Desktop (for running the SQL Server container)
     -   Node.js and npm (for the Next.js, React, and Angular frontends)
 

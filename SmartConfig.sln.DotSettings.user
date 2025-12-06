@@ -52,7 +52,7 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5673bda4_002D4401_002D47c6_002Db943_002D289cf14a7706/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Solution /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=0b4603ad_002D2300_002D4eaf_002D80b0_002Da5d96445e8b0_0023SmartConfig_002EApp/@EntryIndexedValue">True</s:Boolean>
+	
 	
 	
 	

@@ -8,7 +8,7 @@ This service provides the core AI functionalities for the SmartConfig applicatio
 
 ## Key Features
 
--   **.NET 9 Minimal API**: Lightweight and fast API development.
+-   **.NET 10 Minimal API**: Lightweight and fast API development.
 -   **MediatR**: Implements CQRS for clean and decoupled logic.
 -   **AI Integration**: Connects to AI providers (e.g., Ollama, OpenRouter) for chat completion.
 -   **Streaming Endpoint**: Provides a real-time streaming chat experience.

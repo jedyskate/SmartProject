@@ -18,11 +18,10 @@ The solution is organized into the following high-level folders:
     -   **`SmartConfig.Agent`**: Minimal API with MediatR.
     -   **`SmartConfig.Services`**: Business/Agent layer.
 
--   **`/src/SmartConfig.App`**: Contains the Blazor Hybrid and MAUI applications with auto-render mode.
-    -   **`SmartConfig.App`**: The MAUI application for Windows, Android, and iOS.
-    -   **`SmartConfig.App.Shared`**: The shared UI.
-    -   **`SmartConfig.App.Web`**: The Blazor Server Side.
-    -   **`SmartConfig.App.Web.Client`**: The Blazor Client Side.
+-   **`/src/SmartConfig.App`**: Contains the web-only Blazor application with hybrid rendering (Server + WebAssembly).
+    -   **`SmartConfig.App.Shared`**: The shared Razor components and pages used by both server and client.
+    -   **`SmartConfig.App.Web`**: The Blazor Server application with interactive rendering modes.
+    -   **`SmartConfig.App.Web.Client`**: The Blazor WebAssembly client-side application.
 
 -   **`/src/SmartConfig.Mcp`**: A .NET application for managing and coordinating other parts of the system.
 -   **`/src/SmartConfig.Scheduler`**: A .NET application for running scheduled jobs.

@@ -52,6 +52,6 @@ if (bool.Parse(builder.Configuration["SmartConfig:Clients:Scheduler"] ?? "false"
 builder.AddAiResources(api);
 
 // Frontends (next.js, angular, react and blazor)
-// builder.AddFrontendResources(api);
+builder.AddFrontendResources(api);
 
 builder.Build().Run();
