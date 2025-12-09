@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Markdig" Version="0.41.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.82" />
+        <PackageReference Include="shortid" Version="4.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\UserConfig\UserConfigCreate.razor" />
+      <AdditionalFiles Include="Pages\UserConfig\UserConfigEdit.razor" />
+      <AdditionalFiles Include="Pages\UserConfig\UserConfigSearch.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
+    </ItemGroup>
+    
+</Project>

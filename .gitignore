@@ -84,7 +84,9 @@ docker-compose.override.yml
 # iOS
 *.ipa
 *.dSYM/
-*.app/
+# iOS app bundles (only in bin/obj output directories)
+**/bin/**/*.app/
+**/obj/**/*.app/
 **/iOSInjectionProject/
 
 # Mac
