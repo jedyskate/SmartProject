@@ -18,15 +18,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Components\Chat.razor" />
       <AdditionalFiles Include="Pages\UserConfig\UserConfigCreate.razor" />
       <AdditionalFiles Include="Pages\UserConfig\UserConfigEdit.razor" />
       <AdditionalFiles Include="Pages\UserConfig\UserConfigSearch.razor" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
-        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
     </ItemGroup>
     
 </Project>

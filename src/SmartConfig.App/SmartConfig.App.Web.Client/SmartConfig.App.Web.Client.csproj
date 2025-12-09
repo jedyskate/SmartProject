@@ -14,8 +14,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\SmartConfig.App.Shared\SmartConfig.App.Shared.csproj"/>
-        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
-        <ProjectReference Include="..\..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.AI.Sdk\SmartConfig.AI.Sdk.csproj" />
+        <ProjectReference Include="..\..\..\sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj" />
     </ItemGroup>
     
 </Project>

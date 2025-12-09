@@ -8,9 +8,9 @@ using SmartConfig.AI.Sdk;
 
 namespace SmartConfig.App.Shared.Components;
 
-public partial class Chat : IDisposable
+public partial class AgentFrameworkChat : IDisposable
 {
-    private DotNetObjectReference<Chat> _dotNetRef;
+    private DotNetObjectReference<AgentFrameworkChat> _dotNetRef;
     private ElementReference _chatBody;
     // private PersistingComponentStateSubscription _persistingSubscription;
 
