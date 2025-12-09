@@ -15,6 +15,23 @@ public static class ResourceAiExtensions
             .WaitFor(api)
             .WithReference(api)
             .WithExternalHttpEndpoints();
+
+        // Ollama
+        var ollama = builder.AddOllama("ollama")
+            .WithHttpEndpoint(port: 11434, targetPort: 11434, name: "ollama-http", isProxied: false)
+            .WithExternalHttpEndpoints()
+            .WithParentRelationship(mcp)
+            .WithDataVolume()
+            // .AddModel("phi4-mini", "phi4-mini:latest");
+            .AddModel("llama32", "llama3.2:latest");
+
+        // Agent
+        if (clients?.Contains("agent") ?? false)
+            builder.AddProject<SmartConfig_Agent>("agent")
+                .WithReference(ollama)
+                .WaitFor(ollama)
+                .WithParentRelationship(mcp)
+                .WithEnvironment("Agent__OpenRouter__ApiKey", builder.Configuration["Agent:OpenRouter:ApiKey"]);
         
         // n8n
         if (clients?.Contains("n8n") ?? false)

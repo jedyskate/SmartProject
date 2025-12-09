@@ -43,8 +43,7 @@ public partial class N8nChat : IDisposable
         StateHasChanged();
 
         // Use YARP proxy endpoint for n8n webhook
-        var url = "/n8n/webhook/n8n/smartconfig-chat";
-
+        var url = "/n8n/webhook/smartconfig-chat";
         await JSRuntime.InvokeVoidAsync("streamChat", url, chatRequest, _dotNetRef);
     }
 
