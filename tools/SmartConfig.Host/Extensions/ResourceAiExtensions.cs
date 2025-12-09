@@ -29,6 +29,7 @@ public static class ResourceAiExtensions
         if (clients?.Contains("agent") ?? false)
             builder.AddProject<SmartConfig_Agent>("agent")
                 .WithReference(ollama)
+                .WaitFor(mcp)
                 .WaitFor(ollama)
                 .WithParentRelationship(mcp)
                 .WithEnvironment("Agent__OpenRouter__ApiKey", builder.Configuration["Agent:OpenRouter:ApiKey"]);
@@ -37,6 +38,7 @@ public static class ResourceAiExtensions
         if (clients?.Contains("n8n") ?? false)
             builder.AddContainer("n8n", "n8nio/n8n", "latest")
                 .WaitFor(mcp)
+                .WaitFor(ollama)
                 .WithParentRelationship(mcp)
                 .WithHttpEndpoint(port: 5678, targetPort: 5678, name: "n8n-http", isProxied: false)
                 .WithExternalHttpEndpoints()
@@ -51,6 +53,7 @@ public static class ResourceAiExtensions
         if (clients?.Contains("anythingLlm") ?? false)
             builder.AddContainer("anythingllm", "mintplexlabs/anythingllm", "latest")
                 .WaitFor(mcp)
+                .WaitFor(ollama)
                 .WithParentRelationship(mcp)
                 .WithHttpEndpoint(port: 3001, targetPort: 3001, name: "anythingLlm-http", isProxied: false)
                 .WithExternalHttpEndpoints()
