@@ -53,10 +53,16 @@ public static class ResourceFrontendExtensions
         
         // Blazor
         if (frontends?.Contains("blazor") ?? false)
+        {
+            var agentApiKey = builder.Configuration["Agent:OpenRouter:ApiKey"];
+            var isAgentFrameworkEnabled = !string.IsNullOrWhiteSpace(agentApiKey);
+
             builder.AddProject<SmartConfig_App_Web>("blazor")
                 .WaitFor(api)
                 .WithReference(api)
                 .WithHttpsEndpoint(7230, name: "blazor-https")
-                .WithParentRelationship(api);
+                .WithParentRelationship(api)
+                .WithEnvironment("SmartConfig__Features__AgentFrameworkEnabled", isAgentFrameworkEnabled.ToString());
+        }
     }
 }

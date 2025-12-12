@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject IConfiguration Configuration
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">SmartConfig.Blazor</a>
     </div>
@@ -32,11 +34,14 @@
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="microsoftagent">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Agent Framework
-            </NavLink>
-        </div>
+        @if (IsAgentFrameworkEnabled)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="microsoftagent">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Agent Framework
+                </NavLink>
+            </div>
+        }
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="userconfig/search">
@@ -46,3 +51,13 @@
     </nav>
 </div>
 
+@code {
+    private bool IsAgentFrameworkEnabled { get; set; }
+
+    protected override void OnInitialized()
+    {
+        IsAgentFrameworkEnabled = Configuration.GetValue("SmartConfig:Features:AgentFrameworkEnabled", defaultValue: true);
+        
+        base.OnInitialized();
+    }
+}

@@ -25,14 +25,17 @@ public static class ResourceAiExtensions
             // .AddModel("phi4-mini", "phi4-mini:latest");
             .AddModel("llama32", "llama3.2:latest");
 
+        var agentApiKey = builder.Configuration["Agent:OpenRouter:ApiKey"];
+        var isAgentFrameworkEnabled = !string.IsNullOrWhiteSpace(agentApiKey);
+
         // Agent
-        if (clients?.Contains("agent") ?? false)
+        if ((clients?.Contains("agent") ?? false) && isAgentFrameworkEnabled)
             builder.AddProject<SmartConfig_Agent>("agent")
                 .WithReference(ollama)
                 .WaitFor(mcp)
                 .WaitFor(ollama)
                 .WithParentRelationship(mcp)
-                .WithEnvironment("Agent__OpenRouter__ApiKey", builder.Configuration["Agent:OpenRouter:ApiKey"]);
+                .WithEnvironment("Agent__OpenRouter__ApiKey", agentApiKey);
         
         // n8n
         if (clients?.Contains("n8n") ?? false)
