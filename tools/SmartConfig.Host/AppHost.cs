@@ -33,9 +33,9 @@ if (bool.Parse(builder.Configuration["SmartConfig:Clients:Scheduler"] ?? "false"
         .WaitForCompletion(migration);
 
 // AI
-builder.AddAiResources(api);
+var aiResources = builder.AddAiResources(api);
 
 // Frontends (next.js, angular, react and blazor)
-builder.AddFrontendResources(api);
+builder.AddFrontendResources(api, aiResources);
 
 builder.Build().Run();
