@@ -5,7 +5,7 @@ namespace SmartConfig.Host.Extensions;
 
 public static class ResourceFrontendExtensions
 {
-    public static void AddFrontendResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
+    public static void AddFrontendResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api, AiResources aiResources)
     {
         //TODO::Aspire otel collector port is set at runtime. UPDATE OTEL URL TO COLLECT TELEMETRICS.
         var otlpEndpoint = Environment.GetEnvironmentVariable("ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL") ?? throw new ArgumentException();
@@ -53,10 +53,23 @@ public static class ResourceFrontendExtensions
         
         // Blazor
         if (frontends?.Contains("blazor") ?? false)
-            builder.AddProject<SmartConfig_App_Web>("blazor")
+        {
+            var agentApiKey = builder.Configuration["Agent:OpenRouter:ApiKey"];
+            var isAgentFrameworkEnabled = !string.IsNullOrWhiteSpace(agentApiKey);
+
+            var blazor = builder.AddProject<SmartConfig_App_Web>("blazor")
                 .WaitFor(api)
                 .WithReference(api)
                 .WithHttpsEndpoint(7230, name: "blazor-https")
-                .WithParentRelationship(api);
+                .WithParentRelationship(api)
+                .WithEnvironment("SmartConfig__Features__AgentFrameworkEnabled", isAgentFrameworkEnabled.ToString());
+
+            // Wait for AI resources if they exist
+            if (aiResources.Agent != null)
+                blazor.WaitFor(aiResources.Agent);
+
+            if (aiResources.N8n != null)
+                blazor.WaitFor(aiResources.N8n);
+        }
     }
 }

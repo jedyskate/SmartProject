@@ -3,12 +3,17 @@ using Projects;
 
 namespace SmartConfig.Host.Extensions;
 
+public record AiResources(
+    IResourceBuilder<ProjectResource>? Agent = null,
+    IResourceBuilder<ContainerResource>? N8n = null
+);
+
 public static class ResourceAiExtensions
 {
-    public static void AddAiResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
+    public static AiResources AddAiResources(this IDistributedApplicationBuilder builder, IResourceBuilder<ProjectResource> api)
     {
         var clients = builder.Configuration.GetSection("SmartConfig:Ai:Clients").Get<string[]>();
-        if (!clients?.Any() ?? true) return;
+        if (!clients?.Any() ?? true) return new AiResources();
         
         // Mcp Server
         var mcp = builder.AddProject<SmartConfig_McpServer>("mcp")
@@ -25,18 +30,24 @@ public static class ResourceAiExtensions
             // .AddModel("phi4-mini", "phi4-mini:latest");
             .AddModel("llama32", "llama3.2:latest");
 
+        var agentApiKey = builder.Configuration["Agent:OpenRouter:ApiKey"];
+        var isAgentFrameworkEnabled = !string.IsNullOrWhiteSpace(agentApiKey);
+
+        IResourceBuilder<ProjectResource>? agent = null;
+        IResourceBuilder<ContainerResource>? n8n = null;
+
         // Agent
-        if (clients?.Contains("agent") ?? false)
-            builder.AddProject<SmartConfig_Agent>("agent")
+        if ((clients?.Contains("agent") ?? false) && isAgentFrameworkEnabled)
+            agent = builder.AddProject<SmartConfig_Agent>("agent")
                 .WithReference(ollama)
                 .WaitFor(mcp)
                 .WaitFor(ollama)
                 .WithParentRelationship(mcp)
-                .WithEnvironment("Agent__OpenRouter__ApiKey", builder.Configuration["Agent:OpenRouter:ApiKey"]);
-        
+                .WithEnvironment("Agent__OpenRouter__ApiKey", agentApiKey);
+
         // n8n
         if (clients?.Contains("n8n") ?? false)
-            builder.AddContainer("n8n", "n8nio/n8n", "latest")
+            n8n = builder.AddContainer("n8n", "n8nio/n8n", "latest")
                 .WaitFor(mcp)
                 .WaitFor(ollama)
                 .WithParentRelationship(mcp)
@@ -63,6 +74,8 @@ public static class ResourceAiExtensions
                 .WithBindMount("Volumes/AnythingLLM/anythingllm_mcp_servers.json", "/app/server/storage/plugins/anythingllm_mcp_servers.json")
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-flows/empty.json") // Directory is needed
                 .WithBindMount("Volumes/AnythingLLM/empty.json", "/app/server/storage/plugins/agent-skills/empty.json"); // Directory is needed
+
+        return new AiResources(agent, n8n);
     }
 
     private static IResourceBuilder<T> WithDefaultAiAgent<T>(this IResourceBuilder<T> builder,
