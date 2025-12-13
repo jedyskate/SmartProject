@@ -1,10 +1,6 @@
 {
   "permissions": {
-    "allow": [
-      "WebSearch",
-      "WebFetch(domain:aspire.dev)",
-      "Bash(curl:*)"
-    ],
+    "allow": [],
     "deny": [],
     "ask": []
   }
