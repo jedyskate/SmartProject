@@ -91,6 +91,7 @@ docker-compose.override.yml
 
 # Mac
 **/maccatalyst/
+.DS_Store
 
 # MAUI Build Artifacts
 **/AppPackages/
@@ -99,3 +100,6 @@ docker-compose.override.yml
 
 # Visual Studio / Rider MAUI-specific
 *.DotSettings.user
+
+# Ignore Claude Folder
+**.claude/
