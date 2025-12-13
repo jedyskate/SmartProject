@@ -14,7 +14,7 @@ COPY ["src/SmartConfig.Api/SmartConfig.Application/SmartConfig.Application.cspro
 COPY ["src/SmartConfig.Api/SmartConfig.Common/SmartConfig.Common.csproj", "src/SmartConfig.Api/SmartConfig.Common/"]
 COPY ["src/SmartConfig.Api/SmartConfig.Core/SmartConfig.Core.csproj", "src/SmartConfig.Api/SmartConfig.Core/"]
 COPY ["src/SmartConfig.Api/SmartConfig.Data/SmartConfig.Data.csproj", "src/SmartConfig.Api/SmartConfig.Data/"]
-COPY ["src/SmartConfig.Api/SmartConfig.Orleans.Silo/SmartConfig.Orleans.Silo.csproj", "src/SmartConfig.Api/SmartConfig.Orleans.Silo/"]
+COPY ["src/SmartConfig.Api/SmartConfig.Silo/SmartConfig.Silo.csproj", "src/SmartConfig.Api/SmartConfig.Silo/"]
 RUN dotnet restore "src/SmartConfig.Api/SmartConfig.Api/SmartConfig.Api.csproj"
 COPY . .
 WORKDIR "/src/src/SmartConfig.Api/SmartConfig.Api"

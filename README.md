@@ -12,7 +12,7 @@ The solution is organized into the following high-level folders:
     -   **`SmartConfig.Application`**: The application layer containing business logic (CQRS).
     -   **`SmartConfig.Core`**: The domain layer with core models and business rules.
     -   **`SmartConfig.Data`**: The infrastructure layer for data persistence (Entity Framework).
-    -   **`SmartConfig.Orleans.Silo`**: Hosts the Orleans grains for distributed, stateful logic.
+    -   **`SmartConfig.Silo`**: Hosts the Orleans grains for distributed, stateful logic.
 
 -   **`/src/SmartConfig.Agent`**: A dotnet micro-service that hosts the AI agents logic.
     -   **`SmartConfig.Agent`**: Minimal API with MediatR.
