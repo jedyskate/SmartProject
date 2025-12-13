@@ -1,7 +1,13 @@
 {
   "permissions": {
-    "allow": [],
+    "allow": [
+      "mcp__aspire-dashboard__list_resources"
+    ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "aspire-dashboard"
+  ]
 }
