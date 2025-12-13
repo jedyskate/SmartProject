@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm install && vite",
+    "dev": "npm install && npm run ensure-certs && vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev-cert": "mkcert -key-file key.pem -cert-file cert.pem localhost"
+    "ensure-certs": "[ -f cert/key.pem ] && [ -f cert/cert.pem ] || (mkdir -p cert && cd cert && mkcert -key-file key.pem -cert-file cert.pem localhost 127.0.0.1 ::1)"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",

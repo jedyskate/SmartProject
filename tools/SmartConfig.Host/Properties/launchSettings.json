@@ -15,7 +15,7 @@
         "ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL": "https://localhost:21005",   //HTTP
         "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:22102",
         "ASPIRE_DASHBOARD_CORS_ALLOWED_ORIGINS": "*",
-        //This is taken from NextJs frontend project and it's required to authorize against Aspire exporter.
+        //This is taken from NextJs/React frontend projects and it's required to authorize against Aspire exporter.
         "OTEL_EXPORTER_OTLP_HEADERS": "x-otlp-api-key=61f1602a8811972aa82d9984a6ecc3ce",
         //ASPIRE MCP SERVER ENDPOINT
         "ASPIRE_DASHBOARD_MCP_ENDPOINT_URL": "http://localhost:21006",
