@@ -1,4 +1,7 @@
-﻿namespace SmartConfig.Orleans.Silo.Grains.Tests;
+﻿using System.Net;
+using SmartConfig.Common.Exceptions;
+
+namespace SmartConfig.Silo.Grains.Tests;
 
 public interface IHelloWorldUserGrain : IGrainWithStringKey
 {
@@ -23,14 +26,16 @@ public class HelloWorldGrain : Grain, IHelloWorldUserGrain
 
     public async Task<string> SayHelloWorld(string name)
     {
+        //throw new SmartConfigException(HttpStatusCode.InternalServerError, "Hello World, not allowed!");
+
         var grain = _grainFactory.GetGrain<IHelloCounterTotalGrain>("Generic-Grain-Identifier");
         var helloTotalCount = await grain.IncreaseHelloCounter();
-            
+
         _state.State.HelloWorldCount++;
         await _state.WriteStateAsync();
 
         var persona = string.IsNullOrEmpty(name) ? "Nobody" : name;
-            
+
         return $"Hello world number {_state.State.HelloWorldCount} from {persona}. Total hello world count: {helloTotalCount}";
     }
 }

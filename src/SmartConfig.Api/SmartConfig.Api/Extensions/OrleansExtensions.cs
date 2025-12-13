@@ -88,7 +88,7 @@ public static class OrleansExtensions
                     isSupported: type => type!.Namespace!.StartsWith("SmartConfig.Common"));
 
                 serializerBuilder.AddNewtonsoftJsonSerializer(
-                    isSupported: type => type!.Namespace!.StartsWith("SmartConfig.Orleans.Silo"));
+                    isSupported: type => type!.Namespace!.StartsWith("SmartConfig.Silo"));
             });
         });
 

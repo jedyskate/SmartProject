@@ -1,4 +1,4 @@
-﻿namespace SmartConfig.Orleans.Silo.Grains.Tests;
+﻿namespace SmartConfig.Silo.Grains.Tests;
 
 public interface IHelloCounterTotalGrain : IGrainWithStringKey
 {

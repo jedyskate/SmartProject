@@ -1,7 +1,7 @@
 using Moq;
 using NUnit.Framework;
 using Shouldly;
-using SmartConfig.Orleans.Silo.Grains.Tests;
+using SmartConfig.Silo.Grains.Tests;
 
 namespace SmartConfig.UnitTests.Tests.Orleans.Grains;
 

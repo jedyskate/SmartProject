@@ -18,7 +18,7 @@
 		<ProjectReference Include="..\SmartConfig.Common\SmartConfig.Common.csproj" />
 		<ProjectReference Include="..\SmartConfig.Core\SmartConfig.Core.csproj" />
 		<ProjectReference Include="..\SmartConfig.Data\SmartConfig.Data.csproj" />
-		<ProjectReference Include="..\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj" />
+		<ProjectReference Include="..\SmartConfig.Silo\SmartConfig.Silo.csproj" />
 	</ItemGroup>
 
 </Project>

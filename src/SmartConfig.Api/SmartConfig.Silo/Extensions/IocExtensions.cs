@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SmartConfig.Orleans.Silo.Extensions;
+namespace SmartConfig.Silo.Extensions;
 
 public static class IocExtensions
 {

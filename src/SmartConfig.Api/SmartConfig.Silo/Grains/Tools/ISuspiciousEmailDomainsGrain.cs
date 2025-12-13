@@ -1,4 +1,4 @@
-﻿namespace SmartConfig.Orleans.Silo.Grains.Tools;
+﻿namespace SmartConfig.Silo.Grains.Tools;
 
 public interface ISuspiciousEmailDomainsGrain : IGrainWithStringKey
 {

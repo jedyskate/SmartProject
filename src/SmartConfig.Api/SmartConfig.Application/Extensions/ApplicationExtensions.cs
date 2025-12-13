@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using SmartConfig.Orleans.Silo.Extensions;
+using SmartConfig.Silo.Extensions;
 
 namespace SmartConfig.Application.Extensions;
 

@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "items", "items", "{2D1C41C0
 		README.md = README.md
 		nuget.config = nuget.config
 		.gitignore = .gitignore
+		.mcp.json = .mcp.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.LoadTests", "tests\SmartConfig.LoadTests\SmartConfig.LoadTests.csproj", "{366D3100-4770-4507-9931-04B7D636346C}"
@@ -54,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Core", "src\Sma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Data", "src\SmartConfig.Api\SmartConfig.Data\SmartConfig.Data.csproj", "{ED32E080-BF83-4350-A761-31ED1376C91C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Orleans.Silo", "src\SmartConfig.Api\SmartConfig.Orleans.Silo\SmartConfig.Orleans.Silo.csproj", "{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.Silo", "src\SmartConfig.Api\SmartConfig.Silo\SmartConfig.Silo.csproj", "{7E51C0B9-9C22-4A99-AC04-6ED01B6FD2D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartConfig.BE.Sdk", "sdks\SmartConfig.BE.Sdk\SmartConfig.BE.Sdk.csproj", "{E4A1C5AE-86E7-45DD-8A4D-90EBC358B33A}"
 EndProject

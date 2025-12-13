@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SmartConfig.Data;
-using SmartConfig.Orleans.Silo.Grains.Tests;
+using SmartConfig.Silo.Grains.Tests;
 
 namespace SmartConfig.Application.Application.Orleans.Commands;
 
