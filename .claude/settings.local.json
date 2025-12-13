@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "mcp__aspire-dashboard__list_resources"
+      "mcp__aspire-dashboard__list_resources",
+      "mcp__aspire-dashboard__list_console_logs",
+      "mcp__aspire-dashboard__list_structured_logs",
+      "mcp__aspire-dashboard__list_traces",
+      "mcp__aspire-dashboard__list_trace_structured_logs",
+      "mcp__aspire-dashboard__execute_resource_command"
     ],
     "deny": [],
     "ask": []

@@ -240,3 +240,81 @@ When modifying or adding agents:
 5. Tools can be shared across agents or agent-specific
 
 Agent execution is streaming - use `IAsyncEnumerable<string>` for responses.
+
+## Aspire Dashboard MCP (Claude Code & Cursor)
+
+The Aspire host exposes an **MCP server** for monitoring and managing running resources:
+
+**Configuration:** `.mcp.json` in repository root
+```json
+{
+  "mcpServers": {
+    "aspire-dashboard": {
+      "type": "http",
+      "url": "http://localhost:21006/mcp",
+      "headers": {
+        "x-mcp-api-key": "<COMPUTER_SPECIFIC_KEY>"
+      }
+    }
+  }
+}
+```
+
+**Prerequisites:**
+- Aspire host MUST be running first: `dotnet run --project tools/SmartConfig.Host/SmartConfig.Host.csproj`
+- MCP server is only available when Aspire dashboard is active
+- Default MCP endpoint: `http://localhost:21006/mcp`
+
+**Available MCP Tools:**
+
+1. **`mcp__aspire-dashboard__list_resources`**
+   - Lists all resources/services orchestrated by Aspire
+   - Shows status, health, and endpoints for each service
+   - Use to check if API, databases, frontends are running
+
+2. **`mcp__aspire-dashboard__list_console_logs`**
+   - View console output from specific resources
+   - Filter by resource name and time range
+   - Essential for debugging startup issues
+
+3. **`mcp__aspire-dashboard__list_structured_logs`**
+   - View structured telemetry logs with metadata
+   - Filter by log level, resource, timestamp
+   - Better for production debugging with log scopes
+
+4. **`mcp__aspire-dashboard__list_traces`**
+   - View distributed traces across services
+   - Shows request flow through API → Orleans → Database
+   - Essential for performance profiling
+
+5. **`mcp__aspire-dashboard__list_trace_structured_logs`**
+   - View structured logs associated with specific trace IDs
+   - Correlate logs with distributed traces
+   - Debug cross-service request failures
+
+6. **`mcp__aspire-dashboard__execute_resource_command`**
+   - Execute commands on running resources
+   - Restart services, trigger health checks, etc.
+   - Use with caution in production environments
+
+**Common Usage Patterns:**
+
+```markdown
+# Check if all services are healthy
+Use list_resources to see status of API, databases, frontends
+
+# Debug API startup failure
+Use list_console_logs for "smartconfig-api" resource
+
+# Investigate slow API requests
+Use list_traces filtered by duration > 1000ms
+
+# Correlate errors across services
+Use list_trace_structured_logs with trace ID from error
+```
+
+**Environment Variables (configured in `launchSettings.json`):**
+- `ASPIRE_DASHBOARD_MCP_ENDPOINT_URL`: MCP server endpoint
+- `ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL`: Telemetry collector (gRPC)
+- `ASPIRE_DASHBOARD_OTLP_HTTP_ENDPOINT_URL`: Telemetry collector (HTTP)
+- `ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL`: Resource management endpoint
