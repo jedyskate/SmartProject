@@ -23,6 +23,7 @@ public static class IocExtensions
     
             var smartConfigClient = new SmartConfigApiClient(httpClient)
             {
+                ReadResponseAsString = true, // Required for Blazor WebAssembly compatibility
                 JsonSerializerSettings =
                 {
                     ContractResolver = new CustomCamelCaseResolver(),
