@@ -9,7 +9,7 @@ public static class IocExtensions
     public static IServiceCollection AddSmartConfigAgentClient(this IServiceCollection services)
     {
         //HTTP CLIENT
-        services.AddHttpClient("SmartConfig", (provider, client) =>
+        services.AddHttpClient("SmartConfigAgent", (provider, client) =>
             {
                 var settings = provider.GetRequiredService<SmartConfigAgentSettings>();
                 client.BaseAddress = new Uri(settings.SmartConfigAgentEndpoint);
