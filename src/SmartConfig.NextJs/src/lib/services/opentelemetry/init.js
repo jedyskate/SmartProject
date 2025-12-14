@@ -1,17 +1,4 @@
-import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
-import { SimpleSpanProcessor, BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
-import { detectResources, resourceFromAttributes } from '@opentelemetry/resources';
-import { registerInstrumentations } from '@opentelemetry/instrumentation';
-import { FetchInstrumentation } from '@opentelemetry/instrumentation-fetch';
-import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
-import { UserInteractionInstrumentation } from '@opentelemetry/instrumentation-user-interaction';
-import { MeterProvider, PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
-import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-proto';
-import { metrics } from '@opentelemetry/api';
-import { logs, SeverityNumber } from '@opentelemetry/api-logs';
-import { LoggerProvider, SimpleLogRecordProcessor, ConsoleLogRecordExporter } from '@opentelemetry/sdk-logs';
-import { OTLPLogExporter } from '@opentelemetry/exporter-logs-otlp-proto';
+// All OpenTelemetry imports are now dynamic to prevent SSR evaluation
 
 // Utility: Generate UUID for correlationId
 function generateCorrelationId() {
@@ -23,6 +10,28 @@ function generateCorrelationId() {
 }
 
 export async function initOpenTelemetry() {
+    // Only run in browser environment
+    if (typeof window === 'undefined') {
+        console.warn('OpenTelemetry initialization skipped - not in browser environment');
+        return;
+    }
+
+    // Dynamic imports to prevent SSR evaluation
+    const { WebTracerProvider } = await import('@opentelemetry/sdk-trace-web');
+    const { SimpleSpanProcessor, BatchSpanProcessor, ConsoleSpanExporter } = await import('@opentelemetry/sdk-trace-base');
+    const { OTLPTraceExporter } = await import('@opentelemetry/exporter-trace-otlp-proto');
+    const { resourceFromAttributes } = await import('@opentelemetry/resources');
+    const { registerInstrumentations } = await import('@opentelemetry/instrumentation');
+    const { FetchInstrumentation } = await import('@opentelemetry/instrumentation-fetch');
+    const { DocumentLoadInstrumentation } = await import('@opentelemetry/instrumentation-document-load');
+    const { UserInteractionInstrumentation } = await import('@opentelemetry/instrumentation-user-interaction');
+    const { MeterProvider, PeriodicExportingMetricReader } = await import('@opentelemetry/sdk-metrics');
+    const { OTLPMetricExporter } = await import('@opentelemetry/exporter-metrics-otlp-proto');
+    const { metrics } = await import('@opentelemetry/api');
+    const { logs, SeverityNumber } = await import('@opentelemetry/api-logs');
+    const { LoggerProvider, SimpleLogRecordProcessor, ConsoleLogRecordExporter } = await import('@opentelemetry/sdk-logs');
+    const { OTLPLogExporter } = await import('@opentelemetry/exporter-logs-otlp-proto');
+
     const baseUrl = process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT;
     const otlpHeaders = process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS;
 
@@ -42,14 +51,14 @@ export async function initOpenTelemetry() {
         headers,
     });
 
-    const detected = await detectResources();
-    const custom = resourceFromAttributes({
+    // Manually define resource to avoid detectResources() localStorage issues on Node.js v25
+    const resource = resourceFromAttributes({
         'service.name': 'nextjs',
         'service.version': '1.0.0',
     });
 
     const provider = new WebTracerProvider({
-        resource: detected.merge(custom),
+        resource: resource,
         spanProcessors: [
             new BatchSpanProcessor(exporter),
             new SimpleSpanProcessor(new ConsoleSpanExporter()), // Keep console as simple for debugging
@@ -83,7 +92,7 @@ export async function initOpenTelemetry() {
     });
 
     const meterProvider = new MeterProvider({
-        resource: detected.merge(custom),
+        resource: resource,
         readers: [metricReader]
     });
 
@@ -155,7 +164,7 @@ export async function initOpenTelemetry() {
     });
 
     const loggerProvider = new LoggerProvider({
-        resource: detected.merge(custom),
+        resource: resource,
         processors: [
             new SimpleLogRecordProcessor(logExporter),
             new SimpleLogRecordProcessor(new ConsoleLogRecordExporter()),

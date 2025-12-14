@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import { initOpenTelemetry } from './init';
 
 export default function OpenTelemetryInit() {
     useEffect(() => {
-        initOpenTelemetry();
+        // Dynamically import and initialize OpenTelemetry only in the browser
+        import('./init').then(({ initOpenTelemetry }) => {
+            initOpenTelemetry();
+        });
     }, []);
 
     return null;
