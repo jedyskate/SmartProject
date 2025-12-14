@@ -10,8 +10,6 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using Polly;
-using Serilog;
-using Serilog.Sinks.OpenTelemetry;
 
 namespace SmartConfig.ServiceDefaults;
 
@@ -22,8 +20,6 @@ public static class Extensions
 {
     public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        builder.ConfigureSerilog();
-
         builder.ConfigureOpenTelemetry();
 
         builder.AddDefaultHealthChecks();
@@ -73,40 +69,6 @@ public static class Extensions
         // {
         //     options.AllowedSchemes = ["https"];
         // });
-
-        return builder;
-    }
-
-    private static TBuilder ConfigureSerilog<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
-    {
-        var serviceName = builder.Environment.ApplicationName;
-        var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
-
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(builder.Configuration)
-            .Enrich.FromLogContext()
-            .Enrich.WithEnvironmentName()
-            .Enrich.WithMachineName()
-            .Enrich.WithThreadId()
-            .Enrich.WithThreadName()
-            .Enrich.WithProperty("ServiceName", serviceName)
-            .Enrich.With(new ActivityEnricher())
-            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {TraceId} {SpanId} {Message:lj}{NewLine}{Exception}")
-            .WriteTo.Conditional(
-                _ => !string.IsNullOrWhiteSpace(otlpEndpoint),
-                wt => wt.OpenTelemetry(options =>
-                {
-                    options.Endpoint = otlpEndpoint ?? string.Empty;
-                    options.Protocol = OtlpProtocol.HttpProtobuf;
-                    options.ResourceAttributes = new Dictionary<string, object>
-                    {
-                        ["service.name"] = serviceName
-                    };
-                })
-            )
-            .CreateLogger();
-
-        builder.Services.AddSerilog(Log.Logger);
 
         return builder;
     }
