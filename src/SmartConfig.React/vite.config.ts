@@ -13,4 +13,11 @@ export default defineConfig({
     },
     port: 5175, // Optional: use any free port
   },
+  // Expose Aspire-injected OTLP configuration to client-side code
+  // Aspire automatically sets OTEL_EXPORTER_OTLP_* for server-side,
+  // this makes them available in the browser with VITE_ prefix
+  define: {
+    'import.meta.env.VITE_OTEL_EXPORTER_OTLP_ENDPOINT': JSON.stringify(process.env.OTEL_EXPORTER_OTLP_ENDPOINT || ''),
+    'import.meta.env.VITE_OTEL_EXPORTER_OTLP_HEADERS': JSON.stringify(process.env.OTEL_EXPORTER_OTLP_HEADERS || ''),
+  },
 })
