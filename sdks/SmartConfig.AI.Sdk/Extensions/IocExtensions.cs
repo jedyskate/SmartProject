@@ -17,6 +17,7 @@ public static class IocExtensions
             .AddTypedClient<ISmartConfigAgentClient>((httpClient, provider) =>
                 new SmartConfigAgentClient(httpClient)
                 {
+                    ReadResponseAsString = true, // Required for Blazor WebAssembly compatibility
                     JsonSerializerSettings =
                     {
                         ContractResolver = new CustomCamelCaseResolver(),
