@@ -1,7 +1,4 @@
-﻿using System.Net;
-using SmartConfig.Common.Exceptions;
-
-namespace SmartConfig.Silo.Grains.Tests;
+﻿namespace SmartConfig.Silo.Grains.Tests;
 
 public interface IHelloWorldUserGrain : IGrainWithStringKey
 {

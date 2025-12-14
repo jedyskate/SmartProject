@@ -1,5 +1,5 @@
 import { WebTracerProvider } from '@opentelemetry/sdk-trace-web';
-import { SimpleSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
+import { SimpleSpanProcessor, BatchSpanProcessor, ConsoleSpanExporter } from '@opentelemetry/sdk-trace-base';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
 import { detectResources, resourceFromAttributes, type Resource } from '@opentelemetry/resources';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
@@ -51,8 +51,8 @@ export async function initOpenTelemetry() {
     const provider = new WebTracerProvider({
         resource: detected.merge(custom),
         spanProcessors: [
-            new SimpleSpanProcessor(exporter),
-            new SimpleSpanProcessor(new ConsoleSpanExporter())
+            new BatchSpanProcessor(exporter),
+            new SimpleSpanProcessor(new ConsoleSpanExporter()) // Keep console as simple for debugging
         ]
     });
     provider.register();
