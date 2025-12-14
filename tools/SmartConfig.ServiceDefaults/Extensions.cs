@@ -94,7 +94,6 @@ public static class Extensions
             .WithTracing(tracing =>
             {
                 tracing.AddSource("*")
-                    .AddSource("Microsoft.Orleans")
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddSqlClientInstrumentation()
